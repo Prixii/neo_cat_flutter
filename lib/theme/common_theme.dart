@@ -3,4 +3,4 @@
 
 import 'package:fluent_ui/fluent_ui.dart';
 
-var lightTheme = FluentThemeData(scaffoldBackgroundColor: Colors.white);
+var lightTheme = FluentThemeData.light();

@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/pages/hello/index.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
 /// @author wang.jiaqi
@@ -15,11 +16,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FluentApp(
       theme: lightTheme,
-      home: const ScaffoldPage(
-        content: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      home: const HelloPage(),
     );
   }
 }
