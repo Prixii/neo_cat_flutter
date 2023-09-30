@@ -17,19 +17,27 @@ class _ManagerPageState extends State<ManagerPage> {
     return ScaffoldPage(
       padding: EdgeInsets.zero,
       content: Container(
-        color: FluentTheme.of(Navigator.of(context).context)
-            .scaffoldBackgroundColor,
-        child: Center(
-          child: Button(
-              onPressed: () => {
-                    Navigator.push(
-                        context,
-                        FluentPageRoute(
-                            builder: (context) => const InitializrPage()))
-                  },
-              child: const Text('here is Manager')),
-        ),
-      ),
+          color: FluentTheme.of(Navigator.of(context).context)
+              .scaffoldBackgroundColor,
+          child: Row(
+            children: [
+              Expanded(
+                  child: Container(
+                    color: Colors.green,
+                  ),
+                  flex: 1),
+              Expanded(
+                  child: Container(
+                    color: Colors.blue,
+                  ),
+                  flex: 2),
+              Expanded(
+                  child: Container(
+                    color: Colors.green,
+                  ),
+                  flex: 1),
+            ],
+          )),
     );
   }
 }
