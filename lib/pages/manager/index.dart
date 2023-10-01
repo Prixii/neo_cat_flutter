@@ -1,5 +1,4 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/pages/initializr/index.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-29 11
