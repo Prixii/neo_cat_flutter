@@ -1,9 +1,18 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
+
+part 'relation.g.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-29 10
 
+@JsonSerializable()
 class BaseRelation {
+  String id;
+  String name;
+  String startNodeId;
+  String endNodeId;
+
   BaseRelation.byNodeName(
       {required this.id,
       required this.name,
@@ -12,14 +21,14 @@ class BaseRelation {
       : startNodeId = getNodeIdByName(startNodeName),
         endNodeId = getNodeIdByName(endNodeName);
 
-  BaseRelation.byNodeId(
+  BaseRelation(
       {required this.id,
       required this.name,
       required this.startNodeId,
       required this.endNodeId});
 
-  String id;
-  String name;
-  String startNodeId;
-  String endNodeId;
+  factory BaseRelation.fromJson(Map<String, dynamic> json) =>
+      _$BaseRelationFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BaseRelationToJson(this);
 }
