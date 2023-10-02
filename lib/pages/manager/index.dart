@@ -21,20 +21,23 @@ class _ManagerPageState extends State<ManagerPage> {
           child: Row(
             children: [
               Expanded(
-                  child: Container(
-                    color: Colors.green,
-                  ),
-                  flex: 1),
+                flex: 1,
+                child: Container(
+                  color: Colors.green,
+                ),
+              ),
               Expanded(
-                  child: Container(
-                    color: Colors.blue,
-                  ),
-                  flex: 2),
+                flex: 2,
+                child: Container(
+                  color: Colors.blue,
+                ),
+              ),
               Expanded(
-                  child: Container(
-                    color: Colors.green,
-                  ),
-                  flex: 1),
+                flex: 1,
+                child: Container(
+                  color: Colors.green,
+                ),
+              ),
             ],
           )),
     );

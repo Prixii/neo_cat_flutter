@@ -16,12 +16,12 @@ class _HelloPageState extends State<HelloPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPage(
-        padding: EdgeInsets.zero,
-        content: Container(
-          color: FluentTheme.of(Navigator.of(context).context)
-              .scaffoldBackgroundColor,
-          child: Center(
-              child: Column(
+      padding: EdgeInsets.zero,
+      content: Container(
+        color: FluentTheme.of(Navigator.of(context).context)
+            .scaffoldBackgroundColor,
+        child: Center(
+          child: Column(
             children: [
               Expanded(
                 flex: 1,
@@ -59,7 +59,9 @@ class _HelloPageState extends State<HelloPage> {
                 child: Container(),
               ),
             ],
-          )),
-        ));
+          ),
+        ),
+      ),
+    );
   }
 }

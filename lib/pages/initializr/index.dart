@@ -22,6 +22,28 @@ class InitializrPage extends StatefulWidget {
 class _InitializrPageState extends State<InitializrPage> {
   Future<void> initGraphData() async {
     final newModel = GraphDataModel.fromJson(jsonDecode(widget.rawData ?? ''));
+    logger.d(newModel);
+  }
+
+  void toManager() {
+    Navigator.push(
+        context, FluentPageRoute(builder: (context) => const ManagerPage()));
+  }
+
+  Widget _toManagerBtnBuilder() {
+    return GestureDetector(
+      child: Container(
+        color: Colors.purple,
+        child: const SizedBox(
+          height: 80,
+          width: double.infinity,
+          child: Center(
+            child: Text('toManager'),
+          ),
+        ),
+      ),
+      onTap: () => toManager(),
+    );
   }
 
   @override
@@ -55,19 +77,27 @@ class _InitializrPageState extends State<InitializrPage> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Container(
                         color: Colors.blue,
-                        child: Preview(),
+                        child: const Preview(),
                       ),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        color: Colors.purple,
-                        child: TripletEditor(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            const Expanded(
+                              flex: 1,
+                              child: TripletEditor(),
+                            ),
+                            _toManagerBtnBuilder(),
+                          ],
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               )
