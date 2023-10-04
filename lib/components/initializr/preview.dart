@@ -66,7 +66,9 @@ class _PreviewState extends State<Preview> {
           child: Padding(
             padding: const EdgeInsets.all(6),
             child: Container(
-              decoration: normalBoxDecoration,
+              decoration: normalBoxDecoration.copyWith(
+                border: normalBorder,
+              ),
               child: Column(
                 children: [
                   Expanded(
@@ -85,11 +87,13 @@ class _PreviewState extends State<Preview> {
         Expanded(
           flex: 2,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(6, 0, 6, 6),
+            padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return Container(
-                  decoration: normalBoxDecoration,
+                  decoration: normalBoxDecoration.copyWith(
+                    border: normalBorder,
+                  ),
                   child: const Center(
                     child: Text('this is Forced Graph'),
                   ),

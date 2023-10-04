@@ -10,3 +10,8 @@ final normalBoxDecoration = BoxDecoration(
   borderRadius: BorderRadius.circular(4),
   color: Colors.white,
 );
+
+final normalBorder = Border.all(
+  color: const Color.fromARGB(255, 216, 216, 216),
+  width: 0.7,
+);

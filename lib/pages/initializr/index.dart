@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/components/common/editor.dart';
+import 'package:neo_cat_flutter/components/common/top_bar.dart';
 import 'package:neo_cat_flutter/components/initializr/preview.dart';
 import 'package:neo_cat_flutter/model/graph_data_model.dart';
 import 'package:neo_cat_flutter/pages/manager/index.dart';
@@ -26,7 +27,27 @@ class _InitializrPageState extends State<InitializrPage> {
     logger.d(newModel);
   }
 
-  void toManager() {
+  Widget _editorBuilder() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 6, 6, 0),
+      child: Container(
+        decoration: normalBoxDecoration.copyWith(
+          border: normalBorder,
+        ),
+        child: Column(
+          children: [
+            const Expanded(
+              flex: 1,
+              child: TripletEditor(),
+            ),
+            _toManagerBtnBuilder(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _toManager() {
     Navigator.push(
         context, FluentPageRoute(builder: (context) => const ManagerPage()));
   }
@@ -43,69 +64,40 @@ class _InitializrPageState extends State<InitializrPage> {
           ),
         ),
       ),
-      onTap: () => toManager(),
+      onTap: () => _toManager(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    void toManager() {
-      Navigator.push(
-          context, FluentPageRoute(builder: (context) => const ManagerPage()));
-    }
-
     return ScaffoldPage(
       padding: EdgeInsets.zero,
       content: Container(
         color: FluentTheme.of(Navigator.of(context).context)
             .scaffoldBackgroundColor,
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                decoration: normalBoxDecoration,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+          child: Center(
+            child: Column(
+              children: [
+                const TopBar(),
+                Expanded(
+                  flex: 1,
                   child: Row(
                     children: [
-                      Button(
-                        child: const Text('Menu'),
-                        onPressed: () => {toManager()},
+                      const Expanded(
+                        flex: 3,
+                        child: Preview(),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: _editorBuilder(),
                       ),
                     ],
                   ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    const Expanded(
-                      flex: 3,
-                      child: Preview(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 6, 6, 6),
-                        child: Container(
-                          decoration: normalBoxDecoration,
-                          child: Column(
-                            children: [
-                              const Expanded(
-                                flex: 1,
-                                child: TripletEditor(),
-                              ),
-                              _toManagerBtnBuilder(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
