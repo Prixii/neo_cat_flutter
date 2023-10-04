@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/theme/common_theme.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-02 10
@@ -62,30 +63,39 @@ class _PreviewState extends State<Preview> {
       children: [
         Expanded(
           flex: 1,
-          child: Container(
-            color: Colors.yellow,
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: TextBox(
-                    maxLines: null,
-                    controller: rawTextController,
+          child: Padding(
+            padding: const EdgeInsets.all(6),
+            child: Container(
+              decoration: normalBoxDecoration,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: TextBox(
+                      maxLines: null,
+                      controller: rawTextController,
+                    ),
                   ),
-                ),
-                _btnGroupBuilder(),
-              ],
+                  _btnGroupBuilder(),
+                ],
+              ),
             ),
           ),
         ),
         Expanded(
           flex: 2,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return const Center(
-                child: Text('this is Forced Graph'),
-              );
-            },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(6, 0, 6, 6),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Container(
+                  decoration: normalBoxDecoration,
+                  child: const Center(
+                    child: Text('this is Forced Graph'),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],

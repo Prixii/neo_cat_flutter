@@ -14,7 +14,7 @@ class AttributeTileState extends State<AttributeTile> {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.all(4),
+      padding: EdgeInsets.fromLTRB(4, 12, 4, 0),
       child: Center(
         child: Row(
           children: [

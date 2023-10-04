@@ -5,6 +5,7 @@ import 'package:neo_cat_flutter/components/common/editor.dart';
 import 'package:neo_cat_flutter/components/initializr/preview.dart';
 import 'package:neo_cat_flutter/model/graph_data_model.dart';
 import 'package:neo_cat_flutter/pages/manager/index.dart';
+import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
 /// @author wang.jiaqi
@@ -33,7 +34,7 @@ class _InitializrPageState extends State<InitializrPage> {
   Widget _toManagerBtnBuilder() {
     return GestureDetector(
       child: Container(
-        color: Colors.purple,
+        decoration: normalBoxDecoration,
         child: const SizedBox(
           height: 80,
           width: double.infinity,
@@ -62,39 +63,42 @@ class _InitializrPageState extends State<InitializrPage> {
           child: Column(
             children: [
               Container(
-                color: Colors.orange,
-                child: Row(
-                  children: [
-                    Button(
-                      child: const Text('Menu'),
-                      onPressed: () => {toManager()},
-                    ),
-                  ],
+                decoration: normalBoxDecoration,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: Row(
+                    children: [
+                      Button(
+                        child: const Text('Menu'),
+                        onPressed: () => {toManager()},
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Expanded(
                 flex: 1,
                 child: Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       flex: 3,
-                      child: Container(
-                        color: Colors.blue,
-                        child: const Preview(),
-                      ),
+                      child: Preview(),
                     ),
                     Expanded(
                       flex: 1,
                       child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            const Expanded(
-                              flex: 1,
-                              child: TripletEditor(),
-                            ),
-                            _toManagerBtnBuilder(),
-                          ],
+                        padding: const EdgeInsets.fromLTRB(0, 6, 6, 6),
+                        child: Container(
+                          decoration: normalBoxDecoration,
+                          child: Column(
+                            children: [
+                              const Expanded(
+                                flex: 1,
+                                child: TripletEditor(),
+                              ),
+                              _toManagerBtnBuilder(),
+                            ],
+                          ),
                         ),
                       ),
                     ),
