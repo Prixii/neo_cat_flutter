@@ -9,7 +9,46 @@ class FunctionButtonGroup extends StatefulWidget {
 }
 
 class _FunctionButtonGroupState extends State<FunctionButtonGroup> {
+  final classViewBtn = const Icon(
+    FluentIcons.branch_commit,
+    size: 20,
+  );
+  final classViewBtnActive = Icon(
+    FluentIcons.branch_commit,
+    color: Colors.blue,
+    size: 20,
+  );
+  final relationViewBtn = const Icon(
+    FluentIcons.branch_fork2,
+    size: 20,
+  );
+  final relationViewBtnActive = Icon(
+    FluentIcons.branch_fork2,
+    color: Colors.blue,
+    size: 20,
+  );
+  final browserPaneBtn = const Icon(
+    FluentIcons.open_pane,
+    size: 20,
+  );
+  final browserPaneBtnActive = Icon(
+    FluentIcons.open_pane,
+    color: Colors.blue,
+    size: 20,
+  );
+  final editorPaneBtn = const Icon(
+    FluentIcons.open_pane_mirrored,
+    size: 20,
+  );
+  final editorPaneBtnActive = Icon(
+    FluentIcons.open_pane_mirrored,
+    color: Colors.blue,
+    size: 20,
+  );
+
   var currentViewMode = ViewMode.classMode;
+  var showBrowserPane = true;
+  var showEditorPane = true;
 
   void _switchViewMode() {
     switch (currentViewMode) {
@@ -34,6 +73,18 @@ class _FunctionButtonGroupState extends State<FunctionButtonGroup> {
     }
   }
 
+  void _swichBrowserPane() {
+    setState(() {
+      showBrowserPane = !showBrowserPane;
+    });
+  }
+
+  void _switchEditorPane() {
+    setState(() {
+      showEditorPane = !showEditorPane;
+    });
+  }
+
   Widget _modeBtnBuilder() {
     return Row(
       children: [
@@ -43,10 +94,9 @@ class _FunctionButtonGroupState extends State<FunctionButtonGroup> {
           useMousePosition: false,
           style: const TooltipThemeData(preferBelow: true),
           child: IconButton(
-            icon: const Icon(
-              FluentIcons.branch_commit,
-              size: 20,
-            ),
+            icon: currentViewMode == ViewMode.classMode
+                ? classViewBtnActive
+                : classViewBtn,
             onPressed: () => currentViewMode == ViewMode.classMode
                 ? null
                 : _switchViewMode(),
@@ -61,10 +111,9 @@ class _FunctionButtonGroupState extends State<FunctionButtonGroup> {
           useMousePosition: false,
           style: const TooltipThemeData(preferBelow: true),
           child: IconButton(
-            icon: const Icon(
-              FluentIcons.branch_fork2,
-              size: 20,
-            ),
+            icon: currentViewMode == ViewMode.relationMode
+                ? relationViewBtnActive
+                : relationViewBtn,
             onPressed: () => currentViewMode == ViewMode.relationMode
                 ? null
                 : _switchViewMode(),
@@ -84,13 +133,8 @@ class _FunctionButtonGroupState extends State<FunctionButtonGroup> {
           useMousePosition: false,
           style: const TooltipThemeData(preferBelow: true),
           child: IconButton(
-            icon: const Icon(
-              FluentIcons.open_pane,
-              size: 20,
-            ),
-            onPressed: () => currentViewMode == ViewMode.classMode
-                ? null
-                : _switchViewMode(),
+            icon: showBrowserPane ? browserPaneBtnActive : browserPaneBtn,
+            onPressed: () => _swichBrowserPane(),
           ),
         ),
         const SizedBox(
@@ -102,13 +146,8 @@ class _FunctionButtonGroupState extends State<FunctionButtonGroup> {
           useMousePosition: false,
           style: const TooltipThemeData(preferBelow: true),
           child: IconButton(
-            icon: const Icon(
-              FluentIcons.open_pane_mirrored,
-              size: 20,
-            ),
-            onPressed: () => currentViewMode == ViewMode.relationMode
-                ? null
-                : _switchViewMode(),
+            icon: showEditorPane ? editorPaneBtnActive : editorPaneBtn,
+            onPressed: () => _switchEditorPane(),
           ),
         ),
       ],

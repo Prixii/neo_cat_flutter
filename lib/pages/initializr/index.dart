@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/components/common/editor.dart';
-import 'package:neo_cat_flutter/components/common/top_bar.dart';
 import 'package:neo_cat_flutter/components/initializr/preview.dart';
 import 'package:neo_cat_flutter/model/graph_data_model.dart';
-import 'package:neo_cat_flutter/pages/manager/index.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
@@ -34,37 +32,8 @@ class _InitializrPageState extends State<InitializrPage> {
         decoration: normalBoxDecoration.copyWith(
           border: normalBorder,
         ),
-        child: Column(
-          children: [
-            const Expanded(
-              flex: 1,
-              child: TripletEditor(),
-            ),
-            _toManagerBtnBuilder(),
-          ],
-        ),
+        child: const TripletEditor(),
       ),
-    );
-  }
-
-  void _toManager() {
-    Navigator.push(
-        context, FluentPageRoute(builder: (context) => const ManagerPage()));
-  }
-
-  Widget _toManagerBtnBuilder() {
-    return GestureDetector(
-      child: Container(
-        decoration: normalBoxDecoration,
-        child: const SizedBox(
-          height: 80,
-          width: double.infinity,
-          child: Center(
-            child: Text('toManager'),
-          ),
-        ),
-      ),
-      onTap: () => _toManager(),
     );
   }
 
@@ -78,24 +47,16 @@ class _InitializrPageState extends State<InitializrPage> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
           child: Center(
-            child: Column(
+            child: Row(
               children: [
-                const TopBar(),
+                const Expanded(
+                  flex: 3,
+                  child: Preview(),
+                ),
                 Expanded(
                   flex: 1,
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        flex: 3,
-                        child: Preview(),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: _editorBuilder(),
-                      ),
-                    ],
-                  ),
-                )
+                  child: _editorBuilder(),
+                ),
               ],
             ),
           ),

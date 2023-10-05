@@ -1,6 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/components/common/editor.dart';
-import 'package:neo_cat_flutter/components/common/top_bar.dart';
 import 'package:neo_cat_flutter/components/manager/class_manager_view.dart';
 import 'package:neo_cat_flutter/components/manager/function_btn_group.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
@@ -18,10 +17,10 @@ class ManagerPage extends StatefulWidget {
 class _ManagerPageState extends State<ManagerPage> {
   Widget _classManagerBuilder() {
     return Padding(
-      padding: EdgeInsets.all(6),
+      padding: const EdgeInsets.all(6),
       child: ListView.builder(
         itemCount: 4,
-        itemBuilder: (BuildContext context, int index) => ClassManagerView(
+        itemBuilder: (BuildContext context, int index) => ClassManagerTile(
           className: 'class$index',
         ),
       ),
@@ -71,36 +70,29 @@ class _ManagerPageState extends State<ManagerPage> {
       content: Container(
         color: FluentTheme.of(Navigator.of(context).context)
             .scaffoldBackgroundColor,
-        child: Column(
-          children: [
-            const TopBar(),
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 6, 0, 12),
-                child: Row(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 6, 0, 12),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: _classManagerBuilder(),
+              ),
+              Expanded(
+                flex: 2,
+                child: Column(
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: _classManagerBuilder(),
-                    ),
-                    Expanded(
-                        flex: 2,
-                        child: Column(
-                          children: [
-                            const FunctionButtonGroup(),
-                            _relationChartBuilder(),
-                          ],
-                        )),
-                    Expanded(
-                      flex: 1,
-                      child: _editorBuilder(),
-                    ),
+                    const FunctionButtonGroup(),
+                    _relationChartBuilder(),
                   ],
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                flex: 1,
+                child: _editorBuilder(),
+              ),
+            ],
+          ),
         ),
       ),
     );

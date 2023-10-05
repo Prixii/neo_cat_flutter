@@ -4,17 +4,17 @@ import 'package:neo_cat_flutter/components/manager/triplet_tile.dart';
 /// @author wang.jiaqi
 /// @date 2023-10-04 09
 
-class ClassManagerView extends StatefulWidget {
-  const ClassManagerView({super.key, required this.className});
+class ClassManagerTile extends StatefulWidget {
+  const ClassManagerTile({super.key, required this.className});
 
   final String className;
 
   @override
-  State<ClassManagerView> createState() => _ClassManagerViewState();
+  State<ClassManagerTile> createState() => _ClassManagerTileState();
 }
 
-class _ClassManagerViewState extends State<ClassManagerView> {
-  var isVisible = false;
+class _ClassManagerTileState extends State<ClassManagerTile> {
+  var isVisible = true;
 
   Widget _nodeListBuilder() {
     return ListView.builder(

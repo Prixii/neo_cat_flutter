@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/pages/initializr/index.dart';
+import 'package:neo_cat_flutter/pages/main_navigator.dart';
 
 import '../../utils/common_util.dart';
 
@@ -14,11 +14,12 @@ class OpenProjectCard extends StatelessWidget {
     void toInitializr(String? rawData) {
       Navigator.push(
         context,
-        FluentPageRoute(
-          builder: (context) => InitializrPage(
-            rawData: rawData,
-          ),
-        ),
+        // FluentPageRoute(
+        //   builder: (context) => InitializrPage(
+        //     rawData: rawData,
+        //   ),
+        // ),
+        FluentPageRoute(builder: (context) => const MainNavigator()),
       );
     }
 

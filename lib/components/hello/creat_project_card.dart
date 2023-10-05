@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/pages/initializr/index.dart';
+import 'package:neo_cat_flutter/pages/main_navigator.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-30 21
@@ -10,8 +10,12 @@ class CreateProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void toInitializr() {
-      Navigator.push(context,
-          FluentPageRoute(builder: (context) => const InitializrPage()));
+      Navigator.push(
+        context,
+        FluentPageRoute(
+          builder: (context) => const MainNavigator(),
+        ),
+      );
     }
 
     return Expanded(

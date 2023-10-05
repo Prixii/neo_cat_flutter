@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:fluent_ui/fluent_ui.dart';
 
+/// @author wang.jiaqi
+/// @date 2023-10-02 12
+
 class CirclePainter extends CustomPainter {
   Color? color;
   Offset? offset;
