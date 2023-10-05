@@ -1,4 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/global/bloc/relation_chart_data_bloc.dart';
 import 'package:neo_cat_flutter/pages/save/index.dart';
 
 import 'initializr/index.dart';
@@ -19,16 +21,19 @@ class _MainNavigatorState extends State<MainNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationView(
-      pane: NavigationPane(
-        selected: topIndex,
-        onChanged: (index) => setState(
-          () {
-            topIndex = index;
-          },
+    return BlocProvider(
+      create: (context) => RelationChartDataBloc(),
+      child: NavigationView(
+        pane: NavigationPane(
+          selected: topIndex,
+          onChanged: (index) => setState(
+            () {
+              topIndex = index;
+            },
+          ),
+          displayMode: PaneDisplayMode.top,
+          items: pageItems,
         ),
-        displayMode: PaneDisplayMode.top,
-        items: pageItems,
       ),
     );
   }

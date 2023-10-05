@@ -1,6 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/global/bloc/relation_chart_data_bloc.dart';
+import 'package:neo_cat_flutter/bloc/global/event/relation_chart_data_event.dart';
+import 'package:neo_cat_flutter/bloc/global/state/relation_chart_data_state.dart';
 import 'package:neo_cat_flutter/components/common/attr_tile.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/types/node.dart';
+import 'package:neo_cat_flutter/types/relation.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 /// @author wang.jiaqi
@@ -14,6 +20,33 @@ class TripletEditor extends StatefulWidget {
 }
 
 class _TripletEditorState extends State<TripletEditor> {
+  String _getSourceNodeName() {
+    BaseNode? sourceNode =
+        context.read<RelationChartDataBloc>().state.tripletDataModel.sourceNode;
+    if (sourceNode != null) {
+      return sourceNode.name;
+    }
+    return '待选择';
+  }
+
+  String _getEndNodeName() {
+    BaseNode? endNode =
+        context.read<RelationChartDataBloc>().state.tripletDataModel.endNode;
+    if (endNode != null) {
+      return endNode.name;
+    }
+    return '待选择';
+  }
+
+  String _getRelationName() {
+    BaseRelation? relation =
+        context.read<RelationChartDataBloc>().state.tripletDataModel.relation;
+    if (relation != null) {
+      return relation.name;
+    }
+    return '待选择';
+  }
+
   Widget _tripletEditorBuilder() {
     return SizedBox(
       height: 80,
@@ -23,20 +56,28 @@ class _TripletEditorState extends State<TripletEditor> {
           children: [
             Expanded(
               flex: 1,
-              child: Stack(
-                children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      return CustomPaint(
-                        size: Size(constraints.maxWidth, constraints.maxHeight),
-                        painter: CirclePainter(),
-                      );
-                    },
-                  ),
-                  const Center(
-                    child: Text('name'),
-                  ),
-                ],
+              child: GestureDetector(
+                onSecondaryTap: () => {
+                  context
+                      .read<RelationChartDataBloc>()
+                      .add(const RemoveNodeFromTripletEvent(nodeIndex: 0))
+                },
+                child: Stack(
+                  children: [
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return CustomPaint(
+                          size:
+                              Size(constraints.maxWidth, constraints.maxHeight),
+                          painter: CirclePainter(),
+                        );
+                      },
+                    ),
+                    Center(
+                      child: Text(_getSourceNodeName()),
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -58,10 +99,10 @@ class _TripletEditorState extends State<TripletEditor> {
                           flex: 1,
                           child: Container(),
                         ),
-                        const Expanded(
+                        Expanded(
                           flex: 1,
                           child: Center(
-                            child: Text('relation'),
+                            child: Text(_getRelationName()),
                           ),
                         ),
                         Expanded(
@@ -74,20 +115,28 @@ class _TripletEditorState extends State<TripletEditor> {
                 )),
             Expanded(
               flex: 1,
-              child: Stack(
-                children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      return CustomPaint(
-                        size: Size(constraints.maxWidth, constraints.maxHeight),
-                        painter: CirclePainter(),
-                      );
-                    },
-                  ),
-                  const Center(
-                    child: Text('name'),
-                  ),
-                ],
+              child: GestureDetector(
+                onSecondaryTap: () => {
+                  context
+                      .read<RelationChartDataBloc>()
+                      .add(const RemoveNodeFromTripletEvent(nodeIndex: 1))
+                },
+                child: Stack(
+                  children: [
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return CustomPaint(
+                          size:
+                              Size(constraints.maxWidth, constraints.maxHeight),
+                          painter: CirclePainter(),
+                        );
+                      },
+                    ),
+                    Center(
+                      child: Text(_getEndNodeName()),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -115,31 +164,41 @@ class _TripletEditorState extends State<TripletEditor> {
         height: 40,
         width: double.infinity,
         child: Button(
-            child: const Center(
-              child: Text(
-                'confirm',
-              ),
+          child: const Center(
+            child: Text(
+              'confirm',
             ),
-            onPressed: () => {}),
+          ),
+          onPressed: () => {
+            context.read<RelationChartDataBloc>().add(
+                  ChooseNodeEvent(
+                    // TODO 选择节点
+                    node: BaseNode(name: 'newNode', id: 'a', className: 'cls'),
+                  ),
+                ),
+          },
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _tripletEditorBuilder(),
-        const Divider(),
-        Expanded(
-          child: Container(
-            decoration: normalBoxDecoration,
-            child: _attrListBuilder(),
+    return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+        builder: (context, RelationChartDataState state) {
+      return Column(
+        children: [
+          _tripletEditorBuilder(),
+          const Divider(),
+          Expanded(
+            child: Container(
+              decoration: normalBoxDecoration,
+              child: _attrListBuilder(),
+            ),
           ),
-        ),
-        _confirmBtnBuilder(),
-        const Divider(),
-      ],
-    );
+          _confirmBtnBuilder(),
+        ],
+      );
+    });
   }
 }
