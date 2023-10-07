@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/global/event/relation_chart_data_event.dart';
+import 'package:neo_cat_flutter/bloc/global/model/relation_chart_data_model.dart';
 import 'package:neo_cat_flutter/bloc/global/model/triplet_data_model.dart';
 import 'package:neo_cat_flutter/bloc/global/state/relation_chart_data_state.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
@@ -12,6 +15,9 @@ class RelationChartDataBloc
     );
     on<RemoveNodeFromTripletEvent>(
       (event, emit) => emit(_handleRemoveNodeEvent(event)),
+    );
+    on<GenerateGraphEvent>(
+      (event, emit) => emit(_handleGenerateGraphDataEvent(event)),
     );
   }
 
@@ -37,5 +43,20 @@ class RelationChartDataBloc
     TripletDataModel newTripletModel =
         oldTripletModel.remove(nodeIndex: event.nodeIndex);
     return state.copyWith(tripletDataModel: newTripletModel);
+  }
+
+  RelationChartDataState _handleGenerateGraphDataEvent(
+      GenerateGraphEvent evnet) {
+    try {
+      final chartDataModel =
+          RelationChartDataModel.fromJson(jsonDecode(evnet.rawData));
+      logger.i('[raw data parsesucceed]');
+      return state.copyWith(
+        chartDataModel: chartDataModel,
+      );
+    } catch (e) {
+      logger.e('[raw data parse failed] ${e.toString()}');
+    }
+    return state;
   }
 }

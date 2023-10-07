@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/global/bloc/relation_chart_data_bloc.dart';
 import 'package:neo_cat_flutter/bloc/global/event/relation_chart_data_event.dart';
 import 'package:neo_cat_flutter/bloc/global/state/relation_chart_data_state.dart';
-import 'package:neo_cat_flutter/components/common/attr_tile.dart';
+import 'package:neo_cat_flutter/components/common/property_tile.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
@@ -145,13 +145,13 @@ class _TripletEditorState extends State<TripletEditor> {
     );
   }
 
-  Widget _attrListBuilder() {
+  Widget _propertiesListBuilder() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
       child: ListView.builder(
         itemCount: 4,
         itemBuilder: (BuildContext context, int index) {
-          return const AttributeTile();
+          return const PropertyTile();
         },
       ),
     );
@@ -185,20 +185,21 @@ class _TripletEditorState extends State<TripletEditor> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-        builder: (context, RelationChartDataState state) {
-      return Column(
-        children: [
-          _tripletEditorBuilder(),
-          const Divider(),
-          Expanded(
-            child: Container(
-              decoration: normalBoxDecoration,
-              child: _attrListBuilder(),
+      builder: (context, RelationChartDataState state) {
+        return Column(
+          children: [
+            _tripletEditorBuilder(),
+            const Divider(),
+            Expanded(
+              child: Container(
+                decoration: normalBoxDecoration,
+                child: _propertiesListBuilder(),
+              ),
             ),
-          ),
-          _confirmBtnBuilder(),
-        ],
-      );
-    });
+            _confirmBtnBuilder(),
+          ],
+        );
+      },
+    );
   }
 }

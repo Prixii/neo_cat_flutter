@@ -18,9 +18,10 @@ class RelationChartDataState extends Equatable {
       : chartDataModel = RelationChartDataModel.initial(),
         tripletDataModel = const TripletDataModel.initial();
 
-  RelationChartDataState copyWith(
-      {RelationChartDataModel? chartDataModel,
-      TripletDataModel? tripletDataModel}) {
+  RelationChartDataState copyWith({
+    RelationChartDataModel? chartDataModel,
+    TripletDataModel? tripletDataModel,
+  }) {
     return RelationChartDataState(
       chartDataModel: chartDataModel ?? this.chartDataModel,
       tripletDataModel: tripletDataModel ?? this.tripletDataModel,

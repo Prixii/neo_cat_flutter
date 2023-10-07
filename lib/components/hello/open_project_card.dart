@@ -14,12 +14,11 @@ class OpenProjectCard extends StatelessWidget {
     void toInitializr(String? rawData) {
       Navigator.push(
         context,
-        // FluentPageRoute(
-        //   builder: (context) => InitializrPage(
-        //     rawData: rawData,
-        //   ),
-        // ),
-        FluentPageRoute(builder: (context) => const MainNavigator()),
+        FluentPageRoute(
+          builder: (context) => MainNavigator(
+            rawData: rawData,
+          ),
+        ),
       );
     }
 
@@ -27,7 +26,6 @@ class OpenProjectCard extends StatelessWidget {
       String? filePath = await openFile(['json']);
       if (filePath != null) {
         String? content = await readFile(filePath);
-        logger.d('[content] $content');
         if (content != null) {
           final rawData = await readFile(filePath);
           toInitializr(rawData);

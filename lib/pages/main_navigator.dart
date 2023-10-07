@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/global/bloc/relation_chart_data_bloc.dart';
+import 'package:neo_cat_flutter/bloc/global/event/relation_chart_data_event.dart';
 import 'package:neo_cat_flutter/pages/save/index.dart';
 
 import 'initializr/index.dart';
@@ -10,7 +11,8 @@ import 'manager/index.dart';
 /// @date 2023-10-04 09
 
 class MainNavigator extends StatefulWidget {
-  const MainNavigator({super.key});
+  const MainNavigator({super.key, this.rawData});
+  final String? rawData;
 
   @override
   State<MainNavigator> createState() => _MainNavigatorState();
@@ -18,11 +20,22 @@ class MainNavigator extends StatefulWidget {
 
 class _MainNavigatorState extends State<MainNavigator> {
   int topIndex = 0;
+  final _relationChartDataBloc = RelationChartDataBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.rawData != null) {
+      _relationChartDataBloc.add(
+        GenerateGraphEvent(rawData: widget.rawData!),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RelationChartDataBloc(),
+      create: (context) => _relationChartDataBloc,
       child: NavigationView(
         pane: NavigationPane(
           selected: topIndex,

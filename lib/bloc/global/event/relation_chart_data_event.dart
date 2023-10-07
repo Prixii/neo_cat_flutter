@@ -56,3 +56,33 @@ class UpdateTripletEvent extends RelationChartDataEvent {
   @override
   List<Object?> get props => [sourceNode, relation, endNode];
 }
+
+class GenerateGraphEvent extends RelationChartDataEvent {
+  final String rawData;
+
+  const GenerateGraphEvent({required this.rawData});
+
+  @override
+  List<Object?> get props => [rawData];
+}
+
+class UpdateClassNameEvent extends RelationChartDataEvent {
+  final String classId;
+  final String className;
+
+  const UpdateClassNameEvent({required this.classId, required this.className});
+
+  @override
+  List<Object?> get props => [classId, className];
+}
+
+class UpdateClassPropertyEvent extends RelationChartDataEvent {
+  final String classId;
+  final List<String> properties;
+
+  const UpdateClassPropertyEvent(
+      {required this.classId, required this.properties});
+
+  @override
+  List<Object?> get props => [classId, properties];
+}
