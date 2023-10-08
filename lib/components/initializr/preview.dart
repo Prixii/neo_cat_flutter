@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/components/common/relation_chart.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
 /// @author wang.jiaqi
@@ -94,8 +95,9 @@ class _PreviewState extends State<Preview> {
                   decoration: normalBoxDecoration.copyWith(
                     border: normalBorder,
                   ),
-                  child: const Center(
-                    child: Text('this is Forced Graph'),
+                  child: RelationChart(
+                    width: constraints.maxWidth,
+                    height: constraints.maxHeight,
                   ),
                 );
               },

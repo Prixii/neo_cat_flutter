@@ -1,8 +1,13 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/components/common/editor.dart';
+import 'package:neo_cat_flutter/components/common/relation_chart.dart';
 import 'package:neo_cat_flutter/components/manager/class_manager_view.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/manager_view_mode.dart';
+
+import '../../bloc/global/bloc/relation_chart_data_bloc.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-29 11
@@ -18,6 +23,17 @@ class _ManagerPageState extends State<ManagerPage> {
   bool isBrowserPaneVisible = true;
   bool isEditorPaneVisible = true;
   int centerFlexWeight = 2;
+  late List<ClassData> classDataList;
+
+  @override
+  void initState() {
+    super.initState();
+    classDataList = context
+        .read<RelationChartDataBloc>()
+        .state
+        .chartDataModel
+        .classDataList;
+  }
 
   void _switchViewMode() {
     switch (currentViewMode) {
@@ -164,9 +180,9 @@ class _ManagerPageState extends State<ManagerPage> {
     return Padding(
       padding: const EdgeInsets.all(6),
       child: ListView.builder(
-        itemCount: 4,
+        itemCount: classDataList.length,
         itemBuilder: (BuildContext context, int index) => ClassManagerTile(
-          className: 'class$index',
+          classData: classDataList[index],
         ),
       ),
     );
@@ -200,8 +216,11 @@ class _ManagerPageState extends State<ManagerPage> {
           decoration: normalBoxDecoration.copyWith(
             border: normalBorder,
           ),
-          child: const Center(
-            child: Text('你是一个一个一个关系图啊啊啊啊啊啊'),
+          child: LayoutBuilder(
+            builder: (context, constraints) => RelationChart(
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+            ),
           ),
         ),
       ),

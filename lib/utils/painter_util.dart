@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-02 12
@@ -56,5 +57,49 @@ class ArrowPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
+  }
+}
+
+/// 判定 [firstCircle] 和 [secondCircle] 两个节点是否碰撞
+bool isCircleCollision(CirclePainter firstCircle, CirclePainter secondCircle) {
+  if (firstCircle.offset != null && secondCircle.offset != null) {
+    var xDelta = firstCircle.offset!.dx - secondCircle.offset!.dx;
+    var yDelta = firstCircle.offset!.dy - secondCircle.offset!.dy;
+    return (sqrt(xDelta * xDelta + yDelta * yDelta) <
+        ((firstCircle.radius ?? 30) + (secondCircle.radius ?? 30)));
+  }
+  return false;
+}
+
+/// 计算位于 ([xCoordinate], [yCoordinate]) 的节点的周边节点的位置
+/// 其中, 该节点周围共有 [nodeCount] 个节点
+///
+/// 如果不提供源节点，则默认以组件中心为轴
+Stream<(double x, double y)> calcPointCoordinates({
+  required int nodeCount,
+  double? xCoordinate,
+  double? yCoordinate,
+}) async* {
+  var angle = 360 / nodeCount;
+  for (var index = 0; index < nodeCount; index++) {
+    var xCoordinateTarget =
+        (xCoordinate ?? 0) + cos((pi * 2) / 360 * angle * index) * 120;
+    var yCoordinateTarget =
+        (yCoordinate ?? 0) + sin((pi * 2) / 360 * angle * index) * 120;
+    yield (xCoordinateTarget, yCoordinateTarget);
+  }
+}
+
+void isTapInNode(
+    {required double xCooridnate,
+    required double yCoordinate,
+    required List<(double, double)> positionList}) {
+  for (var position in positionList) {
+    var xDelta = xCooridnate - position.$1;
+    var yDelta = yCoordinate - position.$2;
+    if (sqrt(xDelta * xDelta + yDelta * yDelta) < 30) {
+      logger.d('[in]!');
+      break;
+    }
   }
 }
