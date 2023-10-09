@@ -1,3 +1,4 @@
+import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 
@@ -30,4 +31,13 @@ class TripletEditorState {
         relation: relation ?? this.relation,
         endNode: endNode ?? this.endNode,
       );
+  TripletEditorState removeSourceNode() {
+    return TripletEditorState(
+        sourceNode: null, relation: relation, endNode: endNode);
+  }
+
+  TripletEditorState removeEndNode() {
+    return TripletEditorState(
+        sourceNode: sourceNode, relation: relation, endNode: null);
+  }
 }

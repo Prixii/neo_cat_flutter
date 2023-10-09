@@ -27,6 +27,19 @@ class BaseRelation {
       required this.startNodeId,
       required this.endNodeId});
 
+  BaseRelation copyWith({
+    String? id,
+    String? name,
+    String? startNodeId,
+    String? endNodeId,
+  }) =>
+      BaseRelation(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        startNodeId: startNodeId ?? this.startNodeId,
+        endNodeId: endNodeId ?? this.endNodeId,
+      );
+
   factory BaseRelation.fromJson(Map<String, dynamic> json) =>
       _$BaseRelationFromJson(json);
 

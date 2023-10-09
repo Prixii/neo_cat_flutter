@@ -1,3 +1,4 @@
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/relation_chart_data_model.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 
@@ -21,6 +22,32 @@ class ClassBrowserState {
       : nodeToClassMap = <ClassName, List<BaseNode>>{},
         classVisibilityMap = <ClassName, bool>{},
         classList = <ClassData>[];
+
+  factory ClassBrowserState.fromRelationChartData(
+      RelationChartDataModel model) {
+    var classList = model.classDataList;
+    var nodeList = model.nodeList;
+    var classVisibilityMap = <ClassName, bool>{};
+    var nodeToClassMap = <ClassName, List<BaseNode>>{};
+
+    for (var classData in classList) {
+      classVisibilityMap[classData.name] = true;
+      nodeToClassMap[classData.name] = [];
+    }
+
+    for (var node in nodeList) {
+      var newList = nodeToClassMap[node.className];
+      if (newList != null) {
+        newList.add(node);
+        nodeToClassMap[node.className] = newList;
+      }
+    }
+    return ClassBrowserState(
+      nodeToClassMap: nodeToClassMap,
+      classVisibilityMap: classVisibilityMap,
+      classList: classList,
+    );
+  }
 
   ClassBrowserState copyWith(
           {Map<ClassName, List<BaseNode>>? nodeToClassMap,

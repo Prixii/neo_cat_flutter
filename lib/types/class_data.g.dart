@@ -7,7 +7,7 @@ part of 'class_data.dart';
 // **************************************************************************
 
 ClassData _$ClassDataFromJson(Map<String, dynamic> json) => ClassData(
-      name: json['name'] as String?,
+      name: json['name'] as String,
       properties: (json['properties'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),

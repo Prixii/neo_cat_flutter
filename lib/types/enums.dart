@@ -5,3 +5,8 @@ enum ViewMode {
   classMode,
   relationMode,
 }
+
+enum TripletPosition {
+  source,
+  end,
+}

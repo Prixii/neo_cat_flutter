@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/event.dart';
 
@@ -8,5 +10,14 @@ import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 
 class RelationChartDataBloc
     extends Bloc<RelationChartDataEvent, RelationChartDataState> {
-  RelationChartDataBloc() : super(RelationChartDataState.initial()) {}
+  RelationChartDataBloc() : super(RelationChartDataState.initial()) {
+    on<InitRelationChartData>(
+        (event, emit) => emit(_handleInitRelationChartData(event)));
+  }
+
+  RelationChartDataState _handleInitRelationChartData(
+    InitRelationChartData event,
+  ) {
+    return RelationChartDataState.fromJson(jsonDecode(event.rawData));
+  }
 }
