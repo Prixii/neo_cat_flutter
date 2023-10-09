@@ -90,6 +90,9 @@ Stream<(double x, double y)> calcPointCoordinates({
   }
 }
 
+/// 发生在 [xCooridnate], [yCoordinate] 上的点击事件, 是否点击到了节点上
+///
+/// TODO 将 [positionList] 使用BloC控制
 void isTapInNode(
     {required double xCooridnate,
     required double yCoordinate,

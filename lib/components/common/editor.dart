@@ -2,12 +2,13 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/global/bloc/relation_chart_data_bloc.dart';
 import 'package:neo_cat_flutter/bloc/global/event/relation_chart_data_event.dart';
-import 'package:neo_cat_flutter/bloc/global/state/relation_chart_data_state.dart';
 import 'package:neo_cat_flutter/components/common/property_tile.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
+
+import '../../bloc/global/state/relation_chart_data_state.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-29 11

@@ -5,7 +5,7 @@ import 'package:neo_cat_flutter/components/common/relation_chart.dart';
 import 'package:neo_cat_flutter/components/manager/class_manager_view.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
-import 'package:neo_cat_flutter/types/manager_view_mode.dart';
+import 'package:neo_cat_flutter/types/enums.dart';
 
 import '../../bloc/global/bloc/relation_chart_data_bloc.dart';
 
