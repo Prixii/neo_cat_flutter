@@ -1,9 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/bloc/global/bloc/relation_chart_data_bloc.dart';
-import 'package:neo_cat_flutter/bloc/global/event/relation_chart_data_event.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/event.dart';
 import 'package:neo_cat_flutter/pages/save/index.dart';
 
+import '../bloc/relation_chart_data_bloc/bloc.dart';
 import 'initializr/index.dart';
 import 'manager/index.dart';
 
@@ -27,7 +27,7 @@ class _MainNavigatorState extends State<MainNavigator> {
     super.initState();
     if (widget.rawData != null) {
       _relationChartDataBloc.add(
-        GenerateGraphEvent(rawData: widget.rawData!),
+        InitRelationChartData(rawData: widget.rawData!),
       );
     }
   }

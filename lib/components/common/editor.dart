@@ -1,14 +1,13 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/bloc/global/bloc/relation_chart_data_bloc.dart';
-import 'package:neo_cat_flutter/bloc/global/event/relation_chart_data_event.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/components/common/property_tile.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
-
-import '../../bloc/global/state/relation_chart_data_state.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-29 11
@@ -21,9 +20,16 @@ class TripletEditor extends StatefulWidget {
 }
 
 class _TripletEditorState extends State<TripletEditor> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  TripletEditorBloc _getTripletEditorBloc() =>
+      context.read<TripletEditorBloc>();
+
   String _getSourceNodeName() {
-    BaseNode? sourceNode =
-        context.read<RelationChartDataBloc>().state.tripletDataModel.sourceNode;
+    BaseNode? sourceNode = _getTripletEditorBloc().state.sourceNode;
     if (sourceNode != null) {
       return sourceNode.name;
     }
@@ -31,8 +37,7 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   String _getEndNodeName() {
-    BaseNode? endNode =
-        context.read<RelationChartDataBloc>().state.tripletDataModel.endNode;
+    BaseNode? endNode = _getTripletEditorBloc().state.endNode;
     if (endNode != null) {
       return endNode.name;
     }
@@ -40,8 +45,7 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   String _getRelationName() {
-    BaseRelation? relation =
-        context.read<RelationChartDataBloc>().state.tripletDataModel.relation;
+    BaseRelation? relation = _getTripletEditorBloc().state.relation;
     if (relation != null) {
       return relation.name;
     }
@@ -58,11 +62,8 @@ class _TripletEditorState extends State<TripletEditor> {
             Expanded(
               flex: 1,
               child: GestureDetector(
-                onSecondaryTap: () => {
-                  context
-                      .read<RelationChartDataBloc>()
-                      .add(const RemoveNodeFromTripletEvent(nodeIndex: 0))
-                },
+                onSecondaryTap: () => _getTripletEditorBloc()
+                    .add(RemoveNode(position: TripletPosition.source)),
                 child: Stack(
                   children: [
                     LayoutBuilder(
@@ -117,11 +118,8 @@ class _TripletEditorState extends State<TripletEditor> {
             Expanded(
               flex: 1,
               child: GestureDetector(
-                onSecondaryTap: () => {
-                  context
-                      .read<RelationChartDataBloc>()
-                      .add(const RemoveNodeFromTripletEvent(nodeIndex: 1))
-                },
+                onSecondaryTap: () => _getTripletEditorBloc()
+                    .add(RemoveNode(position: TripletPosition.end)),
                 child: Stack(
                   children: [
                     LayoutBuilder(
@@ -171,12 +169,7 @@ class _TripletEditorState extends State<TripletEditor> {
             ),
           ),
           onPressed: () => {
-            context.read<RelationChartDataBloc>().add(
-                  ChooseNodeEvent(
-                    // TODO 选择节点
-                    node: BaseNode(name: 'newNode', id: 'a', className: 'cls'),
-                  ),
-                ),
+            // TODO 提交实现
           },
         ),
       ),
@@ -185,22 +178,18 @@ class _TripletEditorState extends State<TripletEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-      builder: (context, RelationChartDataState state) {
-        return Column(
-          children: [
-            _tripletEditorBuilder(),
-            const Divider(),
-            Expanded(
-              child: Container(
-                decoration: normalBoxDecoration,
-                child: _propertiesListBuilder(),
-              ),
-            ),
-            _confirmBtnBuilder(),
-          ],
-        );
-      },
+    return Column(
+      children: [
+        _tripletEditorBuilder(),
+        const Divider(),
+        Expanded(
+          child: Container(
+            decoration: normalBoxDecoration,
+            child: _propertiesListBuilder(),
+          ),
+        ),
+        _confirmBtnBuilder(),
+      ],
     );
   }
 }

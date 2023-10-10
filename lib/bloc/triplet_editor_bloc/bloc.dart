@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/bloc/global/bloc/relation_chart_data_bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
+
+import '../relation_chart_data_bloc/bloc.dart';
 
 class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   final RelationChartDataBloc dataBloc;
@@ -51,7 +52,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   }
 
   BaseRelation? getRelation() {
-    var relationList = dataBloc.state.chartDataModel.relationList;
+    var relationList = dataBloc.state.relationChartData.relationList;
     logger.d(relationList);
   }
 }

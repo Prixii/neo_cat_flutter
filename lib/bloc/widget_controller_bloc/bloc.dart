@@ -21,11 +21,29 @@ class WidgetControllerBloc
 
   WidgetControllerState _handleSetIsBrowserVisible(
       SetIsBrowserPaneVisible event) {
-    return state.copyWith(isBrowserPaneVisible: event.isVisible);
+    var newFlexWeight = state.centerFlexWeight;
+    if (state.isBrowserPaneVisible) {
+      newFlexWeight += 1;
+    } else {
+      newFlexWeight -= 1;
+    }
+    return state.copyWith(
+      isBrowserPaneVisible: !state.isBrowserPaneVisible,
+      centerFlexWeight: newFlexWeight,
+    );
   }
 
   WidgetControllerState _handleSetIsEditorVisible(
       SetIsEditorPaneVisible event) {
-    return state.copyWith(isEditorPaneVisible: event.isVisible);
+    var newFlexWeight = state.centerFlexWeight;
+    if (state.isEditorPaneVisible) {
+      newFlexWeight += 1;
+    } else {
+      newFlexWeight -= 1;
+    }
+    return state.copyWith(
+      isBrowserPaneVisible: !state.isEditorPaneVisible,
+      centerFlexWeight: newFlexWeight,
+    );
   }
 }

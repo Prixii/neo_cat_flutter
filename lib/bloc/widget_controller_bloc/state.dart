@@ -7,26 +7,31 @@ class WidgetControllerState {
   final ViewMode viewMode;
   final bool isBrowserPaneVisible;
   final bool isEditorPaneVisible;
+  final int centerFlexWeight;
 
   WidgetControllerState({
     required this.viewMode,
     required this.isBrowserPaneVisible,
     required this.isEditorPaneVisible,
+    required this.centerFlexWeight,
   });
 
   WidgetControllerState.initial()
       : viewMode = ViewMode.classMode,
         isBrowserPaneVisible = true,
-        isEditorPaneVisible = true;
+        isEditorPaneVisible = true,
+        centerFlexWeight = 2;
 
   WidgetControllerState copyWith({
     ViewMode? viewMode,
     bool? isBrowserPaneVisible,
     bool? isEditorPaneVisible,
+    int? centerFlexWeight,
   }) =>
       WidgetControllerState(
         viewMode: viewMode ?? this.viewMode,
         isBrowserPaneVisible: isBrowserPaneVisible ?? this.isBrowserPaneVisible,
         isEditorPaneVisible: isEditorPaneVisible ?? this.isEditorPaneVisible,
+        centerFlexWeight: centerFlexWeight ?? this.centerFlexWeight,
       );
 }

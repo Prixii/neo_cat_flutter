@@ -16,14 +16,10 @@ class SetViewMode extends WidgetControllerEvent {
 
 /// 设置浏览界面BrowseerPane的可见性为 [isVisible]
 class SetIsBrowserPaneVisible extends WidgetControllerEvent {
-  final bool isVisible;
-
-  SetIsBrowserPaneVisible({required this.isVisible});
+  SetIsBrowserPaneVisible();
 }
 
 /// 设置编辑界面EditorPane的可见性为 [isVisible]
 class SetIsEditorPaneVisible extends WidgetControllerEvent {
-  final bool isVisible;
-
-  SetIsEditorPaneVisible({required this.isVisible});
+  SetIsEditorPaneVisible();
 }
