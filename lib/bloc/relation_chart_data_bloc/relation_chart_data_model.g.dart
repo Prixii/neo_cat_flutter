@@ -6,9 +6,9 @@ part of 'relation_chart_data_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RelationChartDataModel _$RelationChartDataModelFromJson(
+_$RelationChartDataModelImpl _$$RelationChartDataModelImplFromJson(
         Map<String, dynamic> json) =>
-    RelationChartDataModel(
+    _$RelationChartDataModelImpl(
       nodeList: (json['nodeList'] as List<dynamic>)
           .map((e) => Node.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -20,8 +20,8 @@ RelationChartDataModel _$RelationChartDataModelFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$RelationChartDataModelToJson(
-        RelationChartDataModel instance) =>
+Map<String, dynamic> _$$RelationChartDataModelImplToJson(
+        _$RelationChartDataModelImpl instance) =>
     <String, dynamic>{
       'nodeList': instance.nodeList,
       'relationList': instance.relationList,

@@ -1,44 +1,28 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 
 part 'relation_chart_data_model.g.dart';
+part 'relation_chart_data_model.freezed.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-05 19
 
-@JsonSerializable()
-class RelationChartDataModel extends Equatable {
-  final List<Node> nodeList;
-  final List<Relation> relationList;
-  final List<ClassData> classDataList;
-
-  const RelationChartDataModel(
-      {required this.nodeList,
-      required this.relationList,
-      required this.classDataList});
-
-  RelationChartDataModel.initial()
-      : nodeList = [],
-        relationList = [],
-        classDataList = <ClassData>[];
-
-  RelationChartDataModel copyWith(List<Node>? nodeList,
-      List<Relation>? relationList, List<ClassData>? classDataList) {
-    return RelationChartDataModel(
-      nodeList: nodeList ?? this.nodeList,
-      relationList: relationList ?? this.relationList,
-      classDataList: classDataList ?? this.classDataList,
-    );
-  }
+@freezed
+class RelationChartDataModel with _$RelationChartDataModel {
+  const factory RelationChartDataModel({
+    required List<Node> nodeList,
+    required List<Relation> relationList,
+    required List<ClassData> classDataList,
+  }) = _RelationChartDataModel;
 
   factory RelationChartDataModel.fromJson(Map<String, dynamic> json) =>
       _$RelationChartDataModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RelationChartDataModelToJson(this);
-
-  @override
-  List<Object?> get props => [nodeList, relationList];
+  factory RelationChartDataModel.initial() => const RelationChartDataModel(
+        nodeList: [],
+        relationList: [],
+        classDataList: <ClassData>[],
+      );
 }

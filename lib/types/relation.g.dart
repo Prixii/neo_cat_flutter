@@ -6,14 +6,16 @@ part of 'relation.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Relation _$RelationFromJson(Map<String, dynamic> json) => Relation(
+_$RelationImpl _$$RelationImplFromJson(Map<String, dynamic> json) =>
+    _$RelationImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       sourceNodeId: json['sourceNodeId'] as String,
       endNodeId: json['endNodeId'] as String,
     );
 
-Map<String, dynamic> _$RelationToJson(Relation instance) => <String, dynamic>{
+Map<String, dynamic> _$$RelationImplToJson(_$RelationImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'sourceNodeId': instance.sourceNodeId,

@@ -6,14 +6,15 @@ part of 'node.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Node _$NodeFromJson(Map<String, dynamic> json) => Node(
+_$NodeImpl _$$NodeImplFromJson(Map<String, dynamic> json) => _$NodeImpl(
       name: json['name'] as String,
       id: json['id'] as String,
       className: json['className'] as String,
-      symbolSize: json['symbolSize'] as int?,
+      symbolSize: json['symbolSize'] as int? ?? 30,
     );
 
-Map<String, dynamic> _$NodeToJson(Node instance) => <String, dynamic>{
+Map<String, dynamic> _$$NodeImplToJson(_$NodeImpl instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
       'className': instance.className,

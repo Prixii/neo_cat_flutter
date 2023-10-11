@@ -6,14 +6,16 @@ part of 'class_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ClassData _$ClassDataFromJson(Map<String, dynamic> json) => ClassData(
+_$ClassDataImpl _$$ClassDataImplFromJson(Map<String, dynamic> json) =>
+    _$ClassDataImpl(
       name: json['name'] as String,
-      properties: (json['properties'] as List<dynamic>?)
-          ?.map((e) => e as String)
+      properties: (json['properties'] as List<dynamic>)
+          .map((e) => e as String)
           .toList(),
     );
 
-Map<String, dynamic> _$ClassDataToJson(ClassData instance) => <String, dynamic>{
+Map<String, dynamic> _$$ClassDataImplToJson(_$ClassDataImpl instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'properties': instance.properties,
     };
