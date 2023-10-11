@@ -1,5 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
+import '../../theme/common_theme.dart';
+
 /// @author wang.jiaqi
 /// @date 2023-10-02 20
 
@@ -34,6 +36,7 @@ class PropertyTileState extends State<PropertyTile> {
               child: Text(
                 widget.propertyName ?? '',
                 textAlign: TextAlign.center,
+                style: defaultText,
               ),
             ),
             const SizedBox(

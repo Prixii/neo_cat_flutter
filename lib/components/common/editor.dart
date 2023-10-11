@@ -76,7 +76,10 @@ class _TripletEditorState extends State<TripletEditor> {
                       },
                     ),
                     Center(
-                      child: Text(_getSourceNodeName()),
+                      child: Text(
+                        _getSourceNodeName(),
+                        style: defaultText,
+                      ),
                     ),
                   ],
                 ),
@@ -104,7 +107,10 @@ class _TripletEditorState extends State<TripletEditor> {
                         Expanded(
                           flex: 1,
                           child: Center(
-                            child: Text(_getRelationName()),
+                            child: Text(
+                              _getRelationName(),
+                              style: defaultTextBlack,
+                            ),
                           ),
                         ),
                         Expanded(
@@ -132,7 +138,10 @@ class _TripletEditorState extends State<TripletEditor> {
                       },
                     ),
                     Center(
-                      child: Text(_getEndNodeName()),
+                      child: Text(
+                        _getEndNodeName(),
+                        style: defaultText,
+                      ),
                     ),
                   ],
                 ),
@@ -166,6 +175,7 @@ class _TripletEditorState extends State<TripletEditor> {
           child: const Center(
             child: Text(
               'confirm',
+              style: defaultText,
             ),
           ),
           onPressed: () => {

@@ -29,5 +29,15 @@ dev_dependencies:
   json_serializable: ^6.7.1
   build_runner: ^2.4.6
 
+
+flutter_gen:
+  output: lib/gen/
+  line_length: 80
+
 flutter:
   uses-material-design: true
+  fonts:
+    - family: NeoCat
+      fonts:
+        - asset: assets/fonts/SourceHanSansCN-Bold.otf
+        - asset: assets/fonts/SourceHanSansCN-Normal.otf

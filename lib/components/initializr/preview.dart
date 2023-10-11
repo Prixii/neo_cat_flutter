@@ -36,21 +36,30 @@ class _PreviewState extends State<Preview> {
         Visibility(
           visible: !isRawTextGenerated,
           child: Button(
-            child: const Text('generate'),
+            child: Text(
+              'generate',
+              style: defaultTextBlack,
+            ),
             onPressed: () => generateRawText(),
           ),
         ),
         Visibility(
           visible: isRawTextGenerated,
           child: Button(
-            child: const Text('1'),
+            child: Text(
+              '1',
+              style: defaultTextBlack,
+            ),
             onPressed: () => {},
           ),
         ),
         Visibility(
           visible: isRawTextGenerated,
           child: Button(
-            child: const Text('2'),
+            child: Text(
+              '2',
+              style: defaultTextBlack,
+            ),
             onPressed: () => {},
           ),
         ),

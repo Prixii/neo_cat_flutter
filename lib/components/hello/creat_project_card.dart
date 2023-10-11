@@ -1,6 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/pages/main_navigator.dart';
 
+import '../../theme/common_theme.dart';
+
 /// @author wang.jiaqi
 /// @date 2023-09-30 21
 
@@ -28,7 +30,10 @@ class CreateProjectCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Create'),
+              Text(
+                'Create',
+                style: defaultText,
+              ),
             ],
           ),
         ),

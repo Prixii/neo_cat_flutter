@@ -5,6 +5,7 @@ import 'package:neo_cat_flutter/bloc/class_browser_bloc/event.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 
+import '../../../theme/common_theme.dart';
 import 'node_tile.dart';
 
 /// @author wang.jiaqi
@@ -53,7 +54,10 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
           const SizedBox(
             width: 12,
           ),
-          Text(widget.classData.name)
+          Text(
+            widget.classData.name,
+            style: defaultText,
+          )
         ],
       ),
       content: _nodeListBuilder(),

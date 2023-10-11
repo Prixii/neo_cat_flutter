@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/pages/main_navigator.dart';
 
+import '../../theme/common_theme.dart';
 import '../../utils/common_util.dart';
 
 /// @author wang.jiaqi
@@ -43,7 +44,10 @@ class OpenProjectCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Open'),
+              Text(
+                'Open',
+                style: defaultText,
+              ),
             ],
           ),
         ),

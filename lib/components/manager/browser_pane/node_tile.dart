@@ -2,6 +2,8 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
+import '../../../theme/common_theme.dart';
+
 /// @author wang.jiaqi
 /// @date 2023-10-07 21
 
@@ -46,6 +48,7 @@ class _NodeTileState extends State<NodeTile> {
                 padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                 child: Text(
                   widget.node.name,
+                  style: defaultText,
                 ),
               ),
             ),

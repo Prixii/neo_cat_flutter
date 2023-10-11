@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 /// @author wang.jiaqi
@@ -32,8 +33,11 @@ class _TripletTileState extends State<TripletTile> {
                       );
                     },
                   ),
-                  const Center(
-                    child: Text('name'),
+                  Center(
+                    child: Text(
+                      'name',
+                      style: defaultTextBlack,
+                    ),
                   ),
                 ],
               ),
@@ -57,10 +61,13 @@ class _TripletTileState extends State<TripletTile> {
                           flex: 1,
                           child: Container(),
                         ),
-                        const Expanded(
+                        Expanded(
                           flex: 1,
                           child: Center(
-                            child: Text('relation'),
+                            child: Text(
+                              'relation',
+                              style: defaultTextBlack,
+                            ),
                           ),
                         ),
                         Expanded(
@@ -83,8 +90,11 @@ class _TripletTileState extends State<TripletTile> {
                       );
                     },
                   ),
-                  const Center(
-                    child: Text('name'),
+                  Center(
+                    child: Text(
+                      'name',
+                      style: defaultTextBlack,
+                    ),
                   ),
                 ],
               ),
