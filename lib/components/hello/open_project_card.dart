@@ -23,7 +23,7 @@ class OpenProjectCard extends StatelessWidget {
     }
 
     Future<void> handleOpenFile() async {
-      String? filePath = await openFile(['json']);
+      String? filePath = await pickFileAndGetPath(['json']);
       if (filePath != null) {
         String? content = await readFile(filePath);
         if (content != null) {

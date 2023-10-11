@@ -15,7 +15,7 @@ class ClassManagerTile extends StatefulWidget {
       {super.key, required this.classData, required this.nodeList});
 
   final ClassData classData;
-  final List<BaseNode> nodeList;
+  final List<Node> nodeList;
 
   @override
   State<ClassManagerTile> createState() => _ClassManagerTileState();

@@ -8,7 +8,7 @@ import '../../types/typdef.dart';
 /// @date 2023-10-09 09
 
 class ClassBrowserState {
-  final Map<ClassName, List<BaseNode>> nodeToClassMap;
+  final Map<ClassName, List<Node>> nodeToClassMap;
   final Map<ClassName, bool> classVisibilityMap;
   final List<ClassData> classList;
 
@@ -19,7 +19,7 @@ class ClassBrowserState {
   });
 
   ClassBrowserState.initial()
-      : nodeToClassMap = <ClassName, List<BaseNode>>{},
+      : nodeToClassMap = <ClassName, List<Node>>{},
         classVisibilityMap = <ClassName, bool>{},
         classList = <ClassData>[];
 
@@ -28,7 +28,7 @@ class ClassBrowserState {
     var classList = model.classDataList;
     var nodeList = model.nodeList;
     var classVisibilityMap = <ClassName, bool>{};
-    var nodeToClassMap = <ClassName, List<BaseNode>>{};
+    var nodeToClassMap = <ClassName, List<Node>>{};
 
     for (var classData in classList) {
       classVisibilityMap[classData.name] = true;
@@ -50,7 +50,7 @@ class ClassBrowserState {
   }
 
   ClassBrowserState copyWith(
-          {Map<ClassName, List<BaseNode>>? nodeToClassMap,
+          {Map<ClassName, List<Node>>? nodeToClassMap,
           Map<ClassName, bool>? classVisibilityMap,
           List<ClassData>? classList}) =>
       ClassBrowserState(

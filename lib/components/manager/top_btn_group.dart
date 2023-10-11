@@ -2,16 +2,17 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/widget_controller_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/widget_controller_bloc/event.dart';
+import 'package:neo_cat_flutter/bloc/widget_controller_bloc/state.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
 
-class TopBtnGroup extends StatefulWidget {
-  const TopBtnGroup({super.key});
+class ButtonGroup extends StatefulWidget {
+  const ButtonGroup({super.key});
 
   @override
-  State<TopBtnGroup> createState() => _TopBtnGroupState();
+  State<ButtonGroup> createState() => _ButtonGroupState();
 }
 
-class _TopBtnGroupState extends State<TopBtnGroup> {
+class _ButtonGroupState extends State<ButtonGroup> {
   @override
   void initState() {
     super.initState();
@@ -105,33 +106,35 @@ class _TopBtnGroupState extends State<TopBtnGroup> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                flex: 1,
-                child: _browserModeBtnBuilder(),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                flex: 1,
-                child: _workBenchController(),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-            ],
+    return BlocBuilder<WidgetControllerBloc, WidgetControllerState>(
+      builder: (context, state) => Row(
+        children: [
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: _browserModeBtnBuilder(),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: _workBenchController(),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

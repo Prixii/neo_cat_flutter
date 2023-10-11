@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
 /// @author wang.jiaqi
@@ -91,18 +92,17 @@ Stream<(double x, double y)> calcPointCoordinates({
 }
 
 /// 发生在 [xCooridnate], [yCoordinate] 上的点击事件, 是否点击到了节点上
-///
-/// TODO 将 [positionList] 使用BloC控制
-void isTapInNode(
-    {required double xCooridnate,
-    required double yCoordinate,
-    required List<(double, double)> positionList}) {
-  for (var position in positionList) {
-    var xDelta = xCooridnate - position.$1;
+Future<NodeId?> findNodeIdTapped({
+  required double xCooridnate,
+  required double yCoordinate,
+  required Map<NodeId, Position> positionMap,
+}) async {
+  for (var nodeId in positionMap.keys) {
+    var position = positionMap[nodeId];
+    var xDelta = xCooridnate - position!.$1;
     var yDelta = yCoordinate - position.$2;
     if (sqrt(xDelta * xDelta + yDelta * yDelta) < 30) {
-      logger.d('[in]!');
-      break;
+      return nodeId;
     }
   }
 }

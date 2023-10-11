@@ -18,7 +18,7 @@ class InitRelationBrowserState extends RelationBrowserEvent {
 
 /// 更新/添加 [relation] 到Map
 class UpdateRelation extends RelationBrowserEvent {
-  final BaseRelation relation;
+  final Relation relation;
 
   UpdateRelation({required this.relation});
 }

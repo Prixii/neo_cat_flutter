@@ -11,8 +11,8 @@ part 'relation_chart_data_model.g.dart';
 
 @JsonSerializable()
 class RelationChartDataModel extends Equatable {
-  final List<BaseNode> nodeList;
-  final List<BaseRelation> relationList;
+  final List<Node> nodeList;
+  final List<Relation> relationList;
   final List<ClassData> classDataList;
 
   const RelationChartDataModel(
@@ -25,8 +25,8 @@ class RelationChartDataModel extends Equatable {
         relationList = [],
         classDataList = <ClassData>[];
 
-  RelationChartDataModel copyWith(List<BaseNode>? nodeList,
-      List<BaseRelation>? relationList, List<ClassData>? classDataList) {
+  RelationChartDataModel copyWith(List<Node>? nodeList,
+      List<Relation>? relationList, List<ClassData>? classDataList) {
     return RelationChartDataModel(
       nodeList: nodeList ?? this.nodeList,
       relationList: relationList ?? this.relationList,

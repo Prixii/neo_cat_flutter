@@ -6,21 +6,21 @@ import 'package:neo_cat_flutter/types/typdef.dart';
 /// @date 2023-10-09 09
 
 class RelationBrowserState {
-  final Map<RelationId, BaseRelation> relationMap;
+  final Map<RelationId, Relation> relationMap;
 
   RelationBrowserState({required this.relationMap});
 
-  RelationBrowserState.initial() : relationMap = <RelationId, BaseRelation>{};
+  RelationBrowserState.initial() : relationMap = <RelationId, Relation>{};
 
   factory RelationBrowserState.fromModel(RelationChartDataModel model) {
     var relationList = model.relationList;
-    var relationMap = <RelationId, BaseRelation>{};
+    var relationMap = <RelationId, Relation>{};
     for (var relation in relationList) {
       relationMap[relation.id] = relation;
     }
     return RelationBrowserState(relationMap: relationMap);
   }
 
-  RelationBrowserState copyWith({Map<RelationId, BaseRelation>? relationMap}) =>
+  RelationBrowserState copyWith({Map<RelationId, Relation>? relationMap}) =>
       RelationBrowserState(relationMap: relationMap ?? this.relationMap);
 }

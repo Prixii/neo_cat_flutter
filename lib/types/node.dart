@@ -5,21 +5,20 @@ part 'node.g.dart';
 /// @date 2023-09-29 10
 
 @JsonSerializable()
-class BaseNode {
+class Node {
   String name;
   String id;
   String className;
   int symbolSize;
 
-  BaseNode(
+  Node(
       {required this.name,
       required this.id,
       required this.className,
       int? symbolSize})
       : symbolSize = symbolSize ?? 30;
 
-  factory BaseNode.fromJson(Map<String, dynamic> json) =>
-      _$BaseNodeFromJson(json);
+  factory Node.fromJson(Map<String, dynamic> json) => _$NodeFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BaseNodeToJson(this);
+  Map<String, dynamic> toJson() => _$NodeToJson(this);
 }

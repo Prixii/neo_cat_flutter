@@ -7,41 +7,41 @@ part 'relation.g.dart';
 /// @date 2023-09-29 10
 
 @JsonSerializable()
-class BaseRelation {
+class Relation {
   String id;
   String name;
-  String startNodeId;
+  String sourceNodeId;
   String endNodeId;
 
-  BaseRelation.byNodeName(
+  Relation.byNodeName(
       {required this.id,
       required this.name,
-      required startNodeName,
-      required endNodeName})
-      : startNodeId = getNodeIdByName(startNodeName),
+      required String sourceNodeName,
+      required String endNodeName})
+      : sourceNodeId = getNodeIdByName(sourceNodeName),
         endNodeId = getNodeIdByName(endNodeName);
 
-  BaseRelation(
+  Relation(
       {required this.id,
       required this.name,
-      required this.startNodeId,
+      required this.sourceNodeId,
       required this.endNodeId});
 
-  BaseRelation copyWith({
+  Relation copyWith({
     String? id,
     String? name,
-    String? startNodeId,
+    String? sourceNodeId,
     String? endNodeId,
   }) =>
-      BaseRelation(
+      Relation(
         id: id ?? this.id,
         name: name ?? this.name,
-        startNodeId: startNodeId ?? this.startNodeId,
+        sourceNodeId: sourceNodeId ?? this.sourceNodeId,
         endNodeId: endNodeId ?? this.endNodeId,
       );
 
-  factory BaseRelation.fromJson(Map<String, dynamic> json) =>
-      _$BaseRelationFromJson(json);
+  factory Relation.fromJson(Map<String, dynamic> json) =>
+      _$RelationFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BaseRelationToJson(this);
+  Map<String, dynamic> toJson() => _$RelationToJson(this);
 }

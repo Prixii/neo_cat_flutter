@@ -11,7 +11,7 @@ String getNodeIdByName(String name) {
   return name;
 }
 
-Future<String?> openFile(List<String> fileExtension) async {
+Future<String?> pickFileAndGetPath(List<String> fileExtension) async {
   FilePickerResult? result = await FilePicker.platform
       .pickFiles(type: FileType.custom, allowedExtensions: fileExtension);
   if (result != null) {
@@ -28,13 +28,11 @@ Future<String?> readFile(String filePath) async {
       String content = file.readAsStringSync();
       return content;
     } else {
-      logger.d('文件不存在');
-      throw FileSystemException(filePath);
+      throw FileSystemException('文件不存在', filePath);
     }
   } catch (e) {
-    logger.d('读取文件错误$e');
+    throw FileSystemException('读取文件错误$e', filePath);
   }
-  return null;
 }
 
 Future<bool> writeFile(

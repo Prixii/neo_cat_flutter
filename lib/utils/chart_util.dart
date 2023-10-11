@@ -4,11 +4,11 @@ import 'package:neo_cat_flutter/types/node.dart';
 
 import '../bloc/relation_chart_data_bloc/bloc.dart';
 
-Future<List<BaseNode>> getNodesByClass(
+Future<List<Node>> getNodesByClass(
     {required BuildContext context, required String className}) async {
-  List<BaseNode> nodeList =
+  List<Node> nodeList =
       context.read<RelationChartDataBloc>().state.relationChartData.nodeList;
-  List<BaseNode> resultList = [];
+  List<Node> resultList = [];
   for (var node in nodeList) {
     if (node.className == className) {
       resultList.add(node);
@@ -16,3 +16,5 @@ Future<List<BaseNode>> getNodesByClass(
   }
   return resultList;
 }
+
+void test() {}

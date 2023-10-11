@@ -10,10 +10,10 @@ RelationChartDataModel _$RelationChartDataModelFromJson(
         Map<String, dynamic> json) =>
     RelationChartDataModel(
       nodeList: (json['nodeList'] as List<dynamic>)
-          .map((e) => BaseNode.fromJson(e as Map<String, dynamic>))
+          .map((e) => Node.fromJson(e as Map<String, dynamic>))
           .toList(),
       relationList: (json['relationList'] as List<dynamic>)
-          .map((e) => BaseRelation.fromJson(e as Map<String, dynamic>))
+          .map((e) => Relation.fromJson(e as Map<String, dynamic>))
           .toList(),
       classDataList: (json['classDataList'] as List<dynamic>)
           .map((e) => ClassData.fromJson(e as Map<String, dynamic>))

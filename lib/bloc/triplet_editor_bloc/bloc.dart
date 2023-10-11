@@ -1,33 +1,35 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
-
-import '../relation_chart_data_bloc/bloc.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
 
 class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   final RelationChartDataBloc dataBloc;
 
   TripletEditorBloc({required this.dataBloc})
       : super(TripletEditorState.initial()) {
-    on<ChooseNode>((event, emit) => emit(_handleChooseNode(event)));
+    on<ChooseNode>((event, emit) async => emit(await _handleChooseNode(event)));
     on<RemoveNode>((event, emit) => emit(_handleRemoveNode(event)));
     on<ChooseRelation>((event, emit) => emit(_handleChooseRelation(event)));
   }
 
-  TripletEditorState _handleChooseNode(ChooseNode event) {
-    if (state.sourceNode == null) {
-      if (state.endNode != null) {
-        getRelation();
+  Future<TripletEditorState> _handleChooseNode(ChooseNode event) async {
+    var sourceNode = state.sourceNode;
+    var endNode = state.endNode;
+    if (sourceNode == null) {
+      sourceNode = event.newNode;
+      Relation? relation;
+      if (endNode != null) {
+        relation = await getRelation(sourceNode.id, endNode.id);
       }
-      return state.copyWith(sourceNode: event.newNode);
-    } else if (state.endNode == null) {
-      if (state.sourceNode != null) {
-        getRelation();
-      }
-      return state.copyWith(endNode: event.newNode);
+      return state.copyWith(sourceNode: event.newNode, relation: relation);
+    } else if (endNode == null) {
+      endNode = event.newNode;
+      var relation = await getRelation(sourceNode.id, endNode.id);
+      return state.copyWith(endNode: endNode, relation: relation);
     } else {
       return state;
     }
@@ -51,8 +53,13 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     return newState;
   }
 
-  BaseRelation? getRelation() {
+  Future<Relation?> getRelation(NodeId source, NodeId end) async {
     var relationList = dataBloc.state.relationChartData.relationList;
-    logger.d(relationList);
+    for (var relation in relationList) {
+      if (relation.sourceNodeId == source && relation.endNodeId == end) {
+        return relation;
+      }
+    }
+    return null;
   }
 }

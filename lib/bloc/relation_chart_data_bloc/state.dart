@@ -9,8 +9,8 @@ import 'relation_chart_data_model.dart';
 
 class RelationChartDataState {
   late RelationChartDataModel relationChartData;
-  late Map<NodeId, BaseNode> nodeMap;
-  late Map<RelationId, BaseRelation> relationMap;
+  late Map<NodeId, Node> nodeMap;
+  late Map<RelationId, Relation> relationMap;
   late Map<NodeId, Position> positionMap;
 
   RelationChartDataState({
@@ -22,16 +22,16 @@ class RelationChartDataState {
 
   RelationChartDataState.initial()
       : relationChartData = RelationChartDataModel.initial(),
-        nodeMap = <NodeId, BaseNode>{},
+        nodeMap = <NodeId, Node>{},
         positionMap = <NodeId, Position>{},
-        relationMap = <RelationId, BaseRelation>{};
+        relationMap = <RelationId, Relation>{};
 
   RelationChartDataState.fromJson(Map<String, dynamic> json) {
     relationChartData = RelationChartDataModel.fromJson(json);
 
-    nodeMap = <NodeId, BaseNode>{};
+    nodeMap = <NodeId, Node>{};
     positionMap = <NodeId, Position>{};
-    relationMap = <RelationId, BaseRelation>{};
+    relationMap = <RelationId, Relation>{};
 
     for (var node in relationChartData.nodeList) {
       nodeMap[node.id] = node;
@@ -44,8 +44,8 @@ class RelationChartDataState {
 
   RelationChartDataState copyWith({
     RelationChartDataModel? relationChartData,
-    Map<NodeId, BaseNode>? nodeMap,
-    Map<RelationId, BaseRelation>? relationMap,
+    Map<NodeId, Node>? nodeMap,
+    Map<RelationId, Relation>? relationMap,
     Map<NodeId, Position>? positionMap,
   }) =>
       RelationChartDataState(
@@ -54,4 +54,27 @@ class RelationChartDataState {
         positionMap: positionMap ?? this.positionMap,
         relationMap: this.relationMap,
       );
+
+  Future<Map<NodeId, Position>> getAbsolutePositionMap(
+      {required Position center}) async {
+    var absolutePositionMap = positionMap;
+    for (var key in absolutePositionMap.keys) {
+      var relativePosition = absolutePositionMap[key];
+      if (relativePosition != null) {
+        var absolutePosition = (
+          relativePosition.$1 + center.$1,
+          relativePosition.$2 + center.$2,
+        );
+        absolutePositionMap[key] = absolutePosition;
+      }
+    }
+    return absolutePositionMap;
+  }
+
+  Future<void> generateRelativePositionMap() async {
+    for (var entry in positionMap.entries) {
+      var nodeId = entry.key;
+      var node = entry.value;
+    }
+  }
 }

@@ -7,7 +7,7 @@ import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 class NodeTile extends StatefulWidget {
   const NodeTile({super.key, required this.node});
-  final BaseNode node;
+  final Node node;
 
   @override
   State<NodeTile> createState() => _NodeTileState();

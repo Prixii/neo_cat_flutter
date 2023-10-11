@@ -1,4 +1,3 @@
-import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 
@@ -6,9 +5,9 @@ import 'package:neo_cat_flutter/types/relation.dart';
 /// @date 2023-10-09 09
 
 class TripletEditorState {
-  final BaseNode? sourceNode;
-  final BaseRelation? relation;
-  final BaseNode? endNode;
+  final Node? sourceNode;
+  final Relation? relation;
+  final Node? endNode;
 
   TripletEditorState({
     required this.sourceNode,
@@ -22,9 +21,9 @@ class TripletEditorState {
         endNode = null;
 
   TripletEditorState copyWith({
-    BaseNode? sourceNode,
-    BaseRelation? relation,
-    BaseNode? endNode,
+    Node? sourceNode,
+    Relation? relation,
+    Node? endNode,
   }) =>
       TripletEditorState(
         sourceNode: sourceNode ?? this.sourceNode,

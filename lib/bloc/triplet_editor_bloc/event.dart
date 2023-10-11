@@ -7,7 +7,7 @@ abstract class TripletEditorEvent {
 }
 
 class ChooseNode extends TripletEditorEvent {
-  final BaseNode newNode;
+  final Node newNode;
 
   ChooseNode({required this.newNode});
 }
@@ -19,7 +19,7 @@ class RemoveNode extends TripletEditorEvent {
 }
 
 class ChooseRelation extends TripletEditorEvent {
-  final BaseRelation relation;
+  final Relation relation;
 
   ChooseRelation({required this.relation});
 }

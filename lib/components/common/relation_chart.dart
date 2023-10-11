@@ -1,11 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/types/node.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-08 19
-var positionList = <(double, double)>[];
-
 class RelationChart extends StatefulWidget {
   const RelationChart({super.key, required this.width, required this.height});
 
@@ -17,19 +18,23 @@ class RelationChart extends StatefulWidget {
 }
 
 class _RelationChartState extends State<RelationChart> {
-  var offsetList = <Offset>[];
+  RelationChartDataBloc _getChartDataBloc() =>
+      context.read<RelationChartDataBloc>();
+
+  Map<NodeId, Position> _getPositionMap() =>
+      _getChartDataBloc().state.positionMap;
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
       child: GestureDetector(
-        onTapUp: (TapUpDetails details) => isTapInNode(
+        onTapUp: (TapUpDetails details) => findNodeIdTapped(
             xCooridnate: details.localPosition.dx,
             yCoordinate: details.localPosition.dy,
-            positionList: positionList),
+            positionMap: _getPositionMap()),
         child: SizedBox(
           width: widget.width,
           height: widget.height,
-          child: CustomPaint(painter: MyCustomPainterTest()),
+          child: CustomPaint(painter: MyCustomPainterTest(context: context)),
           // child: MyCustomPaint(),
         ),
       ),
@@ -38,41 +43,35 @@ class _RelationChartState extends State<RelationChart> {
 }
 
 class MyCustomPainterTest extends CustomPainter {
-  var nodeList = <BaseNode>[];
-  var list = <Offset>[];
+  final BuildContext context;
 
-  Future<List<Offset>> getNodiPosition(double x, double y) async {
-    await for ((double, double) value in calcPointCoordinates(
-      nodeCount: 9,
-      xCoordinate: x,
-      yCoordinate: y,
-    )) {
-      positionList.add(value);
-      list.add(Offset(value.$1, value.$2));
+  MyCustomPainterTest({required this.context});
+
+  RelationChartDataBloc _getChartDataBloc() =>
+      context.read<RelationChartDataBloc>();
+
+  Future<void> drawNodes({
+    required Position center,
+    required Canvas canvas,
+  }) async {
+    Map<NodeId, Position> positionMap =
+        await _getChartDataBloc().state.getAbsolutePositionMap(center: center);
+    final paint = Paint()..color = Colors.blue;
+    for (var nodeId in positionMap.keys) {
+      var position = positionMap[nodeId];
+      if (position != null) {
+        canvas.drawCircle(Offset(position.$1, position.$2), 30, paint);
+      }
     }
-
-    return list;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (var i = 0; i < 10; i++) {
-      nodeList.add(BaseNode(name: 'Node$i', id: '$i', className: 'node'));
-    }
-    final paint = Paint()..color = Colors.blue;
-    var center = Offset(size.width / 2, size.height / 2);
-
-    getNodiPosition(size.width / 2, size.height / 2);
-
-    canvas.drawCircle(center, 30, paint);
-
-    for (int index = 0; index < list.length; index++) {
-      canvas.drawCircle(list[index], 30, paint);
-    }
+    drawNodes(center: (size.width / 2, size.height / 2), canvas: canvas);
   }
 
   @override
   bool shouldRepaint(covariant MyCustomPainterTest oldDelegate) {
-    return oldDelegate.list != list;
+    return true;
   }
 }

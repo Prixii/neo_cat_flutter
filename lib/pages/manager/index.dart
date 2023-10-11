@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/widget_controller_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/widget_controller_bloc/state.dart';
 import 'package:neo_cat_flutter/components/common/editor.dart';
 import 'package:neo_cat_flutter/components/common/relation_chart.dart';
 import 'package:neo_cat_flutter/components/manager/browser_pane/browser_pane.dart';
@@ -22,8 +23,7 @@ class _ManagerPageState extends State<ManagerPage> {
     super.initState();
   }
 
-  WidgetControllerBloc _getWidgetControllerBloc() =>
-      context.read<WidgetControllerBloc>();
+  final _widgetControllerBloc = WidgetControllerBloc();
 
   Widget _editorBuilder() {
     return Padding(
@@ -66,39 +66,44 @@ class _ManagerPageState extends State<ManagerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldPage(
-      padding: EdgeInsets.zero,
-      content: Container(
-        color: FluentTheme.of(Navigator.of(context).context)
-            .scaffoldBackgroundColor,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 6, 0, 12),
-          child: Row(
-            children: [
-              Visibility(
-                visible: _getWidgetControllerBloc().state.isBrowserPaneVisible,
-                child: const Expanded(
-                  flex: 1,
-                  child: BrowserPane(),
-                ),
+    return BlocProvider(
+      create: (context) => _widgetControllerBloc,
+      child: BlocBuilder<WidgetControllerBloc, WidgetControllerState>(
+        builder: (context, state) => ScaffoldPage(
+          padding: EdgeInsets.zero,
+          content: Container(
+            color: FluentTheme.of(Navigator.of(context).context)
+                .scaffoldBackgroundColor,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 6, 0, 12),
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: _widgetControllerBloc.state.isBrowserPaneVisible,
+                    child: const Expanded(
+                      flex: 1,
+                      child: BrowserPane(),
+                    ),
+                  ),
+                  Expanded(
+                    flex: _widgetControllerBloc.state.centerFlexWeight,
+                    child: Column(
+                      children: [
+                        const ButtonGroup(),
+                        _relationChartBuilder(),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: _widgetControllerBloc.state.isEditorPaneVisible,
+                    child: Expanded(
+                      flex: 1,
+                      child: _editorBuilder(),
+                    ),
+                  )
+                ],
               ),
-              Expanded(
-                flex: _getWidgetControllerBloc().state.centerFlexWeight,
-                child: Column(
-                  children: [
-                    const TopBtnGroup(),
-                    _relationChartBuilder(),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: _getWidgetControllerBloc().state.isEditorPaneVisible,
-                child: Expanded(
-                  flex: 1,
-                  child: _editorBuilder(),
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),

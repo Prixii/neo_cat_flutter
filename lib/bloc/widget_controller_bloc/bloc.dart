@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/widget_controller_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/widget_controller_bloc/state.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-09 08
@@ -16,6 +17,7 @@ class WidgetControllerBloc
   }
 
   WidgetControllerState _handleSetViewMode(SetViewMode event) {
+    logger.d('[view mode] visbility changed to ${event.viewMode}');
     return state.copyWith(viewMode: event.viewMode);
   }
 
@@ -27,6 +29,7 @@ class WidgetControllerBloc
     } else {
       newFlexWeight -= 1;
     }
+    logger.d('[browser] visbility changed to ${!state.isBrowserPaneVisible}');
     return state.copyWith(
       isBrowserPaneVisible: !state.isBrowserPaneVisible,
       centerFlexWeight: newFlexWeight,
@@ -41,8 +44,9 @@ class WidgetControllerBloc
     } else {
       newFlexWeight -= 1;
     }
+    logger.d('[editor] visbility changed to ${!state.isEditorPaneVisible}');
     return state.copyWith(
-      isBrowserPaneVisible: !state.isEditorPaneVisible,
+      isEditorPaneVisible: !state.isEditorPaneVisible,
       centerFlexWeight: newFlexWeight,
     );
   }

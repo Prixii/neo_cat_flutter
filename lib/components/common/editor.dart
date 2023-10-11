@@ -29,7 +29,7 @@ class _TripletEditorState extends State<TripletEditor> {
       context.read<TripletEditorBloc>();
 
   String _getSourceNodeName() {
-    BaseNode? sourceNode = _getTripletEditorBloc().state.sourceNode;
+    Node? sourceNode = _getTripletEditorBloc().state.sourceNode;
     if (sourceNode != null) {
       return sourceNode.name;
     }
@@ -37,7 +37,7 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   String _getEndNodeName() {
-    BaseNode? endNode = _getTripletEditorBloc().state.endNode;
+    Node? endNode = _getTripletEditorBloc().state.endNode;
     if (endNode != null) {
       return endNode.name;
     }
@@ -45,7 +45,7 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   String _getRelationName() {
-    BaseRelation? relation = _getTripletEditorBloc().state.relation;
+    Relation? relation = _getTripletEditorBloc().state.relation;
     if (relation != null) {
       return relation.name;
     }
