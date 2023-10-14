@@ -104,4 +104,5 @@ Future<NodeId?> findNodeIdTapped({
       return nodeId;
     }
   }
+  return null;
 }

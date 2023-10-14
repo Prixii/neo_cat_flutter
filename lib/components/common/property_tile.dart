@@ -36,7 +36,7 @@ class PropertyTileState extends State<PropertyTile> {
               child: Text(
                 widget.propertyName ?? '',
                 textAlign: TextAlign.center,
-                style: defaultText,
+                style: defaultTextBlack,
               ),
             ),
             const SizedBox(

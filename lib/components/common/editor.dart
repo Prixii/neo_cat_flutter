@@ -172,10 +172,10 @@ class _TripletEditorState extends State<TripletEditor> {
         height: 40,
         width: double.infinity,
         child: Button(
-          child: const Center(
+          child: Center(
             child: Text(
               'confirm',
-              style: defaultText,
+              style: defaultTextBlack,
             ),
           ),
           onPressed: () => {

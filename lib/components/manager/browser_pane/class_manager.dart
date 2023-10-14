@@ -4,9 +4,12 @@ import 'package:neo_cat_flutter/bloc/class_browser_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/class_browser_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/class_browser_bloc/state.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
+import 'package:neo_cat_flutter/components/common/popup_menu.dart';
 import 'package:neo_cat_flutter/components/manager/browser_pane/class_manager_tile.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/node.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 class ClassManager extends StatefulWidget {
   const ClassManager({super.key});
@@ -26,6 +29,10 @@ class _ClassManagerState extends State<ClassManager> {
     return _classBrowserBloc.state.nodeToClassMap[className] ?? [];
   }
 
+  Position position = (0, 0);
+
+  late OverlayEntry overlayEntry;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +40,18 @@ class _ClassManagerState extends State<ClassManager> {
       InitClassBrowserState(
           model: context.read<RelationChartDataBloc>().state.relationChartData),
     );
+
+    overlayEntry = popupMenuBuilder(() => position);
+  }
+
+  @override
+  void dispose() {
+    try {
+      overlayEntry.remove();
+    } catch (e) {
+      logger.d('error');
+    }
+    super.dispose();
   }
 
   @override
@@ -45,10 +64,22 @@ class _ClassManagerState extends State<ClassManager> {
           child: BlocBuilder<ClassBrowserBloc, ClassBrowserState>(
             builder: (context, state) => ListView.builder(
               itemCount: _getClassDataList().length,
-              itemBuilder: (BuildContext context, int index) =>
-                  ClassManagerTile(
-                classData: _getClassDataList()[index],
-                nodeList: _getNodeList(classIndex: index),
+              itemBuilder: (BuildContext context, int index) => GestureDetector(
+                child: ClassManagerTile(
+                  classData: _getClassDataList()[index],
+                  nodeList: _getNodeList(classIndex: index),
+                ),
+                onSecondaryTapDown: (details) {
+                  setState(
+                    () {
+                      position = (
+                        details.globalPosition.dx,
+                        details.globalPosition.dy
+                      );
+                    },
+                  );
+                  Overlay.of(context).insert(overlayEntry);
+                },
               ),
             ),
           ),
