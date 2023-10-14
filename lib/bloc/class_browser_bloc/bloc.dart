@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/class_browser_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/class_browser_bloc/state.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-09 14
@@ -15,11 +16,13 @@ class ClassBrowserBloc extends Bloc<ClassBrowserEvent, ClassBrowserState> {
   }
 
   ClassBrowserState _handleInitClassBrowserState(InitClassBrowserState event) {
+    logger.i('[classBrowser]: initClassBrowserState!');
     return ClassBrowserState.fromRelationChartData(event.model);
   }
 
   ClassBrowserState _handleSetClassVisible(SetIsClassVisible event) {
     var classVisibilityMap = state.classVisibilityMap;
+    logger.i('[classBrowser]: SetClassVisible!');
     if (classVisibilityMap[event.className] != null) {
       classVisibilityMap[event.className] =
           !classVisibilityMap[event.className]!;
@@ -57,6 +60,7 @@ class ClassBrowserBloc extends Bloc<ClassBrowserEvent, ClassBrowserState> {
       nodeToClassMap[event.classData.name] =
           nodeToClassMap[event.oldName] ?? [];
       nodeToClassMap.remove(event.oldName);
+      logger.i('[classBrowser]: updateClassData renamed!');
       return state.copyWith(
         nodeToClassMap: nodeToClassMap,
         classList: classList,
@@ -77,6 +81,7 @@ class ClassBrowserBloc extends Bloc<ClassBrowserEvent, ClassBrowserState> {
     }
     var classVisiblityMap = state.classVisibilityMap..remove(targetName);
     var nodeToClassMap = state.nodeToClassMap..remove(targetName);
+    logger.i('[classBrowser]: DeleteClassData!');
 
     return state.copyWith(
       nodeToClassMap: nodeToClassMap,

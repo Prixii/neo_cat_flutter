@@ -56,7 +56,7 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
           ),
           Text(
             widget.classData.name,
-            style: defaultText,
+            style: defaultTextBlack,
           )
         ],
       ),

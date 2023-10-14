@@ -5,6 +5,7 @@ import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   final RelationChartDataBloc dataBloc;
@@ -17,6 +18,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   }
 
   Future<TripletEditorState> _handleChooseNode(ChooseNode event) async {
+    logger.i('[tripletEditorState]: ChooseNode!');
     var sourceNode = state.sourceNode;
     var endNode = state.endNode;
     if (sourceNode == null) {
@@ -36,6 +38,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   }
 
   TripletEditorState _handleRemoveNode(RemoveNode event) {
+    logger.i('[tripletEditorState]: RemoveNode!');
     switch (event.position) {
       case TripletPosition.source:
         {
@@ -49,6 +52,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   }
 
   TripletEditorState _handleChooseRelation(ChooseRelation event) {
+    logger.i('[tripletEditorState]: ChooseRelation!');
     var newState = state.copyWith(relation: event.relation);
     return newState;
   }

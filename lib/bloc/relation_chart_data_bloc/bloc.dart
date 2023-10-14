@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/event.dart';
 
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-09 08
@@ -20,12 +21,15 @@ class RelationChartDataBloc
   RelationChartDataState _handleInitRelationChartData(
     InitRelationChartData event,
   ) {
-    return RelationChartDataState.fromJson(jsonDecode(event.rawData));
+    var state = RelationChartDataState.fromJson(jsonDecode(event.rawData));
+    logger.i('[relationChartDataEvent]: initRelationChartData!');
+    return state;
   }
 
   RelationChartDataState _handleReplacePositionMap(
     ReplacePositionMap event,
   ) {
+    logger.i('[relationChartDataEvent]: replacePositionMap!');
     return state.copyWith(positionMap: event.positionMap);
   }
 }

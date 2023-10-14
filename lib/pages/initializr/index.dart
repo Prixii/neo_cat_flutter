@@ -7,9 +7,7 @@ import 'package:neo_cat_flutter/theme/common_theme.dart';
 /// @date 2023-09-29 11
 
 class InitializrPage extends StatefulWidget {
-  final String? rawData;
-
-  const InitializrPage({super.key, this.rawData});
+  const InitializrPage({super.key});
 
   @override
   State<InitializrPage> createState() => _InitializrPageState();

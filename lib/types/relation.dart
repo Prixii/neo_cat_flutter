@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
 
 part 'relation.g.dart';
 part 'relation.freezed.dart';

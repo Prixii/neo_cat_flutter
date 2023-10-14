@@ -37,7 +37,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RelationChartDataBloc(),
+      create: (context) => _relationChartDataBloc,
       child: BlocProvider(
         create: (context) =>
             TripletEditorBloc(dataBloc: _relationChartDataBloc),

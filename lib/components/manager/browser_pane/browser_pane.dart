@@ -24,17 +24,19 @@ class _BrowserPaneState extends State<BrowserPane> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Visibility(
-          visible: _getBlocState().viewMode == ViewMode.classMode,
-          child: const ClassManager(),
-        ),
-        Visibility(
-          visible: _getBlocState().viewMode == ViewMode.relationMode,
-          child: const RelationManager(),
-        )
-      ],
+    return BlocBuilder<WidgetControllerBloc, WidgetControllerState>(
+      builder: (context, state) => Stack(
+        children: [
+          Visibility(
+            visible: _getBlocState().viewMode == ViewMode.classMode,
+            child: const ClassManager(),
+          ),
+          Visibility(
+            visible: _getBlocState().viewMode == ViewMode.relationMode,
+            child: const RelationManager(),
+          )
+        ],
+      ),
     );
   }
 }

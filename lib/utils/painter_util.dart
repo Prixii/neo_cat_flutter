@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-02 12

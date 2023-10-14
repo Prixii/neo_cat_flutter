@@ -1,6 +1,7 @@
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import 'relation_chart_data_model.dart';
 
@@ -28,7 +29,6 @@ class RelationChartDataState {
 
   RelationChartDataState.fromJson(Map<String, dynamic> json) {
     relationChartData = RelationChartDataModel.fromJson(json);
-
     nodeMap = <NodeId, Node>{};
     positionMap = <NodeId, Position>{};
     relationMap = <RelationId, Relation>{};
@@ -76,5 +76,14 @@ class RelationChartDataState {
       var nodeId = entry.key;
       var node = entry.value;
     }
+  }
+
+  Triplet? getTriplet(Relation relation) {
+    Node? sourceNode = nodeMap[relation.sourceNodeId];
+    Node? endNode = nodeMap[relation.endNodeId];
+    if (sourceNode != null && endNode != null) {
+      return (sourceNode, relation, endNode);
+    }
+    return null;
   }
 }
