@@ -1,7 +1,6 @@
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/relation_chart_data_model.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/node.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../types/typdef.dart';
 

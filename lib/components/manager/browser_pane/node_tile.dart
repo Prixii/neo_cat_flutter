@@ -16,25 +16,43 @@ class NodeTile extends StatefulWidget {
 }
 
 class _NodeTileState extends State<NodeTile> {
+  Color backgroundColor = opacity;
+
+  void _handleHover() {
+    setState(() {
+      backgroundColor = const Color.fromRGBO(0, 0, 0, 0.04);
+    });
+  }
+
+  void _handleExit() {
+    setState(() {
+      backgroundColor = opacity;
+    });
+  }
+
   Widget _nodeBuilder() {
     return LayoutBuilder(
-      builder: (context, constraints) => Stack(
-        children: [
-          CustomPaint(
-            size: Size(constraints.maxWidth, constraints.maxHeight),
-            painter: CirclePainter(),
-          ),
-          Center(
-            child: SizedBox(
-              width: (constraints.maxWidth > 40) ? 40 : constraints.maxWidth,
-              child: Text(
-                widget.node.name,
-                overflow: TextOverflow.ellipsis,
-                style: defaultText.copyWith(fontSize: 12),
+      builder: (context, constraints) => SizedBox(
+        width: constraints.maxWidth,
+        height: constraints.maxHeight,
+        child: Stack(
+          children: [
+            CustomPaint(
+              size: Size(constraints.maxWidth, constraints.maxHeight),
+              painter: CirclePainter(),
+            ),
+            Center(
+              child: SizedBox(
+                width: (constraints.maxWidth > 40) ? 40 : constraints.maxWidth,
+                child: Text(
+                  widget.node.name,
+                  overflow: TextOverflow.ellipsis,
+                  style: defaultText.copyWith(fontSize: 12),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -51,15 +69,25 @@ class _NodeTileState extends State<NodeTile> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
-        child: Row(
-          children: [
-            Expanded(flex: 1, child: _nodeBuilder()),
-            Expanded(flex: 3, child: _nodeNameBuilder()),
-          ],
+    return MouseRegion(
+      onEnter: (event) => _handleHover(),
+      onExit: (event) => _handleExit(),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: backgroundColor,
+        ),
+        child: SizedBox(
+          height: 60,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
+            child: Row(
+              children: [
+                Expanded(flex: 1, child: _nodeBuilder()),
+                Expanded(flex: 3, child: _nodeNameBuilder()),
+              ],
+            ),
+          ),
         ),
       ),
     );

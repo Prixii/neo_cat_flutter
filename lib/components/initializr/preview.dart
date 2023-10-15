@@ -1,10 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/components/common/relation_chart.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
-
-import '../../bloc/relation_chart_data_bloc/bloc.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-02 10

@@ -27,3 +27,5 @@ const defaultText = TextStyle(
 );
 
 final defaultTextBlack = defaultText.copyWith(color: Colors.black);
+
+const opacity = Color.fromRGBO(0, 0, 0, 0);
