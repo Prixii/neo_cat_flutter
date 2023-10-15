@@ -44,7 +44,10 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
             color: Colors.blue,
           ),
           label: 'Accept',
-          onTap: () => logger.d(node?.name),
+          onTap: () {
+            logger.d(node?.name);
+            overlayEntry.remove();
+          },
         ),
         SingleMenuOption(
           icon: Icon(

@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../../types/typdef.dart';
 
@@ -9,29 +10,25 @@ class PopupMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: 200,
       height: 200,
-      child: Container(
-        width: 200,
-        height: 200,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey[50],
-                offset: const Offset(0, 0),
-                blurRadius: 2,
-                spreadRadius: 1,
-              )
-            ],
-            color: Colors.grey[10]),
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: ListView.builder(
-            itemCount: options.length,
-            itemBuilder: (context, index) => options[index],
-          ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey[50],
+              offset: const Offset(0, 0),
+              blurRadius: 2,
+              spreadRadius: 1,
+            )
+          ],
+          color: Colors.grey[10]),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: ListView.builder(
+          itemCount: options.length,
+          itemBuilder: (context, index) => options[index],
         ),
       ),
     );
@@ -58,6 +55,7 @@ OverlayEntry popupMenuBuilder(
         children: [
           GestureDetector(
             onTapDown: (details) {
+              logger.e('[close]');
               overlayEntry.remove();
             },
             onSecondaryTapDown: (details) {
