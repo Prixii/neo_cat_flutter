@@ -64,9 +64,8 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
   void dispose() {
     try {
       overlayEntry.remove();
-    } catch (e) {
-      logger.d('error');
-    }
+      // ignore: empty_catches
+    } catch (e) {}
     super.dispose();
   }
 

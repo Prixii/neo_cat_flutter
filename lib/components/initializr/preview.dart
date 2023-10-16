@@ -1,5 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/components/common/relation_chart.dart';
+import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
+import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_field.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
 /// @author wang.jiaqi
@@ -13,57 +15,20 @@ class Preview extends StatefulWidget {
 }
 
 class _PreviewState extends State<Preview> {
-  bool isRawTextGenerated = false;
-  late TextEditingController rawTextController;
+  late RichTextEditingController _richTextEditingController;
 
   @override
   void initState() {
-    rawTextController = TextEditingController();
+    _richTextEditingController = RichTextEditingController(context: context);
     super.initState();
   }
 
-  Future<void> generateRawText() async {
-    setState(() {
-      isRawTextGenerated = true;
-    });
-    return;
-  }
-
-  Widget _btnGroupBuilder() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Visibility(
-          visible: !isRawTextGenerated,
-          child: Button(
-            child: Text(
-              'generate',
-              style: defaultTextBlack,
-            ),
-            onPressed: () => generateRawText(),
-          ),
-        ),
-        Visibility(
-          visible: isRawTextGenerated,
-          child: Button(
-            child: Text(
-              '1',
-              style: defaultTextBlack,
-            ),
-            onPressed: () => {},
-          ),
-        ),
-        Visibility(
-          visible: isRawTextGenerated,
-          child: Button(
-            child: Text(
-              '2',
-              style: defaultTextBlack,
-            ),
-            onPressed: () => {},
-          ),
-        ),
-      ],
+  Widget _manualMarkerBuilder() {
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: SingleChildScrollView(
+        child: richTextFieldBuilder(controller: _richTextEditingController),
+      ),
     );
   }
 
@@ -80,15 +45,9 @@ class _PreviewState extends State<Preview> {
                 border: normalBorder,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: TextBox(
-                      maxLines: null,
-                      controller: rawTextController,
-                    ),
-                  ),
-                  _btnGroupBuilder(),
+                  Expanded(flex: 1, child: _manualMarkerBuilder()),
                 ],
               ),
             ),
