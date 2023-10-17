@@ -1,7 +1,7 @@
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as material;
-import 'package:neo_cat_flutter/components/initializr/rich_text_field/at_text.dart';
+import 'package:neo_cat_flutter/components/initializr/rich_text_field/background_text.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
@@ -20,7 +20,6 @@ Widget richTextFieldBuilder({required RichTextEditingController controller}) {
         enabledBorder: material.UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.transparent),
         ),
-        focusColor: opacity,
       ),
       specialTextSpanBuilder: MySpecialTextSpanBuilder(
         showAtBackground: true,
@@ -35,7 +34,7 @@ class MySpecialTextSpanBuilder extends SpecialTextSpanBuilder {
   final bool showAtBackground;
   final BuilderType type;
   MySpecialTextSpanBuilder(
-      {this.showAtBackground = false, this.type = BuilderType.extendedText});
+      {this.showAtBackground = true, this.type = BuilderType.extendedText});
   @override
   TextSpan build(String data,
       {TextStyle? textStyle, SpecialTextGestureTapCallback? onTap}) {
@@ -44,18 +43,18 @@ class MySpecialTextSpanBuilder extends SpecialTextSpanBuilder {
   }
 
   @override
-  SpecialText? createSpecialText(String flag,
-      {TextStyle? textStyle,
-      SpecialTextGestureTapCallback? onTap,
-      required int index}) {
+  SpecialText? createSpecialText(
+    String flag, {
+    TextStyle? textStyle,
+    SpecialTextGestureTapCallback? onTap,
+    required int index,
+  }) {
     if (flag == "") return null;
 
     ///index is end index of start flag, so text start index should be index-(flag.length-1)
-    if (isStart(flag, AtText.flag)) {
-      return AtText(textStyle ?? defaultText, onTap,
-          start: index - (AtText.flag.length - 1),
-          showAtBackground: showAtBackground,
-          type: type);
+    if (isStart(flag, BackgroundText.flag)) {
+      return BackgroundText(textStyle ?? defaultTextBlack, (parameter) {},
+          type: type, start: index - (BackgroundText.flag.length - 1));
     }
     return null;
   }
