@@ -33,7 +33,6 @@ class BackgroundText extends SpecialText {
       color = " ${fullText.substring(0, index)} ";
       fullText = fullText.substring(index + 1, fullText.length - 1);
     }
-
     TextStyle textStyle = this.textStyle ?? defaultText;
     var backgroundTextSpan = SpecialTextSpan(
       children: [
@@ -42,7 +41,7 @@ class BackgroundText extends SpecialText {
           style: textStyle.copyWith(
             background: Paint()
               ..color =
-                  ColorChooser[color.replaceAll(" ", '')]!.withOpacity(0.15),
+                  colorChooser[color.replaceAll(" ", '')]!.withOpacity(0.15),
           ),
           recognizer: TapGestureRecognizer()
             ..onTap = () => logger.d('[tapped] Background Text Span!'),
@@ -61,4 +60,4 @@ class BackgroundText extends SpecialText {
   }
 }
 
-final ColorChooser = {'red': Colors.red, 'blue': Colors.blue};
+final colorChooser = {'red': Colors.red, 'blue': Colors.blue};

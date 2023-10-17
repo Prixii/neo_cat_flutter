@@ -5,14 +5,27 @@ import 'package:neo_cat_flutter/components/initializr/rich_text_field/background
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
+import 'elevated_class_menu.dart';
+
 /// @author wang.jiaqi
 /// @date 2023-10-16 22
 
 Widget richTextFieldBuilder({required RichTextEditingController controller}) {
+  bool isAnyTextSelected() =>
+      controller.selection.textInside(controller.value.text).isNotEmpty;
+
   return material.Material(
     child: ExtendedTextField(
       controller: controller,
+      extendedContextMenuBuilder: (context, editableTextState) =>
+          isAnyTextSelected()
+              ? elevatedClassMenuBuilder(
+                  context: context,
+                  editableTextState: editableTextState,
+                )
+              : Container(),
       maxLines: null,
+      minLines: 6,
       decoration: const material.InputDecoration(
         focusedBorder: material.UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.transparent),
