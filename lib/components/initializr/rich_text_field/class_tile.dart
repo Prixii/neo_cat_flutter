@@ -39,7 +39,7 @@ class _ClassTileState extends State<ClassTile> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(3),
-            child: Container(color: Colors.blue),
+            child: Container(color: widget.color),
           ),
         ),
       ),

@@ -1,15 +1,15 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/components/common/create_class_dialog.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
 
-class ClassCreator extends StatefulWidget {
-  const ClassCreator({super.key});
+class ClassSetter extends StatefulWidget {
+  const ClassSetter({super.key});
 
   @override
-  State<ClassCreator> createState() => _ClassCreatorState();
+  State<ClassSetter> createState() => _ClassSetterState();
 }
 
-class _ClassCreatorState extends State<ClassCreator> {
+class _ClassSetterState extends State<ClassSetter> {
   late TextEditingController _controller;
 
   @override
@@ -31,6 +31,10 @@ class _ClassCreatorState extends State<ClassCreator> {
     return Padding(
       padding: const EdgeInsets.all(4),
       child: GestureDetector(
+        onTap: () {
+          showCreateClassDialog(context);
+          ContextMenuController.removeAny();
+        },
         child: MouseRegion(
           child: SizedBox(
             height: 30,
@@ -61,9 +65,6 @@ class _ClassCreatorState extends State<ClassCreator> {
             backgroundColor = Colors.transparent;
           }),
         ),
-        onTap: () {
-          ContextMenuController.removeAny();
-        },
       ),
     );
   }
