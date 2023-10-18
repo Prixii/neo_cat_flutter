@@ -22,6 +22,7 @@ Widget richTextFieldBuilder({required RichTextEditingController controller}) {
               ? elevatedClassMenuBuilder(
                   context: context,
                   editableTextState: editableTextState,
+                  controller: controller,
                 )
               : Container(),
       maxLines: null,

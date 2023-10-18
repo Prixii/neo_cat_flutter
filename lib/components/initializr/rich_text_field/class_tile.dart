@@ -1,13 +1,20 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../../theme/common_theme.dart';
 
 class ClassTile extends StatefulWidget {
-  const ClassTile({super.key, required this.color, required this.className});
+  const ClassTile(
+      {super.key,
+      required this.color,
+      required this.className,
+      required this.getController});
 
   final Color color;
   final ClassName className;
+  final RichTextEditingController Function() getController;
 
   @override
   State<ClassTile> createState() => _ClassTileState();
@@ -15,6 +22,17 @@ class ClassTile extends StatefulWidget {
 
 class _ClassTileState extends State<ClassTile> {
   Color backgroundColor = Colors.transparent;
+  void _setClass(RichTextEditingController controller) {
+    var start = controller.selection.start;
+    var end = controller.selection.end;
+    var newText = controller.text;
+    var head = newText.substring(0, start);
+    var center = newText.substring(start, end);
+    var tail = newText.substring(end);
+    newText = "$head€red£$center $tail";
+    logger.d('[newtext]:$newText');
+    controller.text = newText;
+  }
 
   Widget _classNameBuilder() {
     return Padding(
@@ -76,6 +94,7 @@ class _ClassTileState extends State<ClassTile> {
         ),
         onTap: () {
           ContextMenuController.removeAny();
+          _setClass(widget.getController());
         },
       ),
     );

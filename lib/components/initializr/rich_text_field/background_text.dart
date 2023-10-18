@@ -40,8 +40,7 @@ class BackgroundText extends SpecialText {
           text: fullText,
           style: textStyle.copyWith(
             background: Paint()
-              ..color =
-                  colorChooser[color.replaceAll(" ", '')]!.withOpacity(0.15),
+              ..color = colorChooser[color.trim()]!.withOpacity(0.15),
           ),
           recognizer: TapGestureRecognizer()
             ..onTap = () => logger.d('[tapped] Background Text Span!'),

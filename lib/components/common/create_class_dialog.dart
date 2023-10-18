@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart' as material;
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
@@ -21,6 +23,8 @@ class ClassCreator extends StatefulWidget {
 }
 
 class _ClassCreatorState extends State<ClassCreator> {
+  Color pickerColor = Colors.blue;
+
   Widget _titleBuilder() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 6, 0, 12),
@@ -45,7 +49,7 @@ class _ClassCreatorState extends State<ClassCreator> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(3),
-            child: Container(color: Colors.blue),
+            child: Container(color: pickerColor),
           ),
         ),
       ),
@@ -120,21 +124,30 @@ class _ClassCreatorState extends State<ClassCreator> {
                 height: 30,
                 child: Row(
                   children: [
+                    const SizedBox(width: 20),
                     const Expanded(
                       child: TextBox(
                         autofocus: true,
                         placeholder: 'Class Name',
                       ),
                     ),
-                    _colorBoxBuilder()
+                    _colorBoxBuilder(),
+                    const SizedBox(width: 20),
                   ],
                 ),
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(6),
-                  child: GestureDetector(
-                    child: Container(),
+                  padding: const EdgeInsets.all(0),
+                  child: material.Material(
+                    child: SlidePicker(
+                      showIndicator: false,
+                      enableAlpha: false,
+                      pickerColor: pickerColor,
+                      onColorChanged: (Color newColor) => setState(() {
+                        pickerColor = newColor;
+                      }),
+                    ),
                   ),
                 ),
               ),
