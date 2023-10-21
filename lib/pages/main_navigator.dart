@@ -22,37 +22,28 @@ class MainNavigator extends StatefulWidget {
 class _MainNavigatorState extends State<MainNavigator> {
   int topIndex = 0;
 
-  final _relationChartDataBloc = RelationChartDataBloc();
-
   @override
   void initState() {
     super.initState();
     if (widget.rawData != null) {
-      _relationChartDataBloc.add(
-        InitRelationChartData(rawData: widget.rawData!),
-      );
+      context.read<RelationChartDataBloc>().add(
+            InitRelationChartData(rawData: widget.rawData!),
+          );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _relationChartDataBloc,
-      child: BlocProvider(
-        create: (context) =>
-            TripletEditorBloc(dataBloc: _relationChartDataBloc),
-        child: NavigationView(
-          pane: NavigationPane(
-            selected: topIndex,
-            onChanged: (index) => setState(
-              () {
-                topIndex = index;
-              },
-            ),
-            displayMode: PaneDisplayMode.top,
-            items: pageItems,
-          ),
+    return NavigationView(
+      pane: NavigationPane(
+        selected: topIndex,
+        onChanged: (index) => setState(
+          () {
+            topIndex = index;
+          },
         ),
+        displayMode: PaneDisplayMode.top,
+        items: pageItems,
       ),
     );
   }

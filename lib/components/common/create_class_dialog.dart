@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart' as material;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 void showCreateClassDialog(BuildContext context) async {
   await showDialog(
@@ -60,7 +63,11 @@ class _ClassCreatorState extends State<ClassCreator> {
     return Row(children: [
       Expanded(
         child: GestureDetector(
-          onTap: () => {Navigator.pop(context)},
+          onTap: () {
+            logger.d(
+                context.read<RelationChartDataBloc>().state.relationChartData);
+            Navigator.pop(context);
+          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),

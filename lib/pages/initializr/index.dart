@@ -18,11 +18,10 @@ class _InitializrPageState extends State<InitializrPage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 6, 6, 0),
       child: Container(
-        decoration: normalBoxDecoration.copyWith(
-          border: normalBorder,
-        ),
-        child: const TripletEditor(),
-      ),
+          decoration: normalBoxDecoration.copyWith(
+            border: normalBorder,
+          ),
+          child: Container()),
     );
   }
 
