@@ -1,7 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 /// @author wang.jiaqi
@@ -17,11 +16,8 @@ class RelationChart extends StatefulWidget {
 }
 
 class _RelationChartState extends State<RelationChart> {
-  RelationChartDataBloc _getChartDataBloc() =>
-      context.read<RelationChartDataBloc>();
-
   Map<NodeId, Position> _getPositionMap() =>
-      _getChartDataBloc().state.positionMap;
+      relationChartDataBloc(context).state.positionMap;
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
@@ -46,15 +42,12 @@ class MyCustomPainterTest extends CustomPainter {
 
   MyCustomPainterTest({required this.context});
 
-  RelationChartDataBloc _getChartDataBloc() =>
-      context.read<RelationChartDataBloc>();
-
   Future<void> drawNodes({
     required Position center,
     required Canvas canvas,
   }) async {
-    Map<NodeId, Position> positionMap =
-        await _getChartDataBloc().state.getAbsolutePositionMap(center: center);
+    Map<NodeId, Position> positionMap = await relationChartDataBloc(context)
+        .getAbsolutePositionMap(center: center);
     final paint = Paint()..color = Colors.blue;
     for (var nodeId in positionMap.keys) {
       var position = positionMap[nodeId];

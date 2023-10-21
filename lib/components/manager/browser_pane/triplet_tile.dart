@@ -28,7 +28,7 @@ class _TripletTileState extends State<TripletTile> {
   void initState() {
     super.initState();
     var triplet =
-        context.read<RelationChartDataBloc>().state.getTriplet(widget.relation);
+        context.read<RelationChartDataBloc>().getTriplet(widget.relation);
     if (triplet != null) {
       sourceNode = triplet.$1;
       relation = triplet.$2;

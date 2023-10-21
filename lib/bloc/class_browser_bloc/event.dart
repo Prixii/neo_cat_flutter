@@ -1,3 +1,4 @@
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/relation_chart_data_model.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
@@ -5,7 +6,7 @@ import 'package:neo_cat_flutter/types/typdef.dart';
 /// @author wang.jiaqi
 /// @date 2023-10-09 14
 
-abstract class ClassBrowserEvent {
+abstract class ClassBrowserEvent extends RelationChartDataEvent {
   ClassBrowserEvent();
 }
 
@@ -17,10 +18,10 @@ class InitClassBrowserState extends ClassBrowserEvent {
 }
 
 /// 设置 [className] 的可见性
-class SetIsClassVisible extends ClassBrowserEvent {
+class SetClassVisibility extends ClassBrowserEvent {
   final ClassName className;
 
-  SetIsClassVisible({required this.className});
+  SetClassVisibility({required this.className});
 }
 
 /// 更新某个类的数据到 [classData]
