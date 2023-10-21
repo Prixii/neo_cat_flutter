@@ -11,7 +11,6 @@ class ClassSetter extends StatefulWidget {
 
 class _ClassSetterState extends State<ClassSetter> {
   late TextEditingController _controller;
-
   @override
   void initState() {
     super.initState();

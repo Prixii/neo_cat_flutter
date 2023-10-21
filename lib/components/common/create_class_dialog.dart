@@ -4,7 +4,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
 void showCreateClassDialog(BuildContext context) async {
-  final result = await showDialog(
+  await showDialog(
     context: context,
     builder: (context) => ClassCreator(context: context),
   );

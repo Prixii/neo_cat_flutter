@@ -3,7 +3,6 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/gestures.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_field.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
 
 class BackgroundText extends SpecialText {
   static const String flag = "€";
@@ -42,8 +41,7 @@ class BackgroundText extends SpecialText {
             background: Paint()
               ..color = colorChooser[color.trim()]!.withOpacity(0.15),
           ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = () => logger.d('[tapped] Background Text Span!'),
+          recognizer: TapGestureRecognizer()..onTap = () => fullText = "",
         )
       ],
       text: color,
@@ -52,8 +50,7 @@ class BackgroundText extends SpecialText {
       actualText: color,
       start: start,
       deleteAll: true,
-      recognizer: TapGestureRecognizer()
-        ..onTap = () => logger.d('[tapped]:$color'),
+      recognizer: TapGestureRecognizer()..onTap = () => color,
     );
     return backgroundTextSpan;
   }

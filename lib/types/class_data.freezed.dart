@@ -22,7 +22,7 @@ ClassData _$ClassDataFromJson(Map<String, dynamic> json) {
 mixin _$ClassData {
   String get name => throw _privateConstructorUsedError;
   List<String> get properties => throw _privateConstructorUsedError;
-  String get Color => throw _privateConstructorUsedError;
+  String get color => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $ClassDataCopyWith<$Res> {
   factory $ClassDataCopyWith(ClassData value, $Res Function(ClassData) then) =
       _$ClassDataCopyWithImpl<$Res, ClassData>;
   @useResult
-  $Res call({String name, List<String> properties, String Color});
+  $Res call({String name, List<String> properties, String color});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$ClassDataCopyWithImpl<$Res, $Val extends ClassData>
   $Res call({
     Object? name = null,
     Object? properties = null,
-    Object? Color = null,
+    Object? color = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -64,9 +64,9 @@ class _$ClassDataCopyWithImpl<$Res, $Val extends ClassData>
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      Color: null == Color
-          ? _value.Color
-          : Color // ignore: cast_nullable_to_non_nullable
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -80,7 +80,7 @@ abstract class _$$ClassDataImplCopyWith<$Res>
       __$$ClassDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, List<String> properties, String Color});
+  $Res call({String name, List<String> properties, String color});
 }
 
 /// @nodoc
@@ -96,7 +96,7 @@ class __$$ClassDataImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? properties = null,
-    Object? Color = null,
+    Object? color = null,
   }) {
     return _then(_$ClassDataImpl(
       name: null == name
@@ -107,9 +107,9 @@ class __$$ClassDataImplCopyWithImpl<$Res>
           ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      Color: null == Color
-          ? _value.Color
-          : Color // ignore: cast_nullable_to_non_nullable
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -121,7 +121,7 @@ class _$ClassDataImpl implements _ClassData {
   const _$ClassDataImpl(
       {required this.name,
       required final List<String> properties,
-      required this.Color})
+      required this.color})
       : _properties = properties;
 
   factory _$ClassDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -138,11 +138,11 @@ class _$ClassDataImpl implements _ClassData {
   }
 
   @override
-  final String Color;
+  final String color;
 
   @override
   String toString() {
-    return 'ClassData(name: $name, properties: $properties, Color: $Color)';
+    return 'ClassData(name: $name, properties: $properties, color: $color)';
   }
 
   @override
@@ -153,13 +153,13 @@ class _$ClassDataImpl implements _ClassData {
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
                 .equals(other._properties, _properties) &&
-            (identical(other.Color, Color) || other.Color == Color));
+            (identical(other.color, color) || other.color == color));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name,
-      const DeepCollectionEquality().hash(_properties), Color);
+      const DeepCollectionEquality().hash(_properties), color);
 
   @JsonKey(ignore: true)
   @override
@@ -179,7 +179,7 @@ abstract class _ClassData implements ClassData {
   const factory _ClassData(
       {required final String name,
       required final List<String> properties,
-      required final String Color}) = _$ClassDataImpl;
+      required final String color}) = _$ClassDataImpl;
 
   factory _ClassData.fromJson(Map<String, dynamic> json) =
       _$ClassDataImpl.fromJson;
@@ -189,7 +189,7 @@ abstract class _ClassData implements ClassData {
   @override
   List<String> get properties;
   @override
-  String get Color;
+  String get color;
   @override
   @JsonKey(ignore: true)
   _$$ClassDataImplCopyWith<_$ClassDataImpl> get copyWith =>

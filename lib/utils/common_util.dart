@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:logger/logger.dart';
 
 /// @author wang.jiaqi
@@ -48,4 +49,8 @@ Future<bool> writeFile(
   } catch (e) {
     return false;
   }
+}
+
+Color colorFromString(String hexString) {
+  return Color(int.parse(hexString.substring(2), radix: 16));
 }

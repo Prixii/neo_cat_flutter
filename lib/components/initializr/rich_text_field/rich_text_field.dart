@@ -67,8 +67,12 @@ class MySpecialTextSpanBuilder extends SpecialTextSpanBuilder {
 
     ///index is end index of start flag, so text start index should be index-(flag.length-1)
     if (isStart(flag, BackgroundText.flag)) {
-      return BackgroundText(textStyle ?? defaultTextBlack, (parameter) {},
-          type: type, start: index - (BackgroundText.flag.length - 1));
+      return BackgroundText(
+        textStyle ?? defaultTextBlack,
+        (parameter) {},
+        type: type,
+        start: index - (BackgroundText.flag.length - 1),
+      );
     }
     return null;
   }

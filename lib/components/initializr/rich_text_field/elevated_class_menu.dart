@@ -5,10 +5,11 @@ import 'package:neo_cat_flutter/components/initializr/rich_text_field/class_tile
 
 import 'rich_text_editing_controller.dart';
 
-Widget elevatedClassMenuBuilder(
-    {required BuildContext context,
-    required ExtendedEditableTextState editableTextState,
-    required RichTextEditingController controller}) {
+Widget elevatedClassMenuBuilder({
+  required BuildContext context,
+  required ExtendedEditableTextState editableTextState,
+  required RichTextEditingController controller,
+}) {
   return AdaptiveTextSelectionToolbar(
     anchors: editableTextState.contextMenuAnchors,
     children: [

@@ -11,7 +11,7 @@ class ClassData with _$ClassData {
   const factory ClassData({
     required String name,
     required List<String> properties,
-    required String Color,
+    required String color,
   }) = _ClassData;
 
   factory ClassData.fromJson(Map<String, dynamic> json) =>
