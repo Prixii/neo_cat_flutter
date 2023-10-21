@@ -51,6 +51,9 @@ Future<bool> writeFile(
   }
 }
 
+/// 通过 [hexString] 转化成color
+///
+/// hexString形如：#112233
 Color colorFromString(String hexString) {
-  return Color(int.parse(hexString.substring(2), radix: 16));
+  return Color(int.parse("ff${hexString.substring(1)}", radix: 16));
 }

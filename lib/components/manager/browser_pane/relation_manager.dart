@@ -19,34 +19,32 @@ class RelationManager extends StatefulWidget {
 }
 
 class _RelationManagerState extends State<RelationManager> {
-  final RelationBrowserBloc _relationBrowserBloc = RelationBrowserBloc();
+  RelationBrowserBloc _getRelationBrowserBloc() =>
+      context.read<RelationBrowserBloc>();
 
   List<MapEntry<RelationId, Relation>> _getMapEntries() {
-    return _relationBrowserBloc.state.relationMap.entries.toList();
+    return _getRelationBrowserBloc().state.relationMap.entries.toList();
   }
 
   @override
   void initState() {
     super.initState();
     var model = context.read<RelationChartDataBloc>().state.relationChartData;
-    _relationBrowserBloc.add(InitRelationBrowserState(model: model));
+    _getRelationBrowserBloc().add(InitRelationBrowserState(model: model));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RelationBrowserBloc>(
-      create: (context) => _relationBrowserBloc,
-      child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-        builder: (context, state) =>
-            BlocBuilder<RelationBrowserBloc, RelationBrowserState>(
-          builder: (context, state) => ListView.builder(
-            itemCount: _relationBrowserBloc.state.relationMap.keys.length,
-            itemBuilder: (context, index) {
-              var entry = _getMapEntries()[index];
-              var relation = entry.value;
-              return TripletTile(relation: relation);
-            },
-          ),
+    return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+      builder: (context, state) =>
+          BlocBuilder<RelationBrowserBloc, RelationBrowserState>(
+        builder: (context, state) => ListView.builder(
+          itemCount: _getRelationBrowserBloc().state.relationMap.keys.length,
+          itemBuilder: (context, index) {
+            var entry = _getMapEntries()[index];
+            var relation = entry.value;
+            return TripletTile(relation: relation);
+          },
         ),
       ),
     );
