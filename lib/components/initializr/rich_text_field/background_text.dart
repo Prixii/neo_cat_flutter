@@ -3,18 +3,29 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/gestures.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_field.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 class BackgroundText extends SpecialText {
   static const String flag = "€";
   final BuilderType type;
   final int start;
+  final BuildContext context;
   final Color? backgroundColor;
+
+  Color getColor(ClassName label) {
+    var color =
+        relationChartDataBloc(context).state.classMap[label]?.color.toColor();
+    return color ?? Colors.blue.withOpacity(0.15);
+  }
 
   BackgroundText(
     TextStyle textStyle,
     SpecialTextGestureTapCallback? onTap, {
     required this.type,
     required this.start,
+    required this.context,
     this.backgroundColor,
   }) : super(
           flag,
@@ -27,9 +38,9 @@ class BackgroundText extends SpecialText {
   InlineSpan finishText() {
     String fullText = " ${toString().substring(1)}";
     final index = fullText.indexOf('£');
-    String color = " ";
+    String label = " ";
     if (index != -1) {
-      color = " ${fullText.substring(0, index)} ";
+      label = " ${fullText.substring(0, index)} ";
       fullText = fullText.substring(index + 1, fullText.length - 1);
     }
     TextStyle textStyle = this.textStyle ?? defaultText;
@@ -38,22 +49,19 @@ class BackgroundText extends SpecialText {
         TextSpan(
           text: fullText,
           style: textStyle.copyWith(
-            background: Paint()
-              ..color = colorChooser[color.trim()]!.withOpacity(0.15),
+            background: Paint()..color = label.toColor(),
           ),
           recognizer: TapGestureRecognizer()..onTap = () => fullText = "",
         )
       ],
-      text: color,
+      text: label,
       style: textStyle.copyWith(
           fontSize: 8, background: Paint()..color = Colors.transparent),
-      actualText: color,
+      actualText: label,
       start: start,
       deleteAll: true,
-      recognizer: TapGestureRecognizer()..onTap = () => color,
+      recognizer: TapGestureRecognizer()..onTap = () => label,
     );
     return backgroundTextSpan;
   }
 }
-
-final colorChooser = {'red': Colors.red, 'blue': Colors.blue};

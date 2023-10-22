@@ -27,7 +27,10 @@ class _PreviewState extends State<Preview> {
     return Padding(
       padding: const EdgeInsets.all(12),
       child: SingleChildScrollView(
-        child: richTextFieldBuilder(controller: _richTextEditingController),
+        child: richTextFieldBuilder(
+          controller: _richTextEditingController,
+          context: context,
+        ),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../../theme/common_theme.dart';
 
@@ -30,7 +29,6 @@ class _ClassTileState extends State<ClassTile> {
     var center = newText.substring(start, end);
     var tail = newText.substring(end);
     newText = "$head€red£$center $tail";
-    logger.d('[newtext]:$newText');
     controller.text = newText;
   }
 

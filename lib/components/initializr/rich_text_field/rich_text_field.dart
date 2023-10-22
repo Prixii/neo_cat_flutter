@@ -10,7 +10,9 @@ import 'elevated_class_menu.dart';
 /// @author wang.jiaqi
 /// @date 2023-10-16 22
 
-Widget richTextFieldBuilder({required RichTextEditingController controller}) {
+Widget richTextFieldBuilder(
+    {required RichTextEditingController controller,
+    required BuildContext context}) {
   bool isAnyTextSelected() =>
       controller.selection.textInside(controller.value.text).isNotEmpty;
 
@@ -36,6 +38,7 @@ Widget richTextFieldBuilder({required RichTextEditingController controller}) {
         ),
       ),
       specialTextSpanBuilder: MySpecialTextSpanBuilder(
+        context: context,
         showAtBackground: true,
         type: BuilderType.extendedTextField,
       ),
@@ -47,8 +50,11 @@ class MySpecialTextSpanBuilder extends SpecialTextSpanBuilder {
   /// whether show background for @somebody
   final bool showAtBackground;
   final BuilderType type;
+  final BuildContext context;
   MySpecialTextSpanBuilder(
-      {this.showAtBackground = true, this.type = BuilderType.extendedText});
+      {this.showAtBackground = true,
+      this.type = BuilderType.extendedText,
+      required this.context});
   @override
   TextSpan build(String data,
       {TextStyle? textStyle, SpecialTextGestureTapCallback? onTap}) {
@@ -69,6 +75,7 @@ class MySpecialTextSpanBuilder extends SpecialTextSpanBuilder {
     if (isStart(flag, BackgroundText.flag)) {
       return BackgroundText(
         textStyle ?? defaultTextBlack,
+        context: context,
         (parameter) {},
         type: type,
         start: index - (BackgroundText.flag.length - 1),
