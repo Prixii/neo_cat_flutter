@@ -6,7 +6,7 @@ import 'graph.dart';
 import 'algorithm.dart';
 import 'forcedirected/fruchterman_reingold_algorithm.dart';
 
-typedef NodeWidgetBuilder = Widget Function(Node node);
+typedef NodeWidgetBuilder = Widget Function(GraphNode node);
 
 class GraphView extends StatefulWidget {
   final Graph graph;

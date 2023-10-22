@@ -1,8 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/components/common/test/directed_graphview.dart';
-import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
-import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_field.dart';
-import 'package:neo_cat_flutter/theme/common_theme.dart';
+
+import '../../theme/common_theme.dart';
+import '../common/test/directed_graphview.dart';
+import 'rich_text_field/rich_text_editing_controller.dart';
+import 'rich_text_field/rich_text_field.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-02 10
@@ -63,10 +64,11 @@ class _PreviewState extends State<Preview> {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return Container(
-                    decoration: normalBoxDecoration.copyWith(
-                      border: normalBorder,
-                    ),
-                    child: const GraphClusterViewPage());
+                  decoration: normalBoxDecoration.copyWith(
+                    border: normalBorder,
+                  ),
+                  child: const GraphClusterViewPage(),
+                );
               },
             ),
           ),

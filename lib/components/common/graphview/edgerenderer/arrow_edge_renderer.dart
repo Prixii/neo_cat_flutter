@@ -105,7 +105,7 @@ class ArrowEdgeRenderer extends EdgeRenderer {
   }
 
   List<double> clipLine(double startX, double startY, double stopX,
-      double stopY, Node destination) {
+      double stopY, GraphNode destination) {
     // 创建一个包含4个元素的列表，填充为0.0
     var resultLine = List.filled(4, 0.0);
 

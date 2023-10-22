@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import '../graphview/algorithm.dart';
 import '../graphview/forcedirected/fruchterman_reingold_algorithm.dart';
 import '../graphview/graph.dart';
 import '../graphview/graph_view.dart';
-import 'data_storage.dart';
 
 class GraphClusterViewPage extends StatefulWidget {
   const GraphClusterViewPage({
@@ -17,20 +20,22 @@ class GraphClusterViewPage extends StatefulWidget {
 class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
   @override
   Widget build(BuildContext context) {
-    return InteractiveViewer(
-      constrained: false, // 设置是否限制用户缩放
-      boundaryMargin: const EdgeInsets.all(1000), // 设置边界边距
-      minScale: 0.1, // 设置最小缩放比例
-      maxScale: 10, // 设置最大缩放比例
-      child: GraphView(
-        graph: graph, // 设置要显示的图形
-        algorithm: builder, // 设置图形布局算法
-        builder: (Node node) {
-          node.size = const Size(45, 45);
-          var i = node.key!.value as int?; // 获取节点的key
-          String? name = node.name; // 获取节点的名字
-          return circularWidget(i, name); // 返回一个圆形小部件
-        },
+    return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+      builder: (context, state) => InteractiveViewer(
+        constrained: false, // 设置是否限制用户缩放
+        boundaryMargin: const EdgeInsets.all(1000), // 设置边界边距
+        minScale: 0.1, // 设置最小缩放比例
+        maxScale: 10, // 设置最大缩放比例
+        child: GraphView(
+          graph: graph, // 设置要显示的图形
+          algorithm: builder, // 设置图形布局算法
+          builder: (GraphNode node) {
+            node.size = const Size(45, 45);
+            var i = node.key!.value as int?; // 获取节点的key
+            String? name = node.name; // 获取节点的名字
+            return circularWidget(i, name); // 返回一个圆形小部件
+          },
+        ),
       ),
     );
   }
@@ -40,7 +45,7 @@ class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
       cursor: SystemMouseCursors.click, // 设置鼠标光标为小手指样式
       child: GestureDetector(
         onTap: () {
-          print('Circular widget $name was tapped!');
+          // TODO 点击事件
         },
         child: Container(
           width: 40,
@@ -69,20 +74,12 @@ class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
   void initState() {
     super.initState();
 
-    for (var item in node) {
-      var id = item['id'];
-      String name = item['name'];
-      final n = Node.id(id);
-      n.name = name;
-      graph.addNode(n);
-    }
+    graph
+        .addNodes(relationChartDataBloc(context).state.nodeMap.values.toList());
 
-    for (var item in relationship) {
-      var start = item['start'];
-      var end = item['end'];
-      String type = item['type'];
-      graph.addEdge(graph.nodes[start], graph.nodes[end], type);
-    }
+    graph.addEdges(
+        relationChartDataBloc(context).state.relationMap.values.toList(),
+        context);
 
     builder = FruchtermanReingoldAlgorithm(iterations: 1000);
   }

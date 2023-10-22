@@ -17,7 +17,7 @@ const int defaultClusterPadding = 15;
 const double epsilon = 0.0001;
 
 class FruchtermanReingoldAlgorithm implements Algorithm {
-  Map<Node, Offset> displacement = {};
+  Map<GraphNode, Offset> displacement = {};
   Random rand = Random();
   double graphHeight = 500; //default value, change ahead of time
   double graphWidth = 500;
@@ -78,7 +78,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
     tick *= 1.0 - currentIteration / iterations;
   }
 
-  void limitMaximumDisplacement(List<Node> nodes) {
+  void limitMaximumDisplacement(List<GraphNode> nodes) {
     for (var node in nodes) {
       if (node != focusedNode) {
         var dispLength = max(epsilon, displacement[node]!.distance);
@@ -108,7 +108,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
     }
   }
 
-  void calculateRepulsion(List<Node> nodes) {
+  void calculateRepulsion(List<GraphNode> nodes) {
     for (var nodeA in nodes) {
       for (var nodeB in nodes) {
         if (nodeA != nodeB) {
@@ -130,7 +130,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
     }
   }
 
-  Node? focusedNode;
+  GraphNode? focusedNode;
 
   @override
   Size run(Graph? graph, double shiftX, double shiftY) {
@@ -176,7 +176,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
     var offset = getOffset(graph);
     var x = offset.dx;
     var y = offset.dy;
-    var nodesVisited = <Node>[];
+    var nodesVisited = <GraphNode>[];
     var nodeClusters = <NodeCluster>[];
     for (var node in graph.nodes) {
       node.position = Offset(node.x - x, node.y - y);
@@ -233,7 +233,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
   }
 
   void followEdges(
-      Graph graph, NodeCluster cluster, Node node, List nodesVisited) {
+      Graph graph, NodeCluster cluster, GraphNode node, List nodesVisited) {
     graph.successorsOf(node).forEach((successor) {
       if (!nodesVisited.contains(successor)) {
         nodesVisited.add(successor);
@@ -253,7 +253,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
     });
   }
 
-  NodeCluster? findClusterOf(List<NodeCluster> clusters, Node node) {
+  NodeCluster? findClusterOf(List<NodeCluster> clusters, GraphNode node) {
     return clusters.firstWhereOrNull((element) => element.contains(node));
   }
 
@@ -296,7 +296,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
   }
 
   @override
-  void setFocusedNode(Node node) {
+  void setFocusedNode(GraphNode node) {
     focusedNode = node;
   }
 
@@ -308,11 +308,11 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
 }
 
 class NodeCluster {
-  List<Node>? nodes;
+  List<GraphNode>? nodes;
 
   Rect? rect;
 
-  List<Node>? getNodes() {
+  List<GraphNode>? getNodes() {
     return nodes;
   }
 
@@ -324,7 +324,7 @@ class NodeCluster {
     rect = rect;
   }
 
-  void add(Node node) {
+  void add(GraphNode node) {
     nodes!.add(node);
 
     if (nodes!.length == 1) {
@@ -339,7 +339,7 @@ class NodeCluster {
     }
   }
 
-  bool contains(Node node) {
+  bool contains(GraphNode node) {
     return nodes!.contains(node);
   }
 

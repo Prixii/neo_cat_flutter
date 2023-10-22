@@ -1,0 +1,87 @@
+{
+  "nodeList": [
+    {
+      "name": "node1",
+      "properties": null,
+      "id": 1,
+      "label": "good"
+    },
+    {
+      "name": "node2",
+      "properties": null,
+      "id": 2,
+      "label": "good"
+    },
+    {
+      "name": "node3",
+      "properties": null,
+      "id": 3,
+      "label": "good"
+    },
+    {
+      "name": "node4",
+      "properties": null,
+      "id": 4,
+      "label": "good"
+    },
+    {
+      "name": "node5",
+      "properties": null,
+      "id": 5,
+      "label": "bad"
+    },
+    {
+      "name": "node6",
+      "properties": null,
+      "id": 6,
+      "label": "bad"
+    },
+    {
+      "name": "node7",
+      "properties": null,
+      "id": 7,
+      "label": "bad"
+    },
+    {
+      "name": "node8",
+      "properties": null,
+      "id": 8,
+      "label": "bad"
+    }
+  ],
+  "relationList": [
+    {
+      "id": 1,
+      "type": "edge1",
+      "start": 1,
+      "end": 2
+    },
+    {
+      "id": 2,
+      "type": "edge2",
+      "start": 3,
+      "end": 4
+    },
+    {
+      "id": 3,
+      "type": "edge5",
+      "start": 5,
+      "end": 2
+    }
+  ],
+  "labelDataList": [
+    {
+      "name": "good",
+      "properties": [
+        "1",
+        "2"
+      ],
+      "color": "fffc5531"
+    },
+    {
+      "name": "bad",
+      "properties": [],
+      "color": "ff7e776f"
+    }
+  ]
+}

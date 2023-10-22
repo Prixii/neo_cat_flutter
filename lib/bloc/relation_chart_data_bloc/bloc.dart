@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/components/common/graphview/graph.dart';
 
 import '../../types/label_data.dart';
 import '../../types/node.dart';
@@ -119,4 +120,13 @@ class RelationChartDataBloc
 
   int instanceCount(LabelName className) =>
       state.nodeToClassMap[className]?.length ?? 0;
+
+  Future<void> save() async {
+    var rawData = jsonEncode(state.relationChartData.toJson());
+    // TODO 保存
+  }
+
+  GraphNode getGraphNode(NodeId id) {
+    return GraphNode.fromNode(state.nodeMap[id]!);
+  }
 }

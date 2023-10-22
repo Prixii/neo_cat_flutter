@@ -2,20 +2,24 @@ import 'dart:convert';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:neo_cat_flutter/types/node.dart';
+import 'package:neo_cat_flutter/types/relation.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 class Graph {
-  final List<Node> _nodes = [];
+  final List<GraphNode> _nodes = [];
   final List<Edge> _edges = [];
   List<GraphObserver> graphObserver = [];
 
-  List<Node> get nodes => _nodes; //  List<Node> nodes = _nodes;
+  List<GraphNode> get nodes => _nodes; //  List<Node> nodes = _nodes;
   List<Edge> get edges => _edges;
 
   var isTree = false;
 
   int nodeCount() => _nodes.length;
 
-  void addNode(Node node) {
+  void addNode(GraphNode node) {
     if (!_nodes.contains(node)) {
       _nodes.add(node);
       notifyGraphObserver();
@@ -24,11 +28,13 @@ class Graph {
 
   void addNodes(List<Node> nodes) {
     for (var node in nodes) {
-      addNode(node);
+      logger.d('[addNode]${node.toString()}');
+      addNode(GraphNode.fromNode(node));
+      logger.d('[nodes]${_nodes.toList()}');
     }
   }
 
-  void removeNode(Node? node) {
+  void removeNode(GraphNode? node) {
     if (!_nodes.contains(node)) {
 //            throw IllegalArgumentException("Unable to find node in graph.")
     }
@@ -45,13 +51,14 @@ class Graph {
     notifyGraphObserver();
   }
 
-  void removeNodes(List<Node> nodes) {
+  void removeNodes(List<GraphNode> nodes) {
     for (var node in nodes) {
       removeNode(node);
     }
   }
 
-  Edge addEdge(Node source, Node destination, String type, {Paint? paint}) {
+  Edge addEdge(GraphNode source, GraphNode destination, String type,
+      {Paint? paint}) {
     final edge = Edge(source, destination, type, paint: paint);
     addEdgeS(edge);
 
@@ -83,9 +90,9 @@ class Graph {
     }
   }
 
-  void addEdges(List<Edge> edges) {
-    for (var edge in edges) {
-      addEdgeS(edge);
+  void addEdges(List<Relation> relations, BuildContext context) {
+    for (var relation in relations) {
+      addEdgeS(Edge.fromRelation(relation, context));
     }
   }
 
@@ -97,35 +104,35 @@ class Graph {
     }
   }
 
-  void removeEdgeFromPredecessor(Node? predecessor, Node? current) {
+  void removeEdgeFromPredecessor(GraphNode? predecessor, GraphNode? current) {
     _edges.removeWhere(
         (edge) => edge.source == predecessor && edge.destination == current);
   }
 
   bool hasNodes() => _nodes.isNotEmpty;
 
-  Edge? getEdgeBetween(Node source, Node? destination) =>
+  Edge? getEdgeBetween(GraphNode source, GraphNode? destination) =>
       _edges.firstWhereOrNull((element) =>
           element.source == source && element.destination == destination);
 
-  bool hasSuccessor(Node? node) =>
+  bool hasSuccessor(GraphNode? node) =>
       _edges.any((element) => element.source == node);
 
-  List<Node> successorsOf(Node? node) =>
+  List<GraphNode> successorsOf(GraphNode? node) =>
       getOutEdges(node!).map((e) => e.destination).toList();
 
-  bool hasPredecessor(Node node) =>
+  bool hasPredecessor(GraphNode node) =>
       _edges.any((element) => element.destination == node);
 
-  List<Node> predecessorsOf(Node? node) =>
+  List<GraphNode> predecessorsOf(GraphNode? node) =>
       getInEdges(node!).map((edge) => edge.source).toList();
 
-  bool contains({Node? node, Edge? edge}) =>
+  bool contains({GraphNode? node, Edge? edge}) =>
       node != null && _nodes.contains(node) ||
       edge != null && _edges.contains(edge);
 
 //  bool contains(Edge edge) => _edges.contains(edge);
-  Node getNodeAtPosition(int position) {
+  GraphNode getNodeAtPosition(int position) {
     if (position < 0) {
 //            throw IllegalArgumentException("position can't be negative")
     }
@@ -138,16 +145,16 @@ class Graph {
     return _nodes[position];
   }
 
-  Node getNodeUsingKey(ValueKey key) =>
+  GraphNode getNodeUsingKey(ValueKey key) =>
       _nodes.firstWhere((element) => element.key == key);
 
-  Node getNodeUsingId(dynamic id) =>
+  GraphNode getNodeUsingId(dynamic id) =>
       _nodes.firstWhere((element) => element.key == ValueKey(id));
 
-  List<Edge> getOutEdges(Node node) =>
+  List<Edge> getOutEdges(GraphNode node) =>
       _edges.where((element) => element.source == node).toList();
 
-  List<Edge> getInEdges(Node node) =>
+  List<Edge> getInEdges(GraphNode node) =>
       _edges.where((element) => element.destination == node).toList();
 
   void notifyGraphObserver() {
@@ -172,18 +179,23 @@ class Graph {
 }
 
 // 表示节点的类
-class Node {
+class GraphNode {
+  GraphNode.fromNode(Node node) {
+    name = node.name;
+    key = ValueKey(node.id);
+  }
+
   ValueKey? key; // 用于表示节点的键
 
   String? name; // 结点的名字
 
   // 节点的构造函数
-  Node(this.name, id, {Key? key}) {
+  GraphNode(this.name, id, {Key? key}) {
     this.key = ValueKey(key?.hashCode); // 初始化节点的键
   }
 
   // 使用 ID 初始化节点
-  Node.id(dynamic id) {
+  GraphNode.id(dynamic id) {
     key = ValueKey(id);
   }
 
@@ -212,7 +224,8 @@ class Node {
   // 重写等于运算符
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is Node && hashCode == other.hashCode;
+      identical(this, other) ||
+      other is GraphNode && hashCode == other.hashCode;
 
   // 获取哈希码
   @override
@@ -228,9 +241,14 @@ class Node {
 }
 
 class Edge {
-  Node source;
-  Node destination;
+  GraphNode source;
+  GraphNode destination;
   String type;
+
+  factory Edge.fromRelation(Relation relaion, BuildContext context) {
+    return Edge(relationChartDataBloc(context).getGraphNode(relaion.start),
+        relationChartDataBloc(context).getGraphNode(relaion.end), relaion.type);
+  }
 
   Key? key;
   Paint? paint;
