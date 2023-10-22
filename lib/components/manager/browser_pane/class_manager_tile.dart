@@ -1,10 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/bloc/class_browser_bloc/bloc.dart';
-import 'package:neo_cat_flutter/bloc/class_browser_bloc/event.dart';
+import 'package:neo_cat_flutter/bloc/label/event.dart';
 import 'package:neo_cat_flutter/components/common/popup_menu/menu_options.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/node.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../../theme/common_theme.dart';
@@ -64,13 +63,10 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
   void dispose() {
     try {
       overlayEntry.remove();
-    } catch (e) {
-      logger.d('error');
-    }
+      // ignore: empty_catches
+    } catch (e) {}
     super.dispose();
   }
-
-  ClassBrowserBloc _getClassBrowserBloc() => context.read<ClassBrowserBloc>();
 
   Widget _nodeListBuilder() {
     return ListView.builder(
@@ -93,6 +89,12 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
     );
   }
 
+  bool isClassVisible() =>
+      relationChartDataBloc(context)
+          .state
+          .classVisibilityMap[widget.classData.name] ??
+      false;
+
   @override
   Widget build(BuildContext context) {
     return Expander(
@@ -100,11 +102,9 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
       header: Row(
         children: [
           Checkbox(
-            checked: _getClassBrowserBloc()
-                .state
-                .classVisibilityMap[widget.classData.name],
-            onChanged: (value) => _getClassBrowserBloc().add(
-              SetIsClassVisible(className: widget.classData.name),
+            checked: isClassVisible(),
+            onChanged: (value) => relationChartDataBloc(context).add(
+              SetClassVisibility(className: widget.classData.name),
             ),
           ),
           const SizedBox(

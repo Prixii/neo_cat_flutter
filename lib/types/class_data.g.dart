@@ -12,10 +12,12 @@ _$ClassDataImpl _$$ClassDataImplFromJson(Map<String, dynamic> json) =>
       properties: (json['properties'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      color: json['color'] as String,
     );
 
 Map<String, dynamic> _$$ClassDataImplToJson(_$ClassDataImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'properties': instance.properties,
+      'color': instance.color,
     };

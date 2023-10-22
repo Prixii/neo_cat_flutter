@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:logger/logger.dart';
 
 /// @author wang.jiaqi
@@ -47,5 +48,21 @@ Future<bool> writeFile(
     return true;
   } catch (e) {
     return false;
+  }
+}
+
+/// 通过 [hexString] 转化成color
+///
+/// hexString形如：#112233
+
+extension StringExtension on String {
+  Color toColor() {
+    return Color(int.parse(padLeft(8, 'f'), radix: 16));
+  }
+}
+
+extension ColorExtension on Color {
+  String toHex() {
+    return value.toRadixString(16).padLeft(8, 'f');
   }
 }

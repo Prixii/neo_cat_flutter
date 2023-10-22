@@ -1,7 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/event.dart';
-import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/bloc.dart';
 import 'package:neo_cat_flutter/pages/save/index.dart';
 
 import '../bloc/relation_chart_data_bloc/bloc.dart';
@@ -22,37 +21,28 @@ class MainNavigator extends StatefulWidget {
 class _MainNavigatorState extends State<MainNavigator> {
   int topIndex = 0;
 
-  final _relationChartDataBloc = RelationChartDataBloc();
-
   @override
   void initState() {
     super.initState();
     if (widget.rawData != null) {
-      _relationChartDataBloc.add(
-        InitRelationChartData(rawData: widget.rawData!),
-      );
+      context.read<RelationChartDataBloc>().add(
+            InitRelationChartData(rawData: widget.rawData!),
+          );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _relationChartDataBloc,
-      child: BlocProvider(
-        create: (context) =>
-            TripletEditorBloc(dataBloc: _relationChartDataBloc),
-        child: NavigationView(
-          pane: NavigationPane(
-            selected: topIndex,
-            onChanged: (index) => setState(
-              () {
-                topIndex = index;
-              },
-            ),
-            displayMode: PaneDisplayMode.top,
-            items: pageItems,
-          ),
+    return NavigationView(
+      pane: NavigationPane(
+        selected: topIndex,
+        onChanged: (index) => setState(
+          () {
+            topIndex = index;
+          },
         ),
+        displayMode: PaneDisplayMode.top,
+        items: pageItems,
       ),
     );
   }

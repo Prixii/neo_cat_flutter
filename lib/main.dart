@@ -1,4 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/bloc.dart';
 import 'package:neo_cat_flutter/pages/hello/index.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
@@ -14,9 +17,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FluentApp(
-      theme: lightTheme,
-      home: const HelloPage(),
+    final relationChartDataBloc = RelationChartDataBloc();
+    return BlocProvider(
+      create: (context) => relationChartDataBloc,
+      child: BlocProvider(
+        create: (context) => TripletEditorBloc(dataBloc: relationChartDataBloc),
+        child: FluentApp(
+          theme: lightTheme,
+          home: const HelloPage(),
+        ),
+      ),
     );
   }
 }

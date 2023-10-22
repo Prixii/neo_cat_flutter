@@ -1,88 +1,76 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
 
+import '../../types/class_data.dart';
 import 'relation_chart_data_model.dart';
+part 'state.freezed.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-09 09
 
-class RelationChartDataState {
-  late RelationChartDataModel relationChartData;
-  late Map<NodeId, Node> nodeMap;
-  late Map<RelationId, Relation> relationMap;
-  late Map<NodeId, Position> positionMap;
+@freezed
+class RelationChartDataState with _$RelationChartDataState {
+  const factory RelationChartDataState({
+    required RelationChartDataModel relationChartData,
+    required Map<ClassName, ClassData> classMap,
+    required Map<NodeId, Node> nodeMap,
+    required Map<RelationId, Relation> relationMap,
+    required Map<NodeId, Position> positionMap,
+    required Map<ClassName, bool> classVisibilityMap,
+    required Map<ClassName, List<Node>> nodeToClassMap,
+  }) = _RelationChartDataState;
 
-  RelationChartDataState({
-    required this.relationChartData,
-    required this.nodeMap,
-    required this.positionMap,
-    required this.relationMap,
-  });
+  factory RelationChartDataState.initial() => RelationChartDataState(
+        relationChartData: RelationChartDataModel.initial(),
+        classMap: <ClassName, ClassData>{},
+        nodeMap: <NodeId, Node>{},
+        relationMap: <RelationId, Relation>{},
+        positionMap: <NodeId, Position>{},
+        classVisibilityMap: <ClassName, bool>{},
+        nodeToClassMap: <ClassName, List<Node>>{},
+      );
 
-  RelationChartDataState.initial()
-      : relationChartData = RelationChartDataModel.initial(),
-        nodeMap = <NodeId, Node>{},
-        positionMap = <NodeId, Position>{},
-        relationMap = <RelationId, Relation>{};
-
-  RelationChartDataState.fromJson(Map<String, dynamic> json) {
-    relationChartData = RelationChartDataModel.fromJson(json);
-    nodeMap = <NodeId, Node>{};
-    positionMap = <NodeId, Position>{};
-    relationMap = <RelationId, Relation>{};
-
+  factory RelationChartDataState.fromJson(Map<String, dynamic> json) {
+    var relationChartData = RelationChartDataModel.fromJson(json);
+    var nodeMap = <NodeId, Node>{};
     for (var node in relationChartData.nodeList) {
       nodeMap[node.id] = node;
     }
 
+    var relationMap = <RelationId, Relation>{};
     for (var relation in relationChartData.relationList) {
       relationMap[relation.id] = relation;
     }
-  }
+    // TODO 初始化的时候，生成一个positionMap
+    var positionMap = <NodeId, Position>{};
 
-  RelationChartDataState copyWith({
-    RelationChartDataModel? relationChartData,
-    Map<NodeId, Node>? nodeMap,
-    Map<RelationId, Relation>? relationMap,
-    Map<NodeId, Position>? positionMap,
-  }) =>
-      RelationChartDataState(
-        relationChartData: relationChartData ?? this.relationChartData,
-        nodeMap: nodeMap ?? this.nodeMap,
-        positionMap: positionMap ?? this.positionMap,
-        relationMap: this.relationMap,
-      );
-
-  Future<Map<NodeId, Position>> getAbsolutePositionMap(
-      {required Position center}) async {
-    var absolutePositionMap = positionMap;
-    for (var key in absolutePositionMap.keys) {
-      var relativePosition = absolutePositionMap[key];
-      if (relativePosition != null) {
-        var absolutePosition = (
-          relativePosition.$1 + center.$1,
-          relativePosition.$2 + center.$2,
-        );
-        absolutePositionMap[key] = absolutePosition;
-      }
+    var classVisibilityMap = <ClassName, bool>{};
+    for (var classData in relationChartData.classDataList) {
+      classVisibilityMap[classData.name] = true;
     }
-    return absolutePositionMap;
-  }
 
-  Future<void> generateRelativePositionMap() async {
-    for (var entry in positionMap.entries) {
-      var nodeId = entry.key;
-      var node = entry.value;
+    var nodeToClassMap = <ClassName, List<Node>>{};
+    for (var node in nodeMap.values) {
+      var nodeList = nodeToClassMap[node.className] ?? [];
+      nodeList.add(node);
+      nodeToClassMap[node.className] = nodeList;
     }
-  }
 
-  Triplet? getTriplet(Relation relation) {
-    Node? sourceNode = nodeMap[relation.sourceNodeId];
-    Node? endNode = nodeMap[relation.endNodeId];
-    if (sourceNode != null && endNode != null) {
-      return (sourceNode, relation, endNode);
+    var classMap = <ClassName, ClassData>{};
+    for (var classData in relationChartData.classDataList) {
+      classMap[classData.name] = classData;
     }
-    return null;
+
+    return RelationChartDataState(
+      relationChartData: relationChartData,
+      classMap: classMap,
+      nodeMap: nodeMap,
+      positionMap: positionMap,
+      relationMap: relationMap,
+      classVisibilityMap: classVisibilityMap,
+      nodeToClassMap: nodeToClassMap,
+    );
   }
 }

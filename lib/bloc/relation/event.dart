@@ -1,3 +1,4 @@
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/relation_chart_data_model.dart';
 import 'package:neo_cat_flutter/types/relation.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
@@ -5,7 +6,7 @@ import 'package:neo_cat_flutter/types/typdef.dart';
 /// @author wang.jiaqi
 /// @date 2023-10-09 15
 
-abstract class RelationBrowserEvent {
+abstract class RelationBrowserEvent extends RelationChartDataEvent {
   RelationBrowserEvent();
 }
 
