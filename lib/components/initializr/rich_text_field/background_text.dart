@@ -15,8 +15,11 @@ class BackgroundText extends SpecialText {
   final Color? backgroundColor;
 
   Color getColor(ClassName label) {
-    var color =
-        relationChartDataBloc(context).state.classMap[label]?.color.toColor();
+    var color = relationChartDataBloc(context)
+        .state
+        .classMap[label.trim()]
+        ?.color
+        .toColor();
     return color ?? Colors.blue.withOpacity(0.15);
   }
 
@@ -49,7 +52,7 @@ class BackgroundText extends SpecialText {
         TextSpan(
           text: fullText,
           style: textStyle.copyWith(
-            background: Paint()..color = label.toColor(),
+            background: Paint()..color = getColor(label),
           ),
           recognizer: TapGestureRecognizer()..onTap = () => fullText = "",
         )

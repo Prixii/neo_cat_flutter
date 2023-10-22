@@ -28,7 +28,7 @@ class _ClassTileState extends State<ClassTile> {
     var head = newText.substring(0, start);
     var center = newText.substring(start, end);
     var tail = newText.substring(end);
-    newText = "$head€red£$center $tail";
+    newText = "$head€${widget.className}£$center $tail";
     controller.text = newText;
   }
 
