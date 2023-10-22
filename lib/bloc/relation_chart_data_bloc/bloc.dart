@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/types/class_data.dart';
 
 import '../../types/node.dart';
 import '../../types/relation.dart';
 import '../../types/typdef.dart';
 import '../../utils/common_util.dart';
-import '../class_browser_bloc/event.dart';
-import '../relation_browser_bloc/event.dart';
+import '../label/event.dart';
+import '../relation/event.dart';
 import 'event.dart';
 import 'state.dart';
 
@@ -27,6 +28,7 @@ class RelationChartDataBloc
     on<DeleteClassData>((event, emit) => emit(_handleDeleteClass(event)));
     on<UpdateRelation>((event, emit) => emit(_handleUpdateRelation(event)));
     on<DeleteRelation>((event, emit) => emit(_handleDeleteRelation(event)));
+    on<CreateLabel>((event, emit) => emit(_handleCreateLabel(event)));
   }
 
   RelationChartDataState _handleInitRelationChartData(
@@ -106,6 +108,13 @@ class RelationChartDataBloc
   RelationChartDataState _handleDeleteRelation(DeleteRelation event) {
     return state.copyWith(
         relationMap: state.relationMap..remove(event.targetId));
+  }
+
+  RelationChartDataState _handleCreateLabel(CreateLabel event) {
+    var labelMap = <ClassName, ClassData>{}..addAll(state.classMap);
+    labelMap[event.classData.name] = event.classData;
+    logger.d(labelMap);
+    return state.copyWith(classMap: labelMap);
   }
 
   Future<void> generateRelativePositionMap() async {

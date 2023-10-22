@@ -6,26 +6,26 @@ import 'package:neo_cat_flutter/types/typdef.dart';
 /// @author wang.jiaqi
 /// @date 2023-10-09 14
 
-abstract class ClassBrowserEvent extends RelationChartDataEvent {
-  ClassBrowserEvent();
+abstract class LabelEvent extends RelationChartDataEvent {
+  LabelEvent();
 }
 
 /// 使用RelationChartData中的 [model] 来初始化
-class InitClassBrowserState extends ClassBrowserEvent {
+class InitClassBrowserState extends LabelEvent {
   final RelationChartDataModel model;
 
   InitClassBrowserState({required this.model});
 }
 
 /// 设置 [className] 的可见性
-class SetClassVisibility extends ClassBrowserEvent {
+class SetClassVisibility extends LabelEvent {
   final ClassName className;
 
   SetClassVisibility({required this.className});
 }
 
 /// 更新某个类的数据到 [classData]
-class UpdateClassData extends ClassBrowserEvent {
+class UpdateClassData extends LabelEvent {
   final ClassData classData;
   final ClassName oldName;
 
@@ -33,8 +33,14 @@ class UpdateClassData extends ClassBrowserEvent {
 }
 
 /// 删除名为 [className] 的类
-class DeleteClassData extends ClassBrowserEvent {
+class DeleteClassData extends LabelEvent {
   final ClassName className;
 
   DeleteClassData({required this.className});
+}
+
+class CreateLabel extends LabelEvent {
+  final ClassData classData;
+
+  CreateLabel({required this.classData});
 }

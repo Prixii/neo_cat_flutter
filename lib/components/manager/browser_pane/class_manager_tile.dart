@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/bloc/class_browser_bloc/event.dart';
+import 'package:neo_cat_flutter/bloc/label/event.dart';
 import 'package:neo_cat_flutter/components/common/popup_menu/menu_options.dart';
 import 'package:neo_cat_flutter/types/class_data.dart';
 import 'package:neo_cat_flutter/types/node.dart';

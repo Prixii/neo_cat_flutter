@@ -2,8 +2,11 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/bloc/label/event.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/types/class_data.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
 void showCreateClassDialog(BuildContext context) async {
@@ -27,6 +30,19 @@ class ClassCreator extends StatefulWidget {
 
 class _ClassCreatorState extends State<ClassCreator> {
   Color pickerColor = Colors.blue;
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  void _createLabel() {
+    var labelData = ClassData(
+        name: _controller.text, properties: [], color: pickerColor.toHex());
+    relationChartDataBloc(context).add(CreateLabel(classData: labelData));
+  }
 
   Widget _titleBuilder() {
     return Padding(
@@ -91,7 +107,10 @@ class _ClassCreatorState extends State<ClassCreator> {
       Expanded(
         flex: 2,
         child: GestureDetector(
-          onTap: () => {Navigator.pop(context)},
+          onTap: () {
+            Navigator.pop(context);
+            _createLabel();
+          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
@@ -132,8 +151,9 @@ class _ClassCreatorState extends State<ClassCreator> {
                 child: Row(
                   children: [
                     const SizedBox(width: 20),
-                    const Expanded(
+                    Expanded(
                       child: TextBox(
+                        controller: _controller,
                         autofocus: true,
                         placeholder: 'Class Name',
                       ),
