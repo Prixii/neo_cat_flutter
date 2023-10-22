@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/types/class_data.dart';
 
+import '../../types/label_data.dart';
 import '../../types/node.dart';
 import '../../types/relation.dart';
 import '../../types/typdef.dart';
@@ -20,8 +20,6 @@ class RelationChartDataBloc
   RelationChartDataBloc() : super(RelationChartDataState.initial()) {
     on<InitRelationChartData>(
         (event, emit) => emit(_handleInitRelationChartData(event)));
-    on<ReplacePositionMap>(
-        (event, emit) => emit(_handleReplacePositionMap(event)));
     on<SetClassVisibility>(
         (event, emit) => emit(_handleSetClassVisibility(event)));
     on<UpdateClassData>((event, emit) => emit(_handleUpdateClassData(event)));
@@ -37,13 +35,6 @@ class RelationChartDataBloc
     var state = RelationChartDataState.fromJson(jsonDecode(event.rawData));
     logger.i('[relationChartDataEvent]: initRelationChartData!');
     return state;
-  }
-
-  RelationChartDataState _handleReplacePositionMap(
-    ReplacePositionMap event,
-  ) {
-    logger.i('[relationChartDataEvent]: replacePositionMap!');
-    return state.copyWith(positionMap: event.positionMap);
   }
 
   RelationChartDataState _handleSetClassVisibility(SetClassVisibility event) {
@@ -111,42 +102,21 @@ class RelationChartDataBloc
   }
 
   RelationChartDataState _handleCreateLabel(CreateLabel event) {
-    var labelMap = <ClassName, ClassData>{}..addAll(state.classMap);
+    var labelMap = <LabelName, LabelData>{}..addAll(state.classMap);
     labelMap[event.classData.name] = event.classData;
     logger.d(labelMap);
     return state.copyWith(classMap: labelMap);
   }
 
-  Future<void> generateRelativePositionMap() async {
-    // TODO 计算关系相对坐标
-  }
-
-  /// 根据 [center] 返回关系的绝对坐标
-  Future<Map<NodeId, Position>> getAbsolutePositionMap(
-      {required Position center}) async {
-    var absolutePositionMap = state.positionMap;
-    for (var key in absolutePositionMap.keys) {
-      var relativePosition = absolutePositionMap[key];
-      if (relativePosition != null) {
-        var absolutePosition = (
-          relativePosition.$1 + center.$1,
-          relativePosition.$2 + center.$2,
-        );
-        absolutePositionMap[key] = absolutePosition;
-      }
-    }
-    return absolutePositionMap;
-  }
-
   Triplet? getTriplet(Relation relation) {
-    Node? sourceNode = state.nodeMap[relation.sourceNodeId];
-    Node? endNode = state.nodeMap[relation.endNodeId];
+    Node? sourceNode = state.nodeMap[relation.start];
+    Node? endNode = state.nodeMap[relation.end];
     if (sourceNode != null && endNode != null) {
       return (sourceNode, relation, endNode);
     }
     return null;
   }
 
-  int instanceCount(ClassName className) =>
+  int instanceCount(LabelName className) =>
       state.nodeToClassMap[className]?.length ?? 0;
 }

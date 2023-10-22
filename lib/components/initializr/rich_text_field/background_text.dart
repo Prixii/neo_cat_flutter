@@ -14,7 +14,7 @@ class BackgroundText extends SpecialText {
   final BuildContext context;
   final Color? backgroundColor;
 
-  Color getColor(ClassName label) {
+  Color getColor(LabelName label) {
     var color = relationChartDataBloc(context)
         .state
         .classMap[label.trim()]

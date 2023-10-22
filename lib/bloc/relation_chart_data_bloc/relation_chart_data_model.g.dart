@@ -15,8 +15,8 @@ _$RelationChartDataModelImpl _$$RelationChartDataModelImplFromJson(
       relationList: (json['relationList'] as List<dynamic>)
           .map((e) => Relation.fromJson(e as Map<String, dynamic>))
           .toList(),
-      classDataList: (json['classDataList'] as List<dynamic>)
-          .map((e) => ClassData.fromJson(e as Map<String, dynamic>))
+      labelDataList: (json['labelDataList'] as List<dynamic>)
+          .map((e) => LabelData.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -25,5 +25,5 @@ Map<String, dynamic> _$$RelationChartDataModelImplToJson(
     <String, dynamic>{
       'nodeList': instance.nodeList,
       'relationList': instance.relationList,
-      'classDataList': instance.classDataList,
+      'labelDataList': instance.labelDataList,
     };

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
 part 'node.g.dart';
 part 'node.freezed.dart';
 
@@ -9,9 +10,9 @@ part 'node.freezed.dart';
 class Node with _$Node {
   const factory Node({
     required String name,
-    required String id,
-    required String className,
-    @Default(30) int symbolSize,
+    required Map<String, dynamic>? properties,
+    required NodeId id,
+    required LabelName label,
   }) = _Node;
 
   factory Node.fromJson(Map<String, dynamic> json) => _$NodeFromJson(json);

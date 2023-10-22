@@ -5,11 +5,11 @@ import 'node.dart';
 
 typedef Position = (double, double);
 
-typedef NodeId = String;
+typedef NodeId = int;
 
-typedef RelationId = String;
+typedef RelationId = int;
 
-typedef ClassName = String;
+typedef LabelName = String;
 
 typedef Triplet = (Node, Relation, Node);
 

@@ -20,10 +20,10 @@ Relation _$RelationFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Relation {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get sourceNodeId => throw _privateConstructorUsedError;
-  String get endNodeId => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  int get start => throw _privateConstructorUsedError;
+  int get end => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,7 @@ abstract class $RelationCopyWith<$Res> {
   factory $RelationCopyWith(Relation value, $Res Function(Relation) then) =
       _$RelationCopyWithImpl<$Res, Relation>;
   @useResult
-  $Res call({String id, String name, String sourceNodeId, String endNodeId});
+  $Res call({int id, String type, int start, int end});
 }
 
 /// @nodoc
@@ -53,27 +53,27 @@ class _$RelationCopyWithImpl<$Res, $Val extends Relation>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
-    Object? sourceNodeId = null,
-    Object? endNodeId = null,
+    Object? type = null,
+    Object? start = null,
+    Object? end = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      sourceNodeId: null == sourceNodeId
-          ? _value.sourceNodeId
-          : sourceNodeId // ignore: cast_nullable_to_non_nullable
-              as String,
-      endNodeId: null == endNodeId
-          ? _value.endNodeId
-          : endNodeId // ignore: cast_nullable_to_non_nullable
-              as String,
+      start: null == start
+          ? _value.start
+          : start // ignore: cast_nullable_to_non_nullable
+              as int,
+      end: null == end
+          ? _value.end
+          : end // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -86,7 +86,7 @@ abstract class _$$RelationImplCopyWith<$Res>
       __$$RelationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String sourceNodeId, String endNodeId});
+  $Res call({int id, String type, int start, int end});
 }
 
 /// @nodoc
@@ -101,27 +101,27 @@ class __$$RelationImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
-    Object? sourceNodeId = null,
-    Object? endNodeId = null,
+    Object? type = null,
+    Object? start = null,
+    Object? end = null,
   }) {
     return _then(_$RelationImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      sourceNodeId: null == sourceNodeId
-          ? _value.sourceNodeId
-          : sourceNodeId // ignore: cast_nullable_to_non_nullable
-              as String,
-      endNodeId: null == endNodeId
-          ? _value.endNodeId
-          : endNodeId // ignore: cast_nullable_to_non_nullable
-              as String,
+      start: null == start
+          ? _value.start
+          : start // ignore: cast_nullable_to_non_nullable
+              as int,
+      end: null == end
+          ? _value.end
+          : end // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -131,25 +131,25 @@ class __$$RelationImplCopyWithImpl<$Res>
 class _$RelationImpl implements _Relation {
   const _$RelationImpl(
       {required this.id,
-      required this.name,
-      required this.sourceNodeId,
-      required this.endNodeId});
+      required this.type,
+      required this.start,
+      required this.end});
 
   factory _$RelationImpl.fromJson(Map<String, dynamic> json) =>
       _$$RelationImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
-  final String name;
+  final String type;
   @override
-  final String sourceNodeId;
+  final int start;
   @override
-  final String endNodeId;
+  final int end;
 
   @override
   String toString() {
-    return 'Relation(id: $id, name: $name, sourceNodeId: $sourceNodeId, endNodeId: $endNodeId)';
+    return 'Relation(id: $id, type: $type, start: $start, end: $end)';
   }
 
   @override
@@ -158,17 +158,14 @@ class _$RelationImpl implements _Relation {
         (other.runtimeType == runtimeType &&
             other is _$RelationImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.sourceNodeId, sourceNodeId) ||
-                other.sourceNodeId == sourceNodeId) &&
-            (identical(other.endNodeId, endNodeId) ||
-                other.endNodeId == endNodeId));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.start, start) || other.start == start) &&
+            (identical(other.end, end) || other.end == end));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, sourceNodeId, endNodeId);
+  int get hashCode => Object.hash(runtimeType, id, type, start, end);
 
   @JsonKey(ignore: true)
   @override
@@ -186,22 +183,22 @@ class _$RelationImpl implements _Relation {
 
 abstract class _Relation implements Relation {
   const factory _Relation(
-      {required final String id,
-      required final String name,
-      required final String sourceNodeId,
-      required final String endNodeId}) = _$RelationImpl;
+      {required final int id,
+      required final String type,
+      required final int start,
+      required final int end}) = _$RelationImpl;
 
   factory _Relation.fromJson(Map<String, dynamic> json) =
       _$RelationImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
-  String get name;
+  String get type;
   @override
-  String get sourceNodeId;
+  int get start;
   @override
-  String get endNodeId;
+  int get end;
   @override
   @JsonKey(ignore: true)
   _$$RelationImplCopyWith<_$RelationImpl> get copyWith =>

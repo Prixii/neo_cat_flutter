@@ -18,11 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RelationChartDataState {
   RelationChartDataModel get relationChartData =>
       throw _privateConstructorUsedError;
-  Map<String, ClassData> get classMap => throw _privateConstructorUsedError;
-  Map<String, Node> get nodeMap => throw _privateConstructorUsedError;
-  Map<String, Relation> get relationMap => throw _privateConstructorUsedError;
-  Map<String, (double, double)> get positionMap =>
-      throw _privateConstructorUsedError;
+  Map<String, LabelData> get classMap => throw _privateConstructorUsedError;
+  Map<int, Node> get nodeMap => throw _privateConstructorUsedError;
+  Map<int, Relation> get relationMap => throw _privateConstructorUsedError;
   Map<String, bool> get classVisibilityMap =>
       throw _privateConstructorUsedError;
   Map<String, List<Node>> get nodeToClassMap =>
@@ -41,10 +39,9 @@ abstract class $RelationChartDataStateCopyWith<$Res> {
   @useResult
   $Res call(
       {RelationChartDataModel relationChartData,
-      Map<String, ClassData> classMap,
-      Map<String, Node> nodeMap,
-      Map<String, Relation> relationMap,
-      Map<String, (double, double)> positionMap,
+      Map<String, LabelData> classMap,
+      Map<int, Node> nodeMap,
+      Map<int, Relation> relationMap,
       Map<String, bool> classVisibilityMap,
       Map<String, List<Node>> nodeToClassMap});
 
@@ -69,7 +66,6 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
     Object? classMap = null,
     Object? nodeMap = null,
     Object? relationMap = null,
-    Object? positionMap = null,
     Object? classVisibilityMap = null,
     Object? nodeToClassMap = null,
   }) {
@@ -81,19 +77,15 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
       classMap: null == classMap
           ? _value.classMap
           : classMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, ClassData>,
+              as Map<String, LabelData>,
       nodeMap: null == nodeMap
           ? _value.nodeMap
           : nodeMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Node>,
+              as Map<int, Node>,
       relationMap: null == relationMap
           ? _value.relationMap
           : relationMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Relation>,
-      positionMap: null == positionMap
-          ? _value.positionMap
-          : positionMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, (double, double)>,
+              as Map<int, Relation>,
       classVisibilityMap: null == classVisibilityMap
           ? _value.classVisibilityMap
           : classVisibilityMap // ignore: cast_nullable_to_non_nullable
@@ -126,10 +118,9 @@ abstract class _$$RelationChartDataStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {RelationChartDataModel relationChartData,
-      Map<String, ClassData> classMap,
-      Map<String, Node> nodeMap,
-      Map<String, Relation> relationMap,
-      Map<String, (double, double)> positionMap,
+      Map<String, LabelData> classMap,
+      Map<int, Node> nodeMap,
+      Map<int, Relation> relationMap,
       Map<String, bool> classVisibilityMap,
       Map<String, List<Node>> nodeToClassMap});
 
@@ -154,7 +145,6 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
     Object? classMap = null,
     Object? nodeMap = null,
     Object? relationMap = null,
-    Object? positionMap = null,
     Object? classVisibilityMap = null,
     Object? nodeToClassMap = null,
   }) {
@@ -166,19 +156,15 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
       classMap: null == classMap
           ? _value._classMap
           : classMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, ClassData>,
+              as Map<String, LabelData>,
       nodeMap: null == nodeMap
           ? _value._nodeMap
           : nodeMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Node>,
+              as Map<int, Node>,
       relationMap: null == relationMap
           ? _value._relationMap
           : relationMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Relation>,
-      positionMap: null == positionMap
-          ? _value._positionMap
-          : positionMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, (double, double)>,
+              as Map<int, Relation>,
       classVisibilityMap: null == classVisibilityMap
           ? _value._classVisibilityMap
           : classVisibilityMap // ignore: cast_nullable_to_non_nullable
@@ -196,51 +182,41 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
 class _$RelationChartDataStateImpl implements _RelationChartDataState {
   const _$RelationChartDataStateImpl(
       {required this.relationChartData,
-      required final Map<String, ClassData> classMap,
-      required final Map<String, Node> nodeMap,
-      required final Map<String, Relation> relationMap,
-      required final Map<String, (double, double)> positionMap,
+      required final Map<String, LabelData> classMap,
+      required final Map<int, Node> nodeMap,
+      required final Map<int, Relation> relationMap,
       required final Map<String, bool> classVisibilityMap,
       required final Map<String, List<Node>> nodeToClassMap})
       : _classMap = classMap,
         _nodeMap = nodeMap,
         _relationMap = relationMap,
-        _positionMap = positionMap,
         _classVisibilityMap = classVisibilityMap,
         _nodeToClassMap = nodeToClassMap;
 
   @override
   final RelationChartDataModel relationChartData;
-  final Map<String, ClassData> _classMap;
+  final Map<String, LabelData> _classMap;
   @override
-  Map<String, ClassData> get classMap {
+  Map<String, LabelData> get classMap {
     if (_classMap is EqualUnmodifiableMapView) return _classMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_classMap);
   }
 
-  final Map<String, Node> _nodeMap;
+  final Map<int, Node> _nodeMap;
   @override
-  Map<String, Node> get nodeMap {
+  Map<int, Node> get nodeMap {
     if (_nodeMap is EqualUnmodifiableMapView) return _nodeMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_nodeMap);
   }
 
-  final Map<String, Relation> _relationMap;
+  final Map<int, Relation> _relationMap;
   @override
-  Map<String, Relation> get relationMap {
+  Map<int, Relation> get relationMap {
     if (_relationMap is EqualUnmodifiableMapView) return _relationMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_relationMap);
-  }
-
-  final Map<String, (double, double)> _positionMap;
-  @override
-  Map<String, (double, double)> get positionMap {
-    if (_positionMap is EqualUnmodifiableMapView) return _positionMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_positionMap);
   }
 
   final Map<String, bool> _classVisibilityMap;
@@ -262,7 +238,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
 
   @override
   String toString() {
-    return 'RelationChartDataState(relationChartData: $relationChartData, classMap: $classMap, nodeMap: $nodeMap, relationMap: $relationMap, positionMap: $positionMap, classVisibilityMap: $classVisibilityMap, nodeToClassMap: $nodeToClassMap)';
+    return 'RelationChartDataState(relationChartData: $relationChartData, classMap: $classMap, nodeMap: $nodeMap, relationMap: $relationMap, classVisibilityMap: $classVisibilityMap, nodeToClassMap: $nodeToClassMap)';
   }
 
   @override
@@ -277,8 +253,6 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
             const DeepCollectionEquality()
                 .equals(other._relationMap, _relationMap) &&
             const DeepCollectionEquality()
-                .equals(other._positionMap, _positionMap) &&
-            const DeepCollectionEquality()
                 .equals(other._classVisibilityMap, _classVisibilityMap) &&
             const DeepCollectionEquality()
                 .equals(other._nodeToClassMap, _nodeToClassMap));
@@ -291,7 +265,6 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
       const DeepCollectionEquality().hash(_classMap),
       const DeepCollectionEquality().hash(_nodeMap),
       const DeepCollectionEquality().hash(_relationMap),
-      const DeepCollectionEquality().hash(_positionMap),
       const DeepCollectionEquality().hash(_classVisibilityMap),
       const DeepCollectionEquality().hash(_nodeToClassMap));
 
@@ -306,10 +279,9 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
 abstract class _RelationChartDataState implements RelationChartDataState {
   const factory _RelationChartDataState(
           {required final RelationChartDataModel relationChartData,
-          required final Map<String, ClassData> classMap,
-          required final Map<String, Node> nodeMap,
-          required final Map<String, Relation> relationMap,
-          required final Map<String, (double, double)> positionMap,
+          required final Map<String, LabelData> classMap,
+          required final Map<int, Node> nodeMap,
+          required final Map<int, Relation> relationMap,
           required final Map<String, bool> classVisibilityMap,
           required final Map<String, List<Node>> nodeToClassMap}) =
       _$RelationChartDataStateImpl;
@@ -317,13 +289,11 @@ abstract class _RelationChartDataState implements RelationChartDataState {
   @override
   RelationChartDataModel get relationChartData;
   @override
-  Map<String, ClassData> get classMap;
+  Map<String, LabelData> get classMap;
   @override
-  Map<String, Node> get nodeMap;
+  Map<int, Node> get nodeMap;
   @override
-  Map<String, Relation> get relationMap;
-  @override
-  Map<String, (double, double)> get positionMap;
+  Map<int, Relation> get relationMap;
   @override
   Map<String, bool> get classVisibilityMap;
   @override

@@ -5,7 +5,7 @@ import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/class_setter.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/class_tile.dart';
-import 'package:neo_cat_flutter/types/class_data.dart';
+import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
@@ -16,7 +16,7 @@ Widget elevatedClassMenuBuilder({
   required ExtendedEditableTextState editableTextState,
   required RichTextEditingController controller,
 }) {
-  List<ClassData> getClassData() =>
+  List<LabelData> getClassData() =>
       relationChartDataBloc(context).state.classMap.values.toList();
 
   return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(

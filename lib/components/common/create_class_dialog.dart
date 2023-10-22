@@ -5,7 +5,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/bloc/label/event.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
-import 'package:neo_cat_flutter/types/class_data.dart';
+import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
@@ -39,7 +39,7 @@ class _ClassCreatorState extends State<ClassCreator> {
   }
 
   void _createLabel() {
-    var labelData = ClassData(
+    var labelData = LabelData(
         name: _controller.text, properties: [], color: pickerColor.toHex());
     relationChartDataBloc(context).add(CreateLabel(classData: labelData));
   }

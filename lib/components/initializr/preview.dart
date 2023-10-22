@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/components/common/relation_chart.dart';
+import 'package:neo_cat_flutter/components/common/test/directed_graphview.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_field.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
@@ -63,14 +63,10 @@ class _PreviewState extends State<Preview> {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return Container(
-                  decoration: normalBoxDecoration.copyWith(
-                    border: normalBorder,
-                  ),
-                  child: RelationChart(
-                    width: constraints.maxWidth,
-                    height: constraints.maxHeight,
-                  ),
-                );
+                    decoration: normalBoxDecoration.copyWith(
+                      border: normalBorder,
+                    ),
+                    child: const GraphClusterViewPage());
               },
             ),
           ),

@@ -78,7 +78,7 @@ class _TripletTileState extends State<TripletTile> {
               flex: 1,
               child: Center(
                 child: Text(
-                  relation.name,
+                  relation.type,
                   style: defaultTextBlack,
                 ),
               ),

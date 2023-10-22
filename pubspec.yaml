@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   bloc: ^8.1.2
+  collection: ^1.17.2
   dio: ^5.3.3
   extended_text: ^11.1.0
   extended_text_field: ^12.1.0
@@ -22,6 +23,7 @@ dependencies:
   freezed: ^2.4.5
   freezed_annotation: ^2.4.1
   graphview: ^1.2.0
+  json_annotation: ^4.8.1
   json_serializable: ^6.7.1
   logger: ^2.0.2+1
   shared_preferences: ^2.2.1

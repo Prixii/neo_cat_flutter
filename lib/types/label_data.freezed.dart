@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'class_data.dart';
+part of 'label_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,34 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ClassData _$ClassDataFromJson(Map<String, dynamic> json) {
-  return _ClassData.fromJson(json);
+LabelData _$LabelDataFromJson(Map<String, dynamic> json) {
+  return _LabelData.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ClassData {
+mixin _$LabelData {
   String get name => throw _privateConstructorUsedError;
   List<String> get properties => throw _privateConstructorUsedError;
   String get color => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ClassDataCopyWith<ClassData> get copyWith =>
+  $LabelDataCopyWith<LabelData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ClassDataCopyWith<$Res> {
-  factory $ClassDataCopyWith(ClassData value, $Res Function(ClassData) then) =
-      _$ClassDataCopyWithImpl<$Res, ClassData>;
+abstract class $LabelDataCopyWith<$Res> {
+  factory $LabelDataCopyWith(LabelData value, $Res Function(LabelData) then) =
+      _$LabelDataCopyWithImpl<$Res, LabelData>;
   @useResult
   $Res call({String name, List<String> properties, String color});
 }
 
 /// @nodoc
-class _$ClassDataCopyWithImpl<$Res, $Val extends ClassData>
-    implements $ClassDataCopyWith<$Res> {
-  _$ClassDataCopyWithImpl(this._value, this._then);
+class _$LabelDataCopyWithImpl<$Res, $Val extends LabelData>
+    implements $LabelDataCopyWith<$Res> {
+  _$LabelDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -73,22 +73,22 @@ class _$ClassDataCopyWithImpl<$Res, $Val extends ClassData>
 }
 
 /// @nodoc
-abstract class _$$ClassDataImplCopyWith<$Res>
-    implements $ClassDataCopyWith<$Res> {
-  factory _$$ClassDataImplCopyWith(
-          _$ClassDataImpl value, $Res Function(_$ClassDataImpl) then) =
-      __$$ClassDataImplCopyWithImpl<$Res>;
+abstract class _$$LabelDataImplCopyWith<$Res>
+    implements $LabelDataCopyWith<$Res> {
+  factory _$$LabelDataImplCopyWith(
+          _$LabelDataImpl value, $Res Function(_$LabelDataImpl) then) =
+      __$$LabelDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, List<String> properties, String color});
 }
 
 /// @nodoc
-class __$$ClassDataImplCopyWithImpl<$Res>
-    extends _$ClassDataCopyWithImpl<$Res, _$ClassDataImpl>
-    implements _$$ClassDataImplCopyWith<$Res> {
-  __$$ClassDataImplCopyWithImpl(
-      _$ClassDataImpl _value, $Res Function(_$ClassDataImpl) _then)
+class __$$LabelDataImplCopyWithImpl<$Res>
+    extends _$LabelDataCopyWithImpl<$Res, _$LabelDataImpl>
+    implements _$$LabelDataImplCopyWith<$Res> {
+  __$$LabelDataImplCopyWithImpl(
+      _$LabelDataImpl _value, $Res Function(_$LabelDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -98,7 +98,7 @@ class __$$ClassDataImplCopyWithImpl<$Res>
     Object? properties = null,
     Object? color = null,
   }) {
-    return _then(_$ClassDataImpl(
+    return _then(_$LabelDataImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -117,20 +117,21 @@ class __$$ClassDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ClassDataImpl implements _ClassData {
-  const _$ClassDataImpl(
+class _$LabelDataImpl implements _LabelData {
+  const _$LabelDataImpl(
       {required this.name,
-      required final List<String> properties,
-      required this.color})
+      final List<String> properties = const [],
+      this.color = 'ff4e6ef2'})
       : _properties = properties;
 
-  factory _$ClassDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ClassDataImplFromJson(json);
+  factory _$LabelDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LabelDataImplFromJson(json);
 
   @override
   final String name;
   final List<String> _properties;
   @override
+  @JsonKey()
   List<String> get properties {
     if (_properties is EqualUnmodifiableListView) return _properties;
     // ignore: implicit_dynamic_type
@@ -138,18 +139,19 @@ class _$ClassDataImpl implements _ClassData {
   }
 
   @override
+  @JsonKey()
   final String color;
 
   @override
   String toString() {
-    return 'ClassData(name: $name, properties: $properties, color: $color)';
+    return 'LabelData(name: $name, properties: $properties, color: $color)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ClassDataImpl &&
+            other is _$LabelDataImpl &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
                 .equals(other._properties, _properties) &&
@@ -164,25 +166,25 @@ class _$ClassDataImpl implements _ClassData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ClassDataImplCopyWith<_$ClassDataImpl> get copyWith =>
-      __$$ClassDataImplCopyWithImpl<_$ClassDataImpl>(this, _$identity);
+  _$$LabelDataImplCopyWith<_$LabelDataImpl> get copyWith =>
+      __$$LabelDataImplCopyWithImpl<_$LabelDataImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ClassDataImplToJson(
+    return _$$LabelDataImplToJson(
       this,
     );
   }
 }
 
-abstract class _ClassData implements ClassData {
-  const factory _ClassData(
+abstract class _LabelData implements LabelData {
+  const factory _LabelData(
       {required final String name,
-      required final List<String> properties,
-      required final String color}) = _$ClassDataImpl;
+      final List<String> properties,
+      final String color}) = _$LabelDataImpl;
 
-  factory _ClassData.fromJson(Map<String, dynamic> json) =
-      _$ClassDataImpl.fromJson;
+  factory _LabelData.fromJson(Map<String, dynamic> json) =
+      _$LabelDataImpl.fromJson;
 
   @override
   String get name;
@@ -192,6 +194,6 @@ abstract class _ClassData implements ClassData {
   String get color;
   @override
   @JsonKey(ignore: true)
-  _$$ClassDataImplCopyWith<_$ClassDataImpl> get copyWith =>
+  _$$LabelDataImplCopyWith<_$LabelDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

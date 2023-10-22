@@ -8,15 +8,15 @@ part of 'node.dart';
 
 _$NodeImpl _$$NodeImplFromJson(Map<String, dynamic> json) => _$NodeImpl(
       name: json['name'] as String,
-      id: json['id'] as String,
-      className: json['className'] as String,
-      symbolSize: json['symbolSize'] as int? ?? 30,
+      properties: json['properties'] as Map<String, dynamic>?,
+      id: json['id'] as int,
+      label: json['label'] as String,
     );
 
 Map<String, dynamic> _$$NodeImplToJson(_$NodeImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
+      'properties': instance.properties,
       'id': instance.id,
-      'className': instance.className,
-      'symbolSize': instance.symbolSize,
+      'label': instance.label,
     };

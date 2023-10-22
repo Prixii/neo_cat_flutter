@@ -47,7 +47,7 @@ class _TripletEditorState extends State<TripletEditor> {
   String _getRelationName() {
     Relation? relation = _getTripletEditorBloc().state.relation;
     if (relation != null) {
-      return relation.name;
+      return relation.type;
     }
     return '待选择';
   }

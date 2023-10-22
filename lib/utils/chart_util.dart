@@ -10,7 +10,7 @@ Future<List<Node>> getNodesByClass(
       context.read<RelationChartDataBloc>().state.relationChartData.nodeList;
   List<Node> resultList = [];
   for (var node in nodeList) {
-    if (node.className == className) {
+    if (node.label == className) {
       resultList.add(node);
     }
   }

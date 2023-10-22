@@ -21,9 +21,9 @@ Node _$NodeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Node {
   String get name => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
-  String get className => throw _privateConstructorUsedError;
-  int get symbolSize => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get properties => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,8 @@ abstract class $NodeCopyWith<$Res> {
   factory $NodeCopyWith(Node value, $Res Function(Node) then) =
       _$NodeCopyWithImpl<$Res, Node>;
   @useResult
-  $Res call({String name, String id, String className, int symbolSize});
+  $Res call(
+      {String name, Map<String, dynamic>? properties, int id, String label});
 }
 
 /// @nodoc
@@ -52,27 +53,27 @@ class _$NodeCopyWithImpl<$Res, $Val extends Node>
   @override
   $Res call({
     Object? name = null,
+    Object? properties = freezed,
     Object? id = null,
-    Object? className = null,
-    Object? symbolSize = null,
+    Object? label = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      properties: freezed == properties
+          ? _value.properties
+          : properties // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      className: null == className
-          ? _value.className
-          : className // ignore: cast_nullable_to_non_nullable
-              as String,
-      symbolSize: null == symbolSize
-          ? _value.symbolSize
-          : symbolSize // ignore: cast_nullable_to_non_nullable
               as int,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -84,7 +85,8 @@ abstract class _$$NodeImplCopyWith<$Res> implements $NodeCopyWith<$Res> {
       __$$NodeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String id, String className, int symbolSize});
+  $Res call(
+      {String name, Map<String, dynamic>? properties, int id, String label});
 }
 
 /// @nodoc
@@ -98,27 +100,27 @@ class __$$NodeImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? properties = freezed,
     Object? id = null,
-    Object? className = null,
-    Object? symbolSize = null,
+    Object? label = null,
   }) {
     return _then(_$NodeImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      properties: freezed == properties
+          ? _value._properties
+          : properties // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      className: null == className
-          ? _value.className
-          : className // ignore: cast_nullable_to_non_nullable
-              as String,
-      symbolSize: null == symbolSize
-          ? _value.symbolSize
-          : symbolSize // ignore: cast_nullable_to_non_nullable
               as int,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -128,26 +130,34 @@ class __$$NodeImplCopyWithImpl<$Res>
 class _$NodeImpl implements _Node {
   const _$NodeImpl(
       {required this.name,
+      required final Map<String, dynamic>? properties,
       required this.id,
-      required this.className,
-      this.symbolSize = 30});
+      required this.label})
+      : _properties = properties;
 
   factory _$NodeImpl.fromJson(Map<String, dynamic> json) =>
       _$$NodeImplFromJson(json);
 
   @override
   final String name;
+  final Map<String, dynamic>? _properties;
   @override
-  final String id;
+  Map<String, dynamic>? get properties {
+    final value = _properties;
+    if (value == null) return null;
+    if (_properties is EqualUnmodifiableMapView) return _properties;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
-  final String className;
+  final int id;
   @override
-  @JsonKey()
-  final int symbolSize;
+  final String label;
 
   @override
   String toString() {
-    return 'Node(name: $name, id: $id, className: $className, symbolSize: $symbolSize)';
+    return 'Node(name: $name, properties: $properties, id: $id, label: $label)';
   }
 
   @override
@@ -156,16 +166,16 @@ class _$NodeImpl implements _Node {
         (other.runtimeType == runtimeType &&
             other is _$NodeImpl &&
             (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality()
+                .equals(other._properties, _properties) &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.className, className) ||
-                other.className == className) &&
-            (identical(other.symbolSize, symbolSize) ||
-                other.symbolSize == symbolSize));
+            (identical(other.label, label) || other.label == label));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, className, symbolSize);
+  int get hashCode => Object.hash(runtimeType, name,
+      const DeepCollectionEquality().hash(_properties), id, label);
 
   @JsonKey(ignore: true)
   @override
@@ -184,20 +194,20 @@ class _$NodeImpl implements _Node {
 abstract class _Node implements Node {
   const factory _Node(
       {required final String name,
-      required final String id,
-      required final String className,
-      final int symbolSize}) = _$NodeImpl;
+      required final Map<String, dynamic>? properties,
+      required final int id,
+      required final String label}) = _$NodeImpl;
 
   factory _Node.fromJson(Map<String, dynamic> json) = _$NodeImpl.fromJson;
 
   @override
   String get name;
   @override
-  String get id;
+  Map<String, dynamic>? get properties;
   @override
-  String get className;
+  int get id;
   @override
-  int get symbolSize;
+  String get label;
   @override
   @JsonKey(ignore: true)
   _$$NodeImplCopyWith<_$NodeImpl> get copyWith =>

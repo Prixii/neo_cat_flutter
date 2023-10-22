@@ -1,5 +1,3 @@
-import 'package:neo_cat_flutter/types/typdef.dart';
-
 /// @author wang.jiaqi
 /// @date 2023-10-09 14
 
@@ -12,10 +10,4 @@ class InitRelationChartData extends RelationChartDataEvent {
   final String rawData;
 
   InitRelationChartData({required this.rawData});
-}
-
-class ReplacePositionMap extends RelationChartDataEvent {
-  final Map<NodeId, Position> positionMap;
-
-  ReplacePositionMap({required this.positionMap});
 }

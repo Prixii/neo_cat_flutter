@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
 
 part 'relation.g.dart';
 part 'relation.freezed.dart';
@@ -9,10 +10,10 @@ part 'relation.freezed.dart';
 @freezed
 class Relation with _$Relation {
   const factory Relation({
-    required String id,
-    required String name,
-    required String sourceNodeId,
-    required String endNodeId,
+    required RelationId id,
+    required String type,
+    required int start,
+    required int end,
   }) = _Relation;
 
   factory Relation.fromJson(Map<String, dynamic> json) =>

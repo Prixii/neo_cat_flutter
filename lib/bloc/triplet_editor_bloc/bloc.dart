@@ -60,7 +60,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   Future<Relation?> getRelation(NodeId source, NodeId end) async {
     var relationList = dataBloc.state.relationChartData.relationList;
     for (var relation in relationList) {
-      if (relation.sourceNodeId == source && relation.endNodeId == end) {
+      if (relation.start == source && relation.end == end) {
         return relation;
       }
     }

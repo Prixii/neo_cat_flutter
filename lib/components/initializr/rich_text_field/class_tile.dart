@@ -12,7 +12,7 @@ class ClassTile extends StatefulWidget {
       required this.getController});
 
   final Color color;
-  final ClassName className;
+  final LabelName className;
   final RichTextEditingController Function() getController;
 
   @override

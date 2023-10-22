@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/bloc/label/event.dart';
 import 'package:neo_cat_flutter/components/common/popup_menu/menu_options.dart';
-import 'package:neo_cat_flutter/types/class_data.dart';
+import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/types/node.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
@@ -18,7 +18,7 @@ class ClassManagerTile extends StatefulWidget {
   const ClassManagerTile(
       {super.key, required this.classData, required this.nodeList});
 
-  final ClassData classData;
+  final LabelData classData;
   final List<Node> nodeList;
 
   @override
