@@ -1,43 +1,44 @@
 import 'dart:convert';
 
-import 'package:fluent_ui/fluent_ui.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:neo_cat_flutter/types/source_node.dart';
-import 'package:neo_cat_flutter/types/source_edge.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../../types/graph_edge.dart';
 import '../../../types/graph_node.dart';
 
 class Graph {
-  final List<GraphNode> _nodes = [];
-  final List<GraphEdge> _edges = [];
+  final List<GraphNode> nodes;
+  final List<GraphEdge> edges;
   List<GraphObserver> graphObserver = [];
-
-  List<GraphNode> get nodes => _nodes; //  List<Node> nodes = _nodes;
-  List<GraphEdge> get edges => _edges;
 
   var isTree = false;
 
-  int nodeCount() => _nodes.length;
+  Graph({required this.nodes, required this.edges});
+
+  Graph.init()
+      : nodes = [],
+        edges = [];
+
+  int nodeCount() => nodes.length;
 
   void addNode(GraphNode node) {
-    if (!_nodes.contains(node)) {
-      _nodes.add(node);
+    if (!nodes.contains(node)) {
+      nodes.add(node);
       notifyGraphObserver();
     }
   }
 
-  void addNodes(List<SourceNode> nodes) {
-    for (var node in nodes) {
+  void addNodes(List<SourceNode> nodeList) {
+    for (var node in nodeList) {
       logger.d('[addNode]${node.toString()}');
       addNode(GraphNode.fromNode(node));
-      logger.d('[nodes]${_nodes.toList()}');
+      logger.d('[nodes]${nodes.toList()}');
     }
   }
 
   void removeNode(GraphNode? node) {
-    if (!_nodes.contains(node)) {
+    if (!nodes.contains(node)) {
 //            throw IllegalArgumentException("Unable to find node in graph.")
     }
 
@@ -45,16 +46,15 @@ class Graph {
       successorsOf(node).forEach((element) => removeNode(element));
     }
 
-    _nodes.remove(node);
+    nodes.remove(node);
 
-    _edges
-        .removeWhere((edge) => edge.source == node || edge.destination == node);
+    edges.removeWhere((edge) => edge.start == node || edge.end == node);
 
     notifyGraphObserver();
   }
 
-  void removeNodes(List<GraphNode> nodes) {
-    for (var node in nodes) {
+  void removeNodes(List<GraphNode> nodeList) {
+    for (var node in nodeList) {
       removeNode(node);
     }
   }
@@ -62,62 +62,62 @@ class Graph {
   void addEdgeS(GraphEdge edge) {
     var sourceSet = false;
     var destinationSet = false;
-    for (var node in _nodes) {
-      if (!sourceSet && node == edge.source) {
-        edge.source = node;
+    for (var node in nodes) {
+      if (!sourceSet && node == edge.start) {
+        edge.start = node;
         sourceSet = true;
-      } else if (!destinationSet && node == edge.destination) {
-        edge.destination = node;
+      } else if (!destinationSet && node == edge.end) {
+        edge.end = node;
         destinationSet = true;
       }
     }
     if (!sourceSet) {
-      _nodes.add(edge.source);
+      nodes.add(edge.start);
     }
     if (!destinationSet) {
-      _nodes.add(edge.destination);
+      nodes.add(edge.end);
     }
 
-    if (!_edges.contains(edge)) {
-      _edges.add(edge);
+    if (!edges.contains(edge)) {
+      edges.add(edge);
       notifyGraphObserver();
     }
   }
 
-  void removeEdge(GraphEdge edge) => _edges.remove(edge);
+  void removeEdge(GraphEdge edge) => edges.remove(edge);
 
-  void removeEdges(List<GraphEdge> edges) {
-    for (var edge in edges) {
+  void removeEdges(List<GraphEdge> edgeList) {
+    for (var edge in edgeList) {
       removeEdge(edge);
     }
   }
 
   void removeEdgeFromPredecessor(GraphNode? predecessor, GraphNode? current) {
-    _edges.removeWhere(
-        (edge) => edge.source == predecessor && edge.destination == current);
+    edges.removeWhere(
+        (edge) => edge.start == predecessor && edge.end == current);
   }
 
-  bool hasNodes() => _nodes.isNotEmpty;
+  bool hasNodes() => nodes.isNotEmpty;
 
   GraphEdge? getEdgeBetween(GraphNode source, GraphNode? destination) =>
-      _edges.firstWhereOrNull((element) =>
-          element.source == source && element.destination == destination);
+      edges.firstWhereOrNull(
+          (element) => element.start == source && element.end == destination);
 
   bool hasSuccessor(GraphNode? node) =>
-      _edges.any((element) => element.source == node);
+      edges.any((element) => element.start == node);
 
   List<GraphNode> successorsOf(GraphNode? node) =>
-      getOutEdges(node!).map((e) => e.destination).toList();
+      getOutEdges(node!).map((e) => e.end).toList();
 
   bool hasPredecessor(GraphNode node) =>
-      _edges.any((element) => element.destination == node);
+      edges.any((element) => element.end == node);
 
   List<GraphNode> predecessorsOf(GraphNode? node) =>
-      getInEdges(node!).map((edge) => edge.source).toList();
+      getInEdges(node!).map((edge) => edge.start).toList();
 
   bool contains({GraphNode? node, GraphEdge? edge}) =>
-      node != null && _nodes.contains(node) ||
-      edge != null && _edges.contains(edge);
+      node != null && nodes.contains(node) ||
+      edge != null && edges.contains(edge);
 
 //  bool contains(Edge edge) => _edges.contains(edge);
   GraphNode getNodeAtPosition(int position) {
@@ -125,25 +125,22 @@ class Graph {
 //            throw IllegalArgumentException("position can't be negative")
     }
 
-    final size = _nodes.length;
+    final size = nodes.length;
     if (position >= size) {
 //            throw IndexOutOfBoundsException("Position: $position, Size: $size")
     }
 
-    return _nodes[position];
+    return nodes[position];
   }
 
-  GraphNode getNodeUsingKey(ValueKey key) =>
-      _nodes.firstWhere((element) => element.id == key);
-
-  GraphNode getNodeUsingId(dynamic id) =>
-      _nodes.firstWhere((element) => element.id == ValueKey(id));
+  GraphNode getNodeUsingId(int id) =>
+      nodes.firstWhere((element) => element.id == id);
 
   List<GraphEdge> getOutEdges(GraphNode node) =>
-      _edges.where((element) => element.source == node).toList();
+      edges.where((element) => element.start == node).toList();
 
   List<GraphEdge> getInEdges(GraphNode node) =>
-      _edges.where((element) => element.destination == node).toList();
+      edges.where((element) => element.end == node).toList();
 
   void notifyGraphObserver() {
     for (var element in graphObserver) {
@@ -153,11 +150,11 @@ class Graph {
 
   String toJson() {
     var jsonString = {
-      'nodes': [..._nodes.map((e) => e.hashCode.toString())],
+      'nodes': [...nodes.map((e) => e.hashCode.toString())],
       'edges': [
-        ..._edges.map((e) => {
-              'from': e.source.hashCode.toString(),
-              'to': e.destination.hashCode.toString()
+        ...edges.map((e) => {
+              'from': e.start.hashCode.toString(),
+              'to': e.end.hashCode.toString()
             })
       ]
     };

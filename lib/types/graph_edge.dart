@@ -5,8 +5,8 @@ import 'source_edge.dart';
 import 'typdef.dart';
 
 class GraphEdge {
-  GraphNode source;
-  GraphNode destination;
+  GraphNode start;
+  GraphNode end;
   String type;
   EdgeId id;
   Paint? paint;
@@ -21,7 +21,7 @@ class GraphEdge {
     return null;
   }
 
-  GraphEdge(this.source, this.destination, this.type, this.id, {this.paint});
+  GraphEdge(this.start, this.end, this.type, this.id, {this.paint});
 
   @override
   bool operator ==(Object? other) =>

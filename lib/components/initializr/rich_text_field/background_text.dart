@@ -17,7 +17,7 @@ class BackgroundText extends SpecialText {
   Color getColor(LabelName label) {
     var color = relationChartDataBloc(context)
         .state
-        .classMap[label.trim()]
+        .labelMap[label.trim()]
         ?.color
         .toColor();
     return color ?? Colors.blue.withOpacity(0.15);

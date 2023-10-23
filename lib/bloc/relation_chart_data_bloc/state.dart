@@ -1,8 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:neo_cat_flutter/types/source_node.dart';
-import 'package:neo_cat_flutter/types/source_edge.dart';
+import 'package:neo_cat_flutter/types/graph_edge.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
 
+import '../../components/common/graphview/graph.dart';
+import '../../types/graph_node.dart';
 import '../../types/label_data.dart';
 import 'relation_chart_data_model.dart';
 part 'state.freezed.dart';
@@ -14,34 +15,37 @@ part 'state.freezed.dart';
 class RelationChartDataState with _$RelationChartDataState {
   const factory RelationChartDataState({
     required RelationChartDataModel relationChartData,
-    required Map<LabelName, LabelData> classMap,
-    // TODO 转换为 graph node
-    required Map<NodeId, SourceNode> nodeMap,
-    // TODO 转换为 graph edge
-    required Map<EdgeId, SourceEdge> relationMap,
-    required Map<LabelName, bool> classVisibilityMap,
-    required Map<LabelName, List<SourceNode>> nodeToClassMap,
+    required Map<LabelName, LabelData> labelMap,
+    required Map<NodeId, GraphNode> nodeMap,
+    required Map<EdgeId, GraphEdge> edgeMap,
+    required Map<LabelName, bool> labelVisibilityMap,
+    required Map<LabelName, List<GraphNode>> nodeToLabelMap,
+    Graph? graph,
   }) = _RelationChartDataState;
 
   factory RelationChartDataState.initial() => RelationChartDataState(
         relationChartData: RelationChartDataModel.initial(),
-        classMap: <LabelName, LabelData>{},
-        nodeMap: <NodeId, SourceNode>{},
-        relationMap: <EdgeId, SourceEdge>{},
-        classVisibilityMap: <LabelName, bool>{},
-        nodeToClassMap: <LabelName, List<SourceNode>>{},
+        labelMap: <LabelName, LabelData>{},
+        nodeMap: <NodeId, GraphNode>{},
+        edgeMap: <EdgeId, GraphEdge>{},
+        labelVisibilityMap: <LabelName, bool>{},
+        nodeToLabelMap: <LabelName, List<GraphNode>>{},
+        graph: Graph(edges: [], nodes: []),
       );
 
   factory RelationChartDataState.fromJson(Map<String, dynamic> json) {
     var relationChartData = RelationChartDataModel.fromJson(json);
-    var nodeMap = <NodeId, SourceNode>{};
+    var nodeMap = <NodeId, GraphNode>{};
     for (var node in relationChartData.nodeList) {
-      nodeMap[node.id] = node;
+      nodeMap[node.id] = GraphNode.fromNode(node);
     }
 
-    var relationMap = <EdgeId, SourceEdge>{};
+    var edgeMap = <EdgeId, GraphEdge>{};
     for (var relation in relationChartData.relationList) {
-      relationMap[relation.id] = relation;
+      var newEdge = GraphEdge.fromSourceEdge(relation, nodeMap);
+      if (newEdge != null) {
+        edgeMap[relation.id] = newEdge;
+      }
     }
 
     var classVisibilityMap = <LabelName, bool>{};
@@ -49,11 +53,11 @@ class RelationChartDataState with _$RelationChartDataState {
       classVisibilityMap[classData.name] = true;
     }
 
-    var nodeToClassMap = <LabelName, List<SourceNode>>{};
+    var nodeToLabelMap = <LabelName, List<GraphNode>>{};
     for (var node in nodeMap.values) {
-      var nodeList = nodeToClassMap[node.label] ?? [];
+      var nodeList = nodeToLabelMap[node.label] ?? [];
       nodeList.add(node);
-      nodeToClassMap[node.label] = nodeList;
+      nodeToLabelMap[node.label] = nodeList;
     }
 
     var classMap = <LabelName, LabelData>{};
@@ -61,13 +65,17 @@ class RelationChartDataState with _$RelationChartDataState {
       classMap[classData.name] = classData;
     }
 
+    var graph =
+        Graph(nodes: nodeMap.values.toList(), edges: edgeMap.values.toList());
+
     return RelationChartDataState(
       relationChartData: relationChartData,
-      classMap: classMap,
+      labelMap: classMap,
       nodeMap: nodeMap,
-      relationMap: relationMap,
-      classVisibilityMap: classVisibilityMap,
-      nodeToClassMap: nodeToClassMap,
+      edgeMap: edgeMap,
+      labelVisibilityMap: classVisibilityMap,
+      nodeToLabelMap: nodeToLabelMap,
+      graph: graph,
     );
   }
 }

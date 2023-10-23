@@ -16,22 +16,22 @@ Widget elevatedClassMenuBuilder({
   required ExtendedEditableTextState editableTextState,
   required RichTextEditingController controller,
 }) {
-  List<LabelData> getClassData() =>
-      relationChartDataBloc(context).state.classMap.values.toList();
+  List<LabelData> getLabelData() =>
+      relationChartDataBloc(context).state.labelMap.values.toList();
 
   return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
     builder: (context, state) => AdaptiveTextSelectionToolbar(
       anchors: editableTextState.contextMenuAnchors,
       children: [
-        const ClassSetter(),
+        const LabelSetter(),
         const Divider(),
         SizedBox(
           height: 200,
           child: ListView.builder(
-            itemCount: getClassData().length,
-            itemBuilder: (context, index) => ClassTile(
-              className: getClassData()[index].name,
-              color: getClassData()[index].color.toColor(),
+            itemCount: getLabelData().length,
+            itemBuilder: (context, index) => LabelTile(
+              className: getLabelData()[index].name,
+              color: getLabelData()[index].color.toColor(),
               getController: () => controller,
             ),
           ),

@@ -1,9 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/types/graph_edge.dart';
 
 import '../../../bloc/relation_chart_data_bloc/bloc.dart';
 import '../../../bloc/relation_chart_data_bloc/state.dart';
-import '../../../types/source_edge.dart';
 import '../../../utils/bloc_util.dart';
 import 'triplet_tile.dart';
 
@@ -22,8 +22,8 @@ class _RelationManagerState extends State<RelationManager> {
     super.initState();
   }
 
-  List<SourceEdge> getRelationList() =>
-      relationChartDataBloc(context).state.relationMap.values.toList();
+  List<GraphEdge> getRelationList() =>
+      relationChartDataBloc(context).state.edgeMap.values.toList();
 
   @override
   Widget build(BuildContext context) {

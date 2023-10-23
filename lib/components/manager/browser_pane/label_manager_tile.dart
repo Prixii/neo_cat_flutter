@@ -1,8 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/bloc/label/event.dart';
 import 'package:neo_cat_flutter/components/common/popup_menu/menu_options.dart';
+import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
-import 'package:neo_cat_flutter/types/source_node.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
@@ -19,7 +19,7 @@ class ClassManagerTile extends StatefulWidget {
       {super.key, required this.classData, required this.nodeList});
 
   final LabelData classData;
-  final List<SourceNode> nodeList;
+  final List<GraphNode> nodeList;
 
   @override
   State<ClassManagerTile> createState() => _ClassManagerTileState();
@@ -30,7 +30,7 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
 
   Position position = (0, 0);
 
-  SourceNode? node;
+  GraphNode? node;
   @override
   void initState() {
     super.initState();
@@ -92,7 +92,7 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
   bool isClassVisible() =>
       relationChartDataBloc(context)
           .state
-          .classVisibilityMap[widget.classData.name] ??
+          .labelVisibilityMap[widget.classData.name] ??
       false;
 
   @override

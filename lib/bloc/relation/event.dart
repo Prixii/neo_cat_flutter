@@ -1,6 +1,6 @@
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/relation_chart_data_model.dart';
-import 'package:neo_cat_flutter/types/source_edge.dart';
+import 'package:neo_cat_flutter/types/graph_edge.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
 
 /// @author wang.jiaqi
@@ -17,11 +17,11 @@ class InitRelationBrowserState extends RelationBrowserEvent {
   InitRelationBrowserState({required this.model});
 }
 
-/// 更新/添加 [relation] 到Map
+/// 更新/添加 [edge] 到Map
 class UpdateRelation extends RelationBrowserEvent {
-  final SourceEdge relation;
+  final GraphEdge edge;
 
-  UpdateRelation({required this.relation});
+  UpdateRelation({required this.edge});
 }
 
 /// 移除Id为 [targetId] 的关系

@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/types/graph_edge.dart';
 
 import '../../types/graph_node.dart';
 import '../../types/label_data.dart';
-import '../../types/source_node.dart';
-import '../../types/source_edge.dart';
 import '../../types/typdef.dart';
 import '../../utils/common_util.dart';
 import '../label/event.dart';
@@ -39,12 +38,12 @@ class RelationChartDataBloc
   }
 
   RelationChartDataState _handleSetClassVisibility(SetClassVisibility event) {
-    var classVisibilityMap = state.classVisibilityMap;
+    var labelVisibilityMap = state.labelVisibilityMap;
     logger.i('[classBrowser]: SetClassVisible!');
-    if (classVisibilityMap[event.className] != null) {
-      classVisibilityMap[event.className] =
-          !classVisibilityMap[event.className]!;
-      return state.copyWith(classVisibilityMap: classVisibilityMap);
+    if (labelVisibilityMap[event.className] != null) {
+      labelVisibilityMap[event.className] =
+          !labelVisibilityMap[event.className]!;
+      return state.copyWith(labelVisibilityMap: labelVisibilityMap);
     }
     return state;
   }
@@ -52,81 +51,80 @@ class RelationChartDataBloc
   RelationChartDataState _handleUpdateClassData(UpdateClassData event) {
     /// 未改名则不需要更新map
     if (event.oldName == event.classData.name) {
-      var classMap = state.classMap;
-      classMap[event.oldName] = event.classData;
-      return state.copyWith(classMap: classMap);
+      var labelMap = state.labelMap;
+      labelMap[event.oldName] = event.classData;
+      return state.copyWith(labelMap: labelMap);
     } else {
       /// 类已经被改名了
-      var classMap = state.classMap;
-      var classVisibilityMap = state.classVisibilityMap;
-      classVisibilityMap[event.classData.name] =
-          classVisibilityMap[event.oldName] ?? true;
-      classVisibilityMap.remove(event.oldName);
+      var labelMap = state.labelMap;
+      var labelVisibilityMap = state.labelVisibilityMap;
+      labelVisibilityMap[event.classData.name] =
+          labelVisibilityMap[event.oldName] ?? true;
+      labelVisibilityMap.remove(event.oldName);
 
-      var nodeToClassMap = state.nodeToClassMap;
-      nodeToClassMap[event.classData.name] =
-          nodeToClassMap[event.oldName] ?? [];
-      nodeToClassMap.remove(event.oldName);
+      var nodeToLabelMap = state.nodeToLabelMap;
+      nodeToLabelMap[event.classData.name] =
+          nodeToLabelMap[event.oldName] ?? [];
+      nodeToLabelMap.remove(event.oldName);
       logger.i('[classBrowser]: updateClassData renamed!');
       return state.copyWith(
-        nodeToClassMap: nodeToClassMap,
-        classMap: classMap,
-        classVisibilityMap: classVisibilityMap,
+        nodeToLabelMap: nodeToLabelMap,
+        labelMap: labelMap,
+        labelVisibilityMap: labelVisibilityMap,
       );
     }
   }
 
   /// 确保class没有实例！！！
   RelationChartDataState _handleDeleteClass(DeleteClassData event) {
-    var classMap = state.classMap..remove(event.className);
-    var classVisiblityMap = state.classVisibilityMap..remove(event.className);
-    var nodeToClassMap = state.nodeToClassMap..remove(event.className);
+    var labelMap = state.labelMap..remove(event.className);
+    var classVisiblityMap = state.labelVisibilityMap..remove(event.className);
+    var nodeToLabelMap = state.nodeToLabelMap..remove(event.className);
 
     logger.i('[classBrowser]: DeleteClassData!');
 
     return state.copyWith(
-      nodeToClassMap: nodeToClassMap,
-      classVisibilityMap: classVisiblityMap,
-      classMap: classMap,
+      nodeToLabelMap: nodeToLabelMap,
+      labelVisibilityMap: classVisiblityMap,
+      labelMap: labelMap,
     );
   }
 
   RelationChartDataState _handleUpdateRelation(UpdateRelation event) {
-    var relationMap = state.relationMap;
-    relationMap[event.relation.id] = event.relation;
-    return state.copyWith(relationMap: relationMap);
+    var edgeMap = state.edgeMap;
+    edgeMap[event.edge.id] = event.edge;
+    return state.copyWith(edgeMap: edgeMap);
   }
 
   RelationChartDataState _handleDeleteRelation(DeleteRelation event) {
-    return state.copyWith(
-        relationMap: state.relationMap..remove(event.targetId));
+    return state.copyWith(edgeMap: state.edgeMap..remove(event.targetId));
   }
 
   RelationChartDataState _handleCreateLabel(CreateLabel event) {
-    var labelMap = <LabelName, LabelData>{}..addAll(state.classMap);
+    var labelMap = <LabelName, LabelData>{}..addAll(state.labelMap);
     labelMap[event.classData.name] = event.classData;
     logger.d(labelMap);
-    return state.copyWith(classMap: labelMap);
+    return state.copyWith(labelMap: labelMap);
   }
 
-  Triplet? getTriplet(SourceEdge relation) {
-    SourceNode? sourceNode = state.nodeMap[relation.start];
-    SourceNode? endNode = state.nodeMap[relation.end];
+  Triplet? getTriplet(GraphEdge edge) {
+    GraphNode? sourceNode = state.nodeMap[edge.start];
+    GraphNode? endNode = state.nodeMap[edge.end];
     if (sourceNode != null && endNode != null) {
-      return (sourceNode, relation, endNode);
+      return (sourceNode, edge, endNode);
     }
     return null;
   }
 
   int instanceCount(LabelName className) =>
-      state.nodeToClassMap[className]?.length ?? 0;
+      state.nodeToLabelMap[className]?.length ?? 0;
 
   Future<void> save() async {
-    var rawData = jsonEncode(state.relationChartData.toJson());
+    // var rawData = jsonEncode(state.relationChartData.toJson());
     // TODO 保存
   }
 
   GraphNode getGraphNode(NodeId id) {
-    return GraphNode.fromNode(state.nodeMap[id]!);
+    return state.nodeMap[id]!;
   }
 }

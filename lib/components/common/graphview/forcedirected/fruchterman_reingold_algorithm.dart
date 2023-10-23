@@ -94,8 +94,8 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
 
   void calculateAttraction(List<GraphEdge> edges) {
     for (var edge in edges) {
-      var source = edge.source;
-      var destination = edge.destination;
+      var source = edge.start;
+      var destination = edge.end;
       var delta = source.position - destination.position;
       var deltaDistance = max(epsilon, delta.distance);
       var maxAttractionDistance = min(graphWidth * attractionPercentage,

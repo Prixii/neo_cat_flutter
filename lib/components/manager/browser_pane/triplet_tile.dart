@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
-import 'package:neo_cat_flutter/types/source_node.dart';
-import 'package:neo_cat_flutter/types/source_edge.dart';
+import 'package:neo_cat_flutter/types/graph_edge.dart';
+import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-04 09
 
 class TripletTile extends StatefulWidget {
-  final SourceEdge relation;
+  final GraphEdge relation;
 
   const TripletTile({super.key, required this.relation});
 
@@ -20,9 +20,9 @@ class TripletTile extends StatefulWidget {
 }
 
 class _TripletTileState extends State<TripletTile> {
-  late final SourceNode sourceNode;
-  late final SourceNode endNode;
-  late final SourceEdge relation;
+  late final GraphNode sourceNode;
+  late final GraphNode endNode;
+  late final GraphEdge relation;
 
   @override
   void initState() {

@@ -19,16 +19,26 @@ class GraphClusterViewPage extends StatefulWidget {
 }
 
 class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
+  late Algorithm builder;
+
+  Graph getGraph() => relationChartDataBloc(context).state.graph!;
+
+  @override
+  void initState() {
+    super.initState();
+    builder = FruchtermanReingoldAlgorithm(iterations: 1000);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-      builder: (context, state) => InteractiveViewer(
-        constrained: false, // 设置是否限制用户缩放
-        boundaryMargin: const EdgeInsets.all(1000), // 设置边界边距
-        minScale: 0.1, // 设置最小缩放比例
-        maxScale: 10, // 设置最大缩放比例
-        child: GraphView(
-          graph: graph, // 设置要显示的图形
+    return InteractiveViewer(
+      constrained: false, // 设置是否限制用户缩放
+      boundaryMargin: const EdgeInsets.all(1000), // 设置边界边距
+      minScale: 0.1, // 设置最小缩放比例
+      maxScale: 10, // 设置最大缩放比例
+      child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+        builder: (context, state) => GraphView(
+          graph: getGraph(), // 设置要显示的图形
           algorithm: builder, // 设置图形布局算法
           builder: (GraphNode node) {
             node.size = const Size(45, 45);
@@ -66,14 +76,5 @@ class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
         ),
       ),
     );
-  }
-
-  final Graph graph = Graph();
-  late Algorithm builder;
-
-  @override
-  void initState() {
-    super.initState();
-    builder = FruchtermanReingoldAlgorithm(iterations: 1000);
   }
 }

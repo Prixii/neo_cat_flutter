@@ -21,8 +21,8 @@ class ArrowEdgeRenderer extends EdgeRenderer {
 
     for (var edge in graph.edges) {
       // 获取起始节点和目标节点
-      var source = edge.source;
-      var destination = edge.destination;
+      var source = edge.start;
+      var destination = edge.end;
 
       // 获取起始节点和目标节点在画布上的偏移量
       var sourceOffset = source.position;

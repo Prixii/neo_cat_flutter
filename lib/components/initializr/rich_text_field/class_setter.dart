@@ -2,14 +2,14 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/components/common/create_class_dialog.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
-class ClassSetter extends StatefulWidget {
-  const ClassSetter({super.key});
+class LabelSetter extends StatefulWidget {
+  const LabelSetter({super.key});
 
   @override
-  State<ClassSetter> createState() => _ClassSetterState();
+  State<LabelSetter> createState() => _LabelSetterState();
 }
 
-class _ClassSetterState extends State<ClassSetter> {
+class _LabelSetterState extends State<LabelSetter> {
   late TextEditingController _controller;
   @override
   void initState() {

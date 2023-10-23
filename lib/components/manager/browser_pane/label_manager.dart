@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/components/manager/browser_pane/class_manager_tile.dart';
+import 'package:neo_cat_flutter/components/manager/browser_pane/label_manager_tile.dart';
+import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
-import 'package:neo_cat_flutter/types/source_node.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 
 class ClassManager extends StatefulWidget {
@@ -13,12 +13,12 @@ class ClassManager extends StatefulWidget {
 
 class _ClassManagerState extends State<ClassManager> {
   List<LabelData> _getClassDataList() {
-    return relationChartDataBloc(context).state.classMap.values.toList();
+    return relationChartDataBloc(context).state.labelMap.values.toList();
   }
 
-  List<SourceNode> _getNodeList({required int classIndex}) {
+  List<GraphNode> _getNodeList({required int classIndex}) {
     var className = _getClassDataList()[classIndex].name;
-    return relationChartDataBloc(context).state.nodeToClassMap[className] ?? [];
+    return relationChartDataBloc(context).state.nodeToLabelMap[className] ?? [];
   }
 
   @override

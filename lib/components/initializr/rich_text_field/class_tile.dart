@@ -4,8 +4,8 @@ import 'package:neo_cat_flutter/types/typdef.dart';
 
 import '../../../theme/common_theme.dart';
 
-class ClassTile extends StatefulWidget {
-  const ClassTile(
+class LabelTile extends StatefulWidget {
+  const LabelTile(
       {super.key,
       required this.color,
       required this.className,
@@ -16,10 +16,10 @@ class ClassTile extends StatefulWidget {
   final RichTextEditingController Function() getController;
 
   @override
-  State<ClassTile> createState() => _ClassTileState();
+  State<LabelTile> createState() => _LabelTileState();
 }
 
-class _ClassTileState extends State<ClassTile> {
+class _LabelTileState extends State<LabelTile> {
   Color backgroundColor = Colors.transparent;
   void _setClass(RichTextEditingController controller) {
     var start = controller.selection.start;
