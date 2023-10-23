@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../../types/graph_node.dart';
 import 'graph.dart';
 import 'algorithm.dart';
 import 'forcedirected/fruchterman_reingold_algorithm.dart';

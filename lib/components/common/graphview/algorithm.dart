@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
+import '../../../types/graph_node.dart';
 import 'edgerenderer/edge_renderer.dart';
 import 'graph.dart';
 

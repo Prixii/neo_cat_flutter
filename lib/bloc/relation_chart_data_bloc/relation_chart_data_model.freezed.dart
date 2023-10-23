@@ -21,8 +21,8 @@ RelationChartDataModel _$RelationChartDataModelFromJson(
 
 /// @nodoc
 mixin _$RelationChartDataModel {
-  List<Node> get nodeList => throw _privateConstructorUsedError;
-  List<Relation> get relationList => throw _privateConstructorUsedError;
+  List<SourceNode> get nodeList => throw _privateConstructorUsedError;
+  List<SourceEdge> get relationList => throw _privateConstructorUsedError;
   List<LabelData> get labelDataList => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,8 +38,8 @@ abstract class $RelationChartDataModelCopyWith<$Res> {
       _$RelationChartDataModelCopyWithImpl<$Res, RelationChartDataModel>;
   @useResult
   $Res call(
-      {List<Node> nodeList,
-      List<Relation> relationList,
+      {List<SourceNode> nodeList,
+      List<SourceEdge> relationList,
       List<LabelData> labelDataList});
 }
 
@@ -65,11 +65,11 @@ class _$RelationChartDataModelCopyWithImpl<$Res,
       nodeList: null == nodeList
           ? _value.nodeList
           : nodeList // ignore: cast_nullable_to_non_nullable
-              as List<Node>,
+              as List<SourceNode>,
       relationList: null == relationList
           ? _value.relationList
           : relationList // ignore: cast_nullable_to_non_nullable
-              as List<Relation>,
+              as List<SourceEdge>,
       labelDataList: null == labelDataList
           ? _value.labelDataList
           : labelDataList // ignore: cast_nullable_to_non_nullable
@@ -88,8 +88,8 @@ abstract class _$$RelationChartDataModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Node> nodeList,
-      List<Relation> relationList,
+      {List<SourceNode> nodeList,
+      List<SourceEdge> relationList,
       List<LabelData> labelDataList});
 }
 
@@ -114,11 +114,11 @@ class __$$RelationChartDataModelImplCopyWithImpl<$Res>
       nodeList: null == nodeList
           ? _value._nodeList
           : nodeList // ignore: cast_nullable_to_non_nullable
-              as List<Node>,
+              as List<SourceNode>,
       relationList: null == relationList
           ? _value._relationList
           : relationList // ignore: cast_nullable_to_non_nullable
-              as List<Relation>,
+              as List<SourceEdge>,
       labelDataList: null == labelDataList
           ? _value._labelDataList
           : labelDataList // ignore: cast_nullable_to_non_nullable
@@ -131,8 +131,8 @@ class __$$RelationChartDataModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RelationChartDataModelImpl implements _RelationChartDataModel {
   const _$RelationChartDataModelImpl(
-      {required final List<Node> nodeList,
-      required final List<Relation> relationList,
+      {required final List<SourceNode> nodeList,
+      required final List<SourceEdge> relationList,
       required final List<LabelData> labelDataList})
       : _nodeList = nodeList,
         _relationList = relationList,
@@ -141,17 +141,17 @@ class _$RelationChartDataModelImpl implements _RelationChartDataModel {
   factory _$RelationChartDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RelationChartDataModelImplFromJson(json);
 
-  final List<Node> _nodeList;
+  final List<SourceNode> _nodeList;
   @override
-  List<Node> get nodeList {
+  List<SourceNode> get nodeList {
     if (_nodeList is EqualUnmodifiableListView) return _nodeList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_nodeList);
   }
 
-  final List<Relation> _relationList;
+  final List<SourceEdge> _relationList;
   @override
-  List<Relation> get relationList {
+  List<SourceEdge> get relationList {
     if (_relationList is EqualUnmodifiableListView) return _relationList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_relationList);
@@ -207,8 +207,8 @@ class _$RelationChartDataModelImpl implements _RelationChartDataModel {
 
 abstract class _RelationChartDataModel implements RelationChartDataModel {
   const factory _RelationChartDataModel(
-          {required final List<Node> nodeList,
-          required final List<Relation> relationList,
+          {required final List<SourceNode> nodeList,
+          required final List<SourceEdge> relationList,
           required final List<LabelData> labelDataList}) =
       _$RelationChartDataModelImpl;
 
@@ -216,9 +216,9 @@ abstract class _RelationChartDataModel implements RelationChartDataModel {
       _$RelationChartDataModelImpl.fromJson;
 
   @override
-  List<Node> get nodeList;
+  List<SourceNode> get nodeList;
   @override
-  List<Relation> get relationList;
+  List<SourceEdge> get relationList;
   @override
   List<LabelData> get labelDataList;
   @override

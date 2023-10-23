@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/components/common/graphview/graph.dart';
 
+import '../../types/graph_node.dart';
 import '../../types/label_data.dart';
-import '../../types/node.dart';
-import '../../types/relation.dart';
+import '../../types/source_node.dart';
+import '../../types/source_edge.dart';
 import '../../types/typdef.dart';
 import '../../utils/common_util.dart';
 import '../label/event.dart';
@@ -109,9 +109,9 @@ class RelationChartDataBloc
     return state.copyWith(classMap: labelMap);
   }
 
-  Triplet? getTriplet(Relation relation) {
-    Node? sourceNode = state.nodeMap[relation.start];
-    Node? endNode = state.nodeMap[relation.end];
+  Triplet? getTriplet(SourceEdge relation) {
+    SourceNode? sourceNode = state.nodeMap[relation.start];
+    SourceNode? endNode = state.nodeMap[relation.end];
     if (sourceNode != null && endNode != null) {
       return (sourceNode, relation, endNode);
     }

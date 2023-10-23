@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/relation_chart_data_bloc/bloc.dart';
 import '../../../bloc/relation_chart_data_bloc/state.dart';
-import '../../../types/relation.dart';
+import '../../../types/source_edge.dart';
 import '../../../utils/bloc_util.dart';
 import 'triplet_tile.dart';
 
@@ -22,7 +22,7 @@ class _RelationManagerState extends State<RelationManager> {
     super.initState();
   }
 
-  List<Relation> getRelationList() =>
+  List<SourceEdge> getRelationList() =>
       relationChartDataBloc(context).state.relationMap.values.toList();
 
   @override

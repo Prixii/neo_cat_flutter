@@ -19,11 +19,11 @@ mixin _$RelationChartDataState {
   RelationChartDataModel get relationChartData =>
       throw _privateConstructorUsedError;
   Map<String, LabelData> get classMap => throw _privateConstructorUsedError;
-  Map<int, Node> get nodeMap => throw _privateConstructorUsedError;
-  Map<int, Relation> get relationMap => throw _privateConstructorUsedError;
+  Map<int, SourceNode> get nodeMap => throw _privateConstructorUsedError;
+  Map<int, SourceEdge> get relationMap => throw _privateConstructorUsedError;
   Map<String, bool> get classVisibilityMap =>
       throw _privateConstructorUsedError;
-  Map<String, List<Node>> get nodeToClassMap =>
+  Map<String, List<SourceNode>> get nodeToClassMap =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -40,10 +40,10 @@ abstract class $RelationChartDataStateCopyWith<$Res> {
   $Res call(
       {RelationChartDataModel relationChartData,
       Map<String, LabelData> classMap,
-      Map<int, Node> nodeMap,
-      Map<int, Relation> relationMap,
+      Map<int, SourceNode> nodeMap,
+      Map<int, SourceEdge> relationMap,
       Map<String, bool> classVisibilityMap,
-      Map<String, List<Node>> nodeToClassMap});
+      Map<String, List<SourceNode>> nodeToClassMap});
 
   $RelationChartDataModelCopyWith<$Res> get relationChartData;
 }
@@ -81,11 +81,11 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
       nodeMap: null == nodeMap
           ? _value.nodeMap
           : nodeMap // ignore: cast_nullable_to_non_nullable
-              as Map<int, Node>,
+              as Map<int, SourceNode>,
       relationMap: null == relationMap
           ? _value.relationMap
           : relationMap // ignore: cast_nullable_to_non_nullable
-              as Map<int, Relation>,
+              as Map<int, SourceEdge>,
       classVisibilityMap: null == classVisibilityMap
           ? _value.classVisibilityMap
           : classVisibilityMap // ignore: cast_nullable_to_non_nullable
@@ -93,7 +93,7 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
       nodeToClassMap: null == nodeToClassMap
           ? _value.nodeToClassMap
           : nodeToClassMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<Node>>,
+              as Map<String, List<SourceNode>>,
     ) as $Val);
   }
 
@@ -119,10 +119,10 @@ abstract class _$$RelationChartDataStateImplCopyWith<$Res>
   $Res call(
       {RelationChartDataModel relationChartData,
       Map<String, LabelData> classMap,
-      Map<int, Node> nodeMap,
-      Map<int, Relation> relationMap,
+      Map<int, SourceNode> nodeMap,
+      Map<int, SourceEdge> relationMap,
       Map<String, bool> classVisibilityMap,
-      Map<String, List<Node>> nodeToClassMap});
+      Map<String, List<SourceNode>> nodeToClassMap});
 
   @override
   $RelationChartDataModelCopyWith<$Res> get relationChartData;
@@ -160,11 +160,11 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
       nodeMap: null == nodeMap
           ? _value._nodeMap
           : nodeMap // ignore: cast_nullable_to_non_nullable
-              as Map<int, Node>,
+              as Map<int, SourceNode>,
       relationMap: null == relationMap
           ? _value._relationMap
           : relationMap // ignore: cast_nullable_to_non_nullable
-              as Map<int, Relation>,
+              as Map<int, SourceEdge>,
       classVisibilityMap: null == classVisibilityMap
           ? _value._classVisibilityMap
           : classVisibilityMap // ignore: cast_nullable_to_non_nullable
@@ -172,7 +172,7 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
       nodeToClassMap: null == nodeToClassMap
           ? _value._nodeToClassMap
           : nodeToClassMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<Node>>,
+              as Map<String, List<SourceNode>>,
     ));
   }
 }
@@ -183,10 +183,10 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
   const _$RelationChartDataStateImpl(
       {required this.relationChartData,
       required final Map<String, LabelData> classMap,
-      required final Map<int, Node> nodeMap,
-      required final Map<int, Relation> relationMap,
+      required final Map<int, SourceNode> nodeMap,
+      required final Map<int, SourceEdge> relationMap,
       required final Map<String, bool> classVisibilityMap,
-      required final Map<String, List<Node>> nodeToClassMap})
+      required final Map<String, List<SourceNode>> nodeToClassMap})
       : _classMap = classMap,
         _nodeMap = nodeMap,
         _relationMap = relationMap,
@@ -203,17 +203,17 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
     return EqualUnmodifiableMapView(_classMap);
   }
 
-  final Map<int, Node> _nodeMap;
+  final Map<int, SourceNode> _nodeMap;
   @override
-  Map<int, Node> get nodeMap {
+  Map<int, SourceNode> get nodeMap {
     if (_nodeMap is EqualUnmodifiableMapView) return _nodeMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_nodeMap);
   }
 
-  final Map<int, Relation> _relationMap;
+  final Map<int, SourceEdge> _relationMap;
   @override
-  Map<int, Relation> get relationMap {
+  Map<int, SourceEdge> get relationMap {
     if (_relationMap is EqualUnmodifiableMapView) return _relationMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_relationMap);
@@ -228,9 +228,9 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
     return EqualUnmodifiableMapView(_classVisibilityMap);
   }
 
-  final Map<String, List<Node>> _nodeToClassMap;
+  final Map<String, List<SourceNode>> _nodeToClassMap;
   @override
-  Map<String, List<Node>> get nodeToClassMap {
+  Map<String, List<SourceNode>> get nodeToClassMap {
     if (_nodeToClassMap is EqualUnmodifiableMapView) return _nodeToClassMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_nodeToClassMap);
@@ -280,10 +280,10 @@ abstract class _RelationChartDataState implements RelationChartDataState {
   const factory _RelationChartDataState(
           {required final RelationChartDataModel relationChartData,
           required final Map<String, LabelData> classMap,
-          required final Map<int, Node> nodeMap,
-          required final Map<int, Relation> relationMap,
+          required final Map<int, SourceNode> nodeMap,
+          required final Map<int, SourceEdge> relationMap,
           required final Map<String, bool> classVisibilityMap,
-          required final Map<String, List<Node>> nodeToClassMap}) =
+          required final Map<String, List<SourceNode>> nodeToClassMap}) =
       _$RelationChartDataStateImpl;
 
   @override
@@ -291,13 +291,13 @@ abstract class _RelationChartDataState implements RelationChartDataState {
   @override
   Map<String, LabelData> get classMap;
   @override
-  Map<int, Node> get nodeMap;
+  Map<int, SourceNode> get nodeMap;
   @override
-  Map<int, Relation> get relationMap;
+  Map<int, SourceEdge> get relationMap;
   @override
   Map<String, bool> get classVisibilityMap;
   @override
-  Map<String, List<Node>> get nodeToClassMap;
+  Map<String, List<SourceNode>> get nodeToClassMap;
   @override
   @JsonKey(ignore: true)
   _$$RelationChartDataStateImplCopyWith<_$RelationChartDataStateImpl>

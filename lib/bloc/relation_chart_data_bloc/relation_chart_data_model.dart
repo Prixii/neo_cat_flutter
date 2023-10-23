@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:neo_cat_flutter/types/node.dart';
-import 'package:neo_cat_flutter/types/relation.dart';
+import 'package:neo_cat_flutter/types/source_node.dart';
+import 'package:neo_cat_flutter/types/source_edge.dart';
 
 import '../../types/label_data.dart';
 
@@ -13,8 +13,8 @@ part 'relation_chart_data_model.freezed.dart';
 @freezed
 class RelationChartDataModel with _$RelationChartDataModel {
   const factory RelationChartDataModel({
-    required List<Node> nodeList,
-    required List<Relation> relationList,
+    required List<SourceNode> nodeList,
+    required List<SourceEdge> relationList,
     required List<LabelData> labelDataList,
   }) = _RelationChartDataModel;
 

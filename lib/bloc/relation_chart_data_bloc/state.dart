@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:neo_cat_flutter/types/node.dart';
-import 'package:neo_cat_flutter/types/relation.dart';
+import 'package:neo_cat_flutter/types/source_node.dart';
+import 'package:neo_cat_flutter/types/source_edge.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
 
 import '../../types/label_data.dart';
@@ -15,29 +15,31 @@ class RelationChartDataState with _$RelationChartDataState {
   const factory RelationChartDataState({
     required RelationChartDataModel relationChartData,
     required Map<LabelName, LabelData> classMap,
-    required Map<NodeId, Node> nodeMap,
-    required Map<RelationId, Relation> relationMap,
+    // TODO 转换为 graph node
+    required Map<NodeId, SourceNode> nodeMap,
+    // TODO 转换为 graph edge
+    required Map<EdgeId, SourceEdge> relationMap,
     required Map<LabelName, bool> classVisibilityMap,
-    required Map<LabelName, List<Node>> nodeToClassMap,
+    required Map<LabelName, List<SourceNode>> nodeToClassMap,
   }) = _RelationChartDataState;
 
   factory RelationChartDataState.initial() => RelationChartDataState(
         relationChartData: RelationChartDataModel.initial(),
         classMap: <LabelName, LabelData>{},
-        nodeMap: <NodeId, Node>{},
-        relationMap: <RelationId, Relation>{},
+        nodeMap: <NodeId, SourceNode>{},
+        relationMap: <EdgeId, SourceEdge>{},
         classVisibilityMap: <LabelName, bool>{},
-        nodeToClassMap: <LabelName, List<Node>>{},
+        nodeToClassMap: <LabelName, List<SourceNode>>{},
       );
 
   factory RelationChartDataState.fromJson(Map<String, dynamic> json) {
     var relationChartData = RelationChartDataModel.fromJson(json);
-    var nodeMap = <NodeId, Node>{};
+    var nodeMap = <NodeId, SourceNode>{};
     for (var node in relationChartData.nodeList) {
       nodeMap[node.id] = node;
     }
 
-    var relationMap = <RelationId, Relation>{};
+    var relationMap = <EdgeId, SourceEdge>{};
     for (var relation in relationChartData.relationList) {
       relationMap[relation.id] = relation;
     }
@@ -47,7 +49,7 @@ class RelationChartDataState with _$RelationChartDataState {
       classVisibilityMap[classData.name] = true;
     }
 
-    var nodeToClassMap = <LabelName, List<Node>>{};
+    var nodeToClassMap = <LabelName, List<SourceNode>>{};
     for (var node in nodeMap.values) {
       var nodeList = nodeToClassMap[node.label] ?? [];
       nodeList.add(node);

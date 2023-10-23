@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
+import '../../../../types/graph_node.dart';
 import '../graph.dart';
 import 'edge_renderer.dart';
 

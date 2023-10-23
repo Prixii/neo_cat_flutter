@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'relation.dart';
+part of 'source_edge.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Relation _$RelationFromJson(Map<String, dynamic> json) {
-  return _Relation.fromJson(json);
+SourceEdge _$SourceEdgeFromJson(Map<String, dynamic> json) {
+  return _SourceEdge.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Relation {
+mixin _$SourceEdge {
   int get id => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   int get start => throw _privateConstructorUsedError;
@@ -27,22 +27,23 @@ mixin _$Relation {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $RelationCopyWith<Relation> get copyWith =>
+  $SourceEdgeCopyWith<SourceEdge> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RelationCopyWith<$Res> {
-  factory $RelationCopyWith(Relation value, $Res Function(Relation) then) =
-      _$RelationCopyWithImpl<$Res, Relation>;
+abstract class $SourceEdgeCopyWith<$Res> {
+  factory $SourceEdgeCopyWith(
+          SourceEdge value, $Res Function(SourceEdge) then) =
+      _$SourceEdgeCopyWithImpl<$Res, SourceEdge>;
   @useResult
   $Res call({int id, String type, int start, int end});
 }
 
 /// @nodoc
-class _$RelationCopyWithImpl<$Res, $Val extends Relation>
-    implements $RelationCopyWith<$Res> {
-  _$RelationCopyWithImpl(this._value, this._then);
+class _$SourceEdgeCopyWithImpl<$Res, $Val extends SourceEdge>
+    implements $SourceEdgeCopyWith<$Res> {
+  _$SourceEdgeCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -79,22 +80,22 @@ class _$RelationCopyWithImpl<$Res, $Val extends Relation>
 }
 
 /// @nodoc
-abstract class _$$RelationImplCopyWith<$Res>
-    implements $RelationCopyWith<$Res> {
-  factory _$$RelationImplCopyWith(
-          _$RelationImpl value, $Res Function(_$RelationImpl) then) =
-      __$$RelationImplCopyWithImpl<$Res>;
+abstract class _$$SourceEdgeImplCopyWith<$Res>
+    implements $SourceEdgeCopyWith<$Res> {
+  factory _$$SourceEdgeImplCopyWith(
+          _$SourceEdgeImpl value, $Res Function(_$SourceEdgeImpl) then) =
+      __$$SourceEdgeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String type, int start, int end});
 }
 
 /// @nodoc
-class __$$RelationImplCopyWithImpl<$Res>
-    extends _$RelationCopyWithImpl<$Res, _$RelationImpl>
-    implements _$$RelationImplCopyWith<$Res> {
-  __$$RelationImplCopyWithImpl(
-      _$RelationImpl _value, $Res Function(_$RelationImpl) _then)
+class __$$SourceEdgeImplCopyWithImpl<$Res>
+    extends _$SourceEdgeCopyWithImpl<$Res, _$SourceEdgeImpl>
+    implements _$$SourceEdgeImplCopyWith<$Res> {
+  __$$SourceEdgeImplCopyWithImpl(
+      _$SourceEdgeImpl _value, $Res Function(_$SourceEdgeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -105,7 +106,7 @@ class __$$RelationImplCopyWithImpl<$Res>
     Object? start = null,
     Object? end = null,
   }) {
-    return _then(_$RelationImpl(
+    return _then(_$SourceEdgeImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -128,15 +129,15 @@ class __$$RelationImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$RelationImpl implements _Relation {
-  const _$RelationImpl(
+class _$SourceEdgeImpl implements _SourceEdge {
+  const _$SourceEdgeImpl(
       {required this.id,
       required this.type,
       required this.start,
       required this.end});
 
-  factory _$RelationImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RelationImplFromJson(json);
+  factory _$SourceEdgeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SourceEdgeImplFromJson(json);
 
   @override
   final int id;
@@ -149,14 +150,14 @@ class _$RelationImpl implements _Relation {
 
   @override
   String toString() {
-    return 'Relation(id: $id, type: $type, start: $start, end: $end)';
+    return 'SourceEdge(id: $id, type: $type, start: $start, end: $end)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RelationImpl &&
+            other is _$SourceEdgeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.start, start) || other.start == start) &&
@@ -170,26 +171,26 @@ class _$RelationImpl implements _Relation {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$RelationImplCopyWith<_$RelationImpl> get copyWith =>
-      __$$RelationImplCopyWithImpl<_$RelationImpl>(this, _$identity);
+  _$$SourceEdgeImplCopyWith<_$SourceEdgeImpl> get copyWith =>
+      __$$SourceEdgeImplCopyWithImpl<_$SourceEdgeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$RelationImplToJson(
+    return _$$SourceEdgeImplToJson(
       this,
     );
   }
 }
 
-abstract class _Relation implements Relation {
-  const factory _Relation(
+abstract class _SourceEdge implements SourceEdge {
+  const factory _SourceEdge(
       {required final int id,
       required final String type,
       required final int start,
-      required final int end}) = _$RelationImpl;
+      required final int end}) = _$SourceEdgeImpl;
 
-  factory _Relation.fromJson(Map<String, dynamic> json) =
-      _$RelationImpl.fromJson;
+  factory _SourceEdge.fromJson(Map<String, dynamic> json) =
+      _$SourceEdgeImpl.fromJson;
 
   @override
   int get id;
@@ -201,6 +202,6 @@ abstract class _Relation implements Relation {
   int get end;
   @override
   @JsonKey(ignore: true)
-  _$$RelationImplCopyWith<_$RelationImpl> get copyWith =>
+  _$$SourceEdgeImplCopyWith<_$SourceEdgeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

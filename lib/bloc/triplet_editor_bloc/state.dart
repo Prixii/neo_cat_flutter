@@ -1,13 +1,13 @@
-import 'package:neo_cat_flutter/types/node.dart';
-import 'package:neo_cat_flutter/types/relation.dart';
+import 'package:neo_cat_flutter/types/source_node.dart';
+import 'package:neo_cat_flutter/types/source_edge.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-09 09
 
 class TripletEditorState {
-  final Node? sourceNode;
-  final Relation? relation;
-  final Node? endNode;
+  final SourceNode? sourceNode;
+  final SourceEdge? relation;
+  final SourceNode? endNode;
 
   TripletEditorState({
     required this.sourceNode,
@@ -21,9 +21,9 @@ class TripletEditorState {
         endNode = null;
 
   TripletEditorState copyWith({
-    Node? sourceNode,
-    Relation? relation,
-    Node? endNode,
+    SourceNode? sourceNode,
+    SourceEdge? relation,
+    SourceNode? endNode,
   }) =>
       TripletEditorState(
         sourceNode: sourceNode ?? this.sourceNode,

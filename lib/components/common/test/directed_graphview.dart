@@ -4,6 +4,7 @@ import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
+import '../../../types/graph_node.dart';
 import '../graphview/algorithm.dart';
 import '../graphview/forcedirected/fruchterman_reingold_algorithm.dart';
 import '../graphview/graph.dart';
@@ -31,7 +32,7 @@ class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
           algorithm: builder, // 设置图形布局算法
           builder: (GraphNode node) {
             node.size = const Size(45, 45);
-            var i = node.key!.value as int?; // 获取节点的key
+            var i = node.id; // 获取节点的key
             String? name = node.name; // 获取节点的名字
             return circularWidget(i, name); // 返回一个圆形小部件
           },
@@ -73,14 +74,6 @@ class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
   @override
   void initState() {
     super.initState();
-
-    graph
-        .addNodes(relationChartDataBloc(context).state.nodeMap.values.toList());
-
-    graph.addEdges(
-        relationChartDataBloc(context).state.relationMap.values.toList(),
-        context);
-
     builder = FruchtermanReingoldAlgorithm(iterations: 1000);
   }
 }

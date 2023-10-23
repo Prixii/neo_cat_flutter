@@ -1,20 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'relation.dart';
+part of 'source_edge.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$RelationImpl _$$RelationImplFromJson(Map<String, dynamic> json) =>
-    _$RelationImpl(
+_$SourceEdgeImpl _$$SourceEdgeImplFromJson(Map<String, dynamic> json) =>
+    _$SourceEdgeImpl(
       id: json['id'] as int,
       type: json['type'] as String,
       start: json['start'] as int,
       end: json['end'] as int,
     );
 
-Map<String, dynamic> _$$RelationImplToJson(_$RelationImpl instance) =>
+Map<String, dynamic> _$$SourceEdgeImplToJson(_$SourceEdgeImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'type': instance.type,

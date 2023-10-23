@@ -3,7 +3,7 @@ import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
-import 'package:neo_cat_flutter/types/relation.dart';
+import 'package:neo_cat_flutter/types/source_edge.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
@@ -23,7 +23,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     var endNode = state.endNode;
     if (sourceNode == null) {
       sourceNode = event.newNode;
-      Relation? relation;
+      SourceEdge? relation;
       if (endNode != null) {
         relation = await getRelation(sourceNode.id, endNode.id);
       }
@@ -57,7 +57,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     return newState;
   }
 
-  Future<Relation?> getRelation(NodeId source, NodeId end) async {
+  Future<SourceEdge?> getRelation(NodeId source, NodeId end) async {
     var relationList = dataBloc.state.relationChartData.relationList;
     for (var relation in relationList) {
       if (relation.start == source && relation.end == end) {

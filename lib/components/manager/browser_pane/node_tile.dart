@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/types/node.dart';
+import 'package:neo_cat_flutter/types/source_node.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 import '../../../theme/common_theme.dart';
@@ -9,7 +9,7 @@ import '../../../theme/common_theme.dart';
 
 class NodeTile extends StatefulWidget {
   const NodeTile({super.key, required this.node});
-  final Node node;
+  final SourceNode node;
 
   @override
   State<NodeTile> createState() => _NodeTileState();

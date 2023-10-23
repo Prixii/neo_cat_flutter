@@ -5,8 +5,8 @@ import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/components/common/property_tile.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
-import 'package:neo_cat_flutter/types/node.dart';
-import 'package:neo_cat_flutter/types/relation.dart';
+import 'package:neo_cat_flutter/types/source_node.dart';
+import 'package:neo_cat_flutter/types/source_edge.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 /// @author wang.jiaqi
@@ -29,7 +29,7 @@ class _TripletEditorState extends State<TripletEditor> {
       context.read<TripletEditorBloc>();
 
   String _getSourceNodeName() {
-    Node? sourceNode = _getTripletEditorBloc().state.sourceNode;
+    SourceNode? sourceNode = _getTripletEditorBloc().state.sourceNode;
     if (sourceNode != null) {
       return sourceNode.name;
     }
@@ -37,7 +37,7 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   String _getEndNodeName() {
-    Node? endNode = _getTripletEditorBloc().state.endNode;
+    SourceNode? endNode = _getTripletEditorBloc().state.endNode;
     if (endNode != null) {
       return endNode.name;
     }
@@ -45,7 +45,7 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   String _getRelationName() {
-    Relation? relation = _getTripletEditorBloc().state.relation;
+    SourceEdge? relation = _getTripletEditorBloc().state.relation;
     if (relation != null) {
       return relation.type;
     }

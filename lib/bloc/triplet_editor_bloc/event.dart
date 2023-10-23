@@ -1,13 +1,13 @@
 import 'package:neo_cat_flutter/types/enums.dart';
-import 'package:neo_cat_flutter/types/node.dart';
-import 'package:neo_cat_flutter/types/relation.dart';
+import 'package:neo_cat_flutter/types/source_node.dart';
+import 'package:neo_cat_flutter/types/source_edge.dart';
 
 abstract class TripletEditorEvent {
   TripletEditorEvent();
 }
 
 class ChooseNode extends TripletEditorEvent {
-  final Node newNode;
+  final SourceNode newNode;
 
   ChooseNode({required this.newNode});
 }
@@ -19,7 +19,7 @@ class RemoveNode extends TripletEditorEvent {
 }
 
 class ChooseRelation extends TripletEditorEvent {
-  final Relation relation;
+  final SourceEdge relation;
 
   ChooseRelation({required this.relation});
 }

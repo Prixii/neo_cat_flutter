@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 
+import '../../../../types/graph_edge.dart';
+import '../../../../types/graph_node.dart';
 import '../algorithm.dart';
 import '../edgerenderer/arrow_edge_renderer.dart';
 import '../edgerenderer/edge_renderer.dart';
@@ -90,7 +92,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
     }
   }
 
-  void calculateAttraction(List<Edge> edges) {
+  void calculateAttraction(List<GraphEdge> edges) {
     for (var edge in edges) {
       var source = edge.source;
       var destination = edge.destination;

@@ -1,14 +1,14 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/types/node.dart';
+import 'package:neo_cat_flutter/types/source_node.dart';
 
 import '../bloc/relation_chart_data_bloc/bloc.dart';
 
-Future<List<Node>> getNodesByClass(
+Future<List<SourceNode>> getNodesByClass(
     {required BuildContext context, required String className}) async {
-  List<Node> nodeList =
+  List<SourceNode> nodeList =
       context.read<RelationChartDataBloc>().state.relationChartData.nodeList;
-  List<Node> resultList = [];
+  List<SourceNode> resultList = [];
   for (var node in nodeList) {
     if (node.label == className) {
       resultList.add(node);
