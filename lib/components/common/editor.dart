@@ -2,12 +2,15 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
 import 'package:neo_cat_flutter/components/common/property_tile.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
-import 'package:neo_cat_flutter/types/source_node.dart';
-import 'package:neo_cat_flutter/types/source_edge.dart';
+import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
+
+import '../../types/graph_edge.dart';
+import '../../utils/bloc_util.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-29 11
@@ -25,19 +28,16 @@ class _TripletEditorState extends State<TripletEditor> {
     super.initState();
   }
 
-  TripletEditorBloc _getTripletEditorBloc() =>
-      context.read<TripletEditorBloc>();
-
   String _getSourceNodeName() {
-    SourceNode? sourceNode = _getTripletEditorBloc().state.sourceNode;
-    if (sourceNode != null) {
-      return sourceNode.name;
+    GraphNode? startNode = tripletEditorBloc(context).state.sourceNode;
+    if (startNode != null) {
+      return startNode.name;
     }
     return '待选择';
   }
 
   String _getEndNodeName() {
-    SourceNode? endNode = _getTripletEditorBloc().state.endNode;
+    GraphNode? endNode = tripletEditorBloc(context).state.endNode;
     if (endNode != null) {
       return endNode.name;
     }
@@ -45,9 +45,9 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   String _getRelationName() {
-    SourceEdge? relation = _getTripletEditorBloc().state.relation;
-    if (relation != null) {
-      return relation.type;
+    GraphEdge? edge = tripletEditorBloc(context).state.edge;
+    if (edge != null) {
+      return edge.type;
     }
     return '待选择';
   }
@@ -62,7 +62,7 @@ class _TripletEditorState extends State<TripletEditor> {
             Expanded(
               flex: 1,
               child: GestureDetector(
-                onSecondaryTap: () => _getTripletEditorBloc()
+                onSecondaryTap: () => tripletEditorBloc(context)
                     .add(RemoveNode(position: TripletPosition.source)),
                 child: Stack(
                   children: [
@@ -124,7 +124,7 @@ class _TripletEditorState extends State<TripletEditor> {
             Expanded(
               flex: 1,
               child: GestureDetector(
-                onSecondaryTap: () => _getTripletEditorBloc()
+                onSecondaryTap: () => tripletEditorBloc(context)
                     .add(RemoveNode(position: TripletPosition.end)),
                 child: Stack(
                   children: [
@@ -188,18 +188,20 @@ class _TripletEditorState extends State<TripletEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _tripletEditorBuilder(),
-        const Divider(),
-        Expanded(
-          child: Container(
-            decoration: normalBoxDecoration,
-            child: _propertiesListBuilder(),
+    return BlocBuilder<TripletEditorBloc, TripletEditorState>(
+      builder: (context, state) => Column(
+        children: [
+          _tripletEditorBuilder(),
+          const Divider(),
+          Expanded(
+            child: Container(
+              decoration: normalBoxDecoration,
+              child: _propertiesListBuilder(),
+            ),
           ),
-        ),
-        _confirmBtnBuilder(),
-      ],
+          _confirmBtnBuilder(),
+        ],
+      ),
     );
   }
 }

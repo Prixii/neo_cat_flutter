@@ -1,5 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 import '../../../theme/common_theme.dart';
@@ -67,25 +69,32 @@ class _NodeTileState extends State<NodeTile> {
     );
   }
 
+  void _handleChooseNode() {
+    tripletEditorBloc(context).add(ChooseNode(newNode: widget.node));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (event) => _handleHover(),
       onExit: (event) => _handleExit(),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: backgroundColor,
-        ),
-        child: SizedBox(
-          height: 60,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
-            child: Row(
-              children: [
-                Expanded(flex: 1, child: _nodeBuilder()),
-                Expanded(flex: 3, child: _nodeNameBuilder()),
-              ],
+      child: GestureDetector(
+        onTap: _handleChooseNode,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: backgroundColor,
+          ),
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
+              child: Row(
+                children: [
+                  Expanded(flex: 1, child: _nodeBuilder()),
+                  Expanded(flex: 3, child: _nodeNameBuilder()),
+                ],
+              ),
             ),
           ),
         ),
