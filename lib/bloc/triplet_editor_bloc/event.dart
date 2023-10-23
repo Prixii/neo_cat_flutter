@@ -23,3 +23,9 @@ class ChooseRelation extends TripletEditorEvent {
 
   ChooseRelation({required this.relation});
 }
+
+class ClickTripletNode extends TripletEditorEvent {
+  final TripletPosition position;
+
+  ClickTripletNode(this.position);
+}

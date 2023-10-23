@@ -6,9 +6,10 @@ import '../../theme/common_theme.dart';
 /// @date 2023-10-02 20
 
 class PropertyTile extends StatefulWidget {
-  const PropertyTile({super.key, this.propertyName, this.propertyValue});
+  const PropertyTile(
+      {super.key, required this.propertyName, this.propertyValue});
 
-  final String? propertyName;
+  final String propertyName;
   final String? propertyValue;
 
   @override
@@ -34,7 +35,7 @@ class PropertyTileState extends State<PropertyTile> {
             Expanded(
               flex: 1,
               child: Text(
-                widget.propertyName ?? '',
+                widget.propertyName,
                 textAlign: TextAlign.center,
                 style: defaultTextBlack,
               ),

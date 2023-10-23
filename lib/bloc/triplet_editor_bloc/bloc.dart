@@ -1,12 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
-import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
-import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
-import 'package:neo_cat_flutter/types/enums.dart';
-import 'package:neo_cat_flutter/types/typdef.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
-
+import '../../types/enums.dart';
 import '../../types/graph_edge.dart';
+import '../../types/typdef.dart';
+import '../../utils/common_util.dart';
+import '../relation_chart_data_bloc/bloc.dart';
+import 'event.dart';
+import 'state.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-23 15
@@ -19,6 +18,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     on<ChooseNode>((event, emit) async => emit(await _handleChooseNode(event)));
     on<RemoveNode>((event, emit) => emit(_handleRemoveNode(event)));
     on<ChooseRelation>((event, emit) => emit(_handleChooseRelation(event)));
+    on<ClickTripletNode>((event, emit) => emit(_handleClickTripletNode(event)));
   }
 
   Future<TripletEditorState> _handleChooseNode(ChooseNode event) async {
@@ -44,13 +44,17 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   TripletEditorState _handleRemoveNode(RemoveNode event) {
     logger.i('[tripletEditorState]: RemoveNode!');
     switch (event.position) {
-      case TripletPosition.source:
+      case TripletPosition.start:
         {
           return state.removeStartNode();
         }
       case TripletPosition.end:
         {
           return state.removeEndNode();
+        }
+      case TripletPosition.edge:
+        {
+          return state;
         }
     }
   }
@@ -59,6 +63,12 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     logger.i('[tripletEditorState]: ChooseRelation!');
     var newState = state.copyWith(edge: event.relation);
     return newState;
+  }
+
+  TripletEditorState _handleClickTripletNode(ClickTripletNode event) {
+    logger
+        .i('[tripletEditorState] new ${event.position} last ${state.viewMode}');
+    return state.copyWith(viewMode: event.position);
   }
 
   Future<GraphEdge?> getEdge(NodeId source, NodeId end) async {

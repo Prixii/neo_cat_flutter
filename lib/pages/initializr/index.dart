@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/components/common/editor.dart';
 
 import '../../components/initializr/preview.dart';
 import '../../theme/common_theme.dart';
@@ -23,10 +24,11 @@ class _InitializrPageState extends State<InitializrPage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 6, 6, 0),
       child: Container(
-          decoration: normalBoxDecoration.copyWith(
-            border: normalBorder,
-          ),
-          child: Container()),
+        decoration: normalBoxDecoration.copyWith(
+          border: normalBorder,
+        ),
+        child: const TripletEditor(),
+      ),
     );
   }
 

@@ -16,5 +16,3 @@ Future<List<SourceNode>> getNodesByClass(
   }
   return resultList;
 }
-
-void test() {}

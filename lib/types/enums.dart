@@ -7,6 +7,7 @@ enum ViewMode {
 }
 
 enum TripletPosition {
-  source,
+  start,
+  edge,
   end,
 }
