@@ -1,6 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/bloc/node/node_event.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
+import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
 
 import '../../../theme/common_theme.dart';
 
@@ -8,11 +11,11 @@ class LabelTile extends StatefulWidget {
   const LabelTile(
       {super.key,
       required this.color,
-      required this.className,
+      required this.labelName,
       required this.getController});
 
   final Color color;
-  final LabelName className;
+  final LabelName labelName;
   final RichTextEditingController Function() getController;
 
   @override
@@ -20,6 +23,20 @@ class LabelTile extends StatefulWidget {
 }
 
 class _LabelTileState extends State<LabelTile> {
+  void createLabel(
+    String name,
+  ) {
+    relationChartDataBloc(context).add(
+      AddNode(
+        GraphNode(
+            label: widget.labelName,
+            name: name,
+            id: "${widget.labelName},$name".hashCode,
+            properties: {}),
+      ),
+    );
+  }
+
   Color backgroundColor = Colors.transparent;
   void _setClass(RichTextEditingController controller) {
     var start = controller.selection.start;
@@ -28,15 +45,16 @@ class _LabelTileState extends State<LabelTile> {
     var head = newText.substring(0, start);
     var center = newText.substring(start, end);
     var tail = newText.substring(end);
-    newText = "$head€${widget.className}£$center $tail";
+    newText = "$head€${widget.labelName}£$center $tail";
     controller.text = newText;
+    createLabel(center);
   }
 
   Widget _classNameBuilder() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
       child: Text(
-        widget.className,
+        widget.labelName,
         textAlign: TextAlign.left,
         style: defaultTextBlack,
       ),

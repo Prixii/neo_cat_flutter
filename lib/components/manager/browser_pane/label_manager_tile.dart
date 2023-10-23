@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/bloc/label/event.dart';
+import 'package:neo_cat_flutter/bloc/label/label_event.dart';
 import 'package:neo_cat_flutter/components/common/popup_menu/menu_options.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
@@ -104,7 +104,7 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
           Checkbox(
             checked: isClassVisible(),
             onChanged: (value) => relationChartDataBloc(context).add(
-              SetClassVisibility(className: widget.classData.name),
+              SetLabelVisibility(labelName: widget.classData.name),
             ),
           ),
           const SizedBox(

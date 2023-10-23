@@ -3,8 +3,8 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
-import 'package:neo_cat_flutter/components/initializr/rich_text_field/class_setter.dart';
-import 'package:neo_cat_flutter/components/initializr/rich_text_field/class_tile.dart';
+import 'package:neo_cat_flutter/components/initializr/rich_text_field/label_setter.dart';
+import 'package:neo_cat_flutter/components/initializr/rich_text_field/label_tile.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
@@ -30,7 +30,7 @@ Widget elevatedClassMenuBuilder({
           child: ListView.builder(
             itemCount: getLabelData().length,
             itemBuilder: (context, index) => LabelTile(
-              className: getLabelData()[index].name,
+              labelName: getLabelData()[index].name,
               color: getLabelData()[index].color.toColor(),
               getController: () => controller,
             ),

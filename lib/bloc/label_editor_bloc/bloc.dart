@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/bloc/class_editor_bloc/event.dart';
-import 'package:neo_cat_flutter/bloc/class_editor_bloc/state.dart';
+import 'package:neo_cat_flutter/bloc/label_editor_bloc/event.dart';
+import 'package:neo_cat_flutter/bloc/label_editor_bloc/state.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
 class ClassEditorBloc extends Bloc<ClassEditorEvent, ClassEditorState> {

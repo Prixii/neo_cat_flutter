@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/node/node_event.dart';
 import 'package:neo_cat_flutter/types/graph_edge.dart';
 
 import '../../types/graph_node.dart';
 import '../../types/label_data.dart';
 import '../../types/typdef.dart';
 import '../../utils/common_util.dart';
-import '../label/event.dart';
-import '../relation/event.dart';
+import '../label/label_event.dart';
+import '../edge/edge_event.dart';
 import 'event.dart';
 import 'state.dart';
 
@@ -20,13 +21,14 @@ class RelationChartDataBloc
   RelationChartDataBloc() : super(RelationChartDataState.initial()) {
     on<InitRelationChartData>(
         (event, emit) => emit(_handleInitRelationChartData(event)));
-    on<SetClassVisibility>(
+    on<SetLabelVisibility>(
         (event, emit) => emit(_handleSetClassVisibility(event)));
     on<UpdateClassData>((event, emit) => emit(_handleUpdateClassData(event)));
-    on<DeleteClassData>((event, emit) => emit(_handleDeleteClass(event)));
+    on<DeleteLabel>((event, emit) => emit(_handleDeleteClass(event)));
     on<UpdateRelation>((event, emit) => emit(_handleUpdateRelation(event)));
     on<DeleteRelation>((event, emit) => emit(_handleDeleteRelation(event)));
     on<CreateLabel>((event, emit) => emit(_handleCreateLabel(event)));
+    on<AddNode>((event, emit) => emit(_handleAddNode(event)));
   }
 
   RelationChartDataState _handleInitRelationChartData(
@@ -37,12 +39,12 @@ class RelationChartDataBloc
     return state;
   }
 
-  RelationChartDataState _handleSetClassVisibility(SetClassVisibility event) {
+  RelationChartDataState _handleSetClassVisibility(SetLabelVisibility event) {
     var labelVisibilityMap = state.labelVisibilityMap;
     logger.i('[classBrowser]: SetClassVisible!');
-    if (labelVisibilityMap[event.className] != null) {
-      labelVisibilityMap[event.className] =
-          !labelVisibilityMap[event.className]!;
+    if (labelVisibilityMap[event.labelName] != null) {
+      labelVisibilityMap[event.labelName] =
+          !labelVisibilityMap[event.labelName]!;
       return state.copyWith(labelVisibilityMap: labelVisibilityMap);
     }
     return state;
@@ -76,10 +78,10 @@ class RelationChartDataBloc
   }
 
   /// 确保class没有实例！！！
-  RelationChartDataState _handleDeleteClass(DeleteClassData event) {
-    var labelMap = state.labelMap..remove(event.className);
-    var classVisiblityMap = state.labelVisibilityMap..remove(event.className);
-    var nodeToLabelMap = state.nodeToLabelMap..remove(event.className);
+  RelationChartDataState _handleDeleteClass(DeleteLabel event) {
+    var labelMap = state.labelMap..remove(event.labelName);
+    var classVisiblityMap = state.labelVisibilityMap..remove(event.labelName);
+    var nodeToLabelMap = state.nodeToLabelMap..remove(event.labelName);
 
     logger.i('[classBrowser]: DeleteClassData!');
 
@@ -102,9 +104,28 @@ class RelationChartDataBloc
 
   RelationChartDataState _handleCreateLabel(CreateLabel event) {
     var labelMap = <LabelName, LabelData>{}..addAll(state.labelMap);
-    labelMap[event.classData.name] = event.classData;
+    labelMap[event.labelData.name] = event.labelData;
+    var labelVisibilityMap = <LabelName, bool>{}
+      ..addAll(state.labelVisibilityMap);
+    labelVisibilityMap[event.labelData.name] = true;
     logger.d(labelMap);
-    return state.copyWith(labelMap: labelMap);
+    return state.copyWith(
+        labelMap: labelMap, labelVisibilityMap: labelVisibilityMap);
+  }
+
+  RelationChartDataState _handleAddNode(AddNode event) {
+    var nodeMap = <NodeId, GraphNode>{}..addAll(state.nodeMap);
+    var node = event.node;
+    nodeMap[node.id] = event.node;
+
+    var nodeToLabelMap = <LabelName, List<GraphNode>>{}
+      ..addAll(state.nodeToLabelMap);
+    var nodeList = nodeToLabelMap[event.node.label] ?? [];
+    nodeList.add(event.node);
+    nodeToLabelMap[event.node.label] = nodeList;
+
+    state.graph!.addNode(event.node);
+    return state.copyWith(nodeMap: nodeMap, nodeToLabelMap: nodeToLabelMap);
   }
 
   Triplet? getTriplet(GraphEdge edge) {
