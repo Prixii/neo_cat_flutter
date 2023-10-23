@@ -1,11 +1,16 @@
+import 'dart:math';
+
 import 'package:fluent_ui/fluent_ui.dart';
 
 import 'source_node.dart';
 import 'typdef.dart';
 
+var random = Random(1);
+
 class GraphNode {
   Size size = const Size(0, 0); // 节点的大小
-  Offset position = const Offset(0, 0); // 节点的位置
+  Offset position = Offset(
+      random.nextDouble() * 20 + 10, random.nextDouble() * 20 + 10); // 节点的位置
 
   int id; // 用于表示节点的键
   LabelName label;

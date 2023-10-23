@@ -70,8 +70,6 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
       double newDX = min(graphWidth - 40, max(0, newPosition.dx));
       double newDY = min(graphHeight - 40, max(0, newPosition.dy));
 
-      // double newDX = newPosition.dx;
-      // double newDY = newPosition.dy;
       node.position = Offset(newDX, newDY);
     }
   }

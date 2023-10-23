@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart' show Material;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -166,7 +166,7 @@ class _ClassCreatorState extends State<ClassCreator> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(0),
-                  child: material.Material(
+                  child: Material(
                     child: SlidePicker(
                       showIndicator: false,
                       enableAlpha: false,

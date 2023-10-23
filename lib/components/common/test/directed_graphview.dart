@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
@@ -30,6 +30,34 @@ class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
     builder = FruchtermanReingoldAlgorithm(iterations: 1000);
   }
 
+  Widget circularWidget(GraphNode node, String? name) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click, // 设置鼠标光标为小手指样式
+      child: GestureDetector(
+        onTap: () {
+          tripletEditorBloc(context).add(ChooseNode(newNode: node));
+          // TODO 点击事件
+        },
+        child: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [BoxShadow(color: Colors.blue, spreadRadius: 5)],
+          ),
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.center,
+            child: Text(
+              name!,
+              style: defaultTextBlack,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
@@ -46,34 +74,6 @@ class _GraphClusterViewPageState extends State<GraphClusterViewPage> {
             String? name = node.name; // 获取节点的名字
             return circularWidget(node, name); // 返回一个圆形小部件
           },
-        ),
-      ),
-    );
-  }
-
-  Widget circularWidget(GraphNode node, String? name) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click, // 设置鼠标光标为小手指样式
-      child: GestureDetector(
-        onTap: () {
-          tripletEditorBloc(context).add(ChooseNode(newNode: node));
-          // TODO 点击事件
-        },
-        child: Container(
-          width: 40,
-          height: 40,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [BoxShadow(color: Colors.blue, spreadRadius: 5)],
-          ),
-          child: FittedBox(
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.center,
-            child: Text(
-              name!,
-              style: defaultTextBlack,
-            ),
-          ),
         ),
       ),
     );

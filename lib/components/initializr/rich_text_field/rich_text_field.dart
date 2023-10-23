@@ -1,6 +1,7 @@
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart'
+    show Material, InputDecoration, UnderlineInputBorder;
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/background_text.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
@@ -16,7 +17,7 @@ Widget richTextFieldBuilder(
   bool isAnyTextSelected() =>
       controller.selection.textInside(controller.value.text).isNotEmpty;
 
-  return material.Material(
+  return Material(
     child: ExtendedTextField(
       controller: controller,
       extendedContextMenuBuilder: (context, editableTextState) =>
@@ -29,11 +30,11 @@ Widget richTextFieldBuilder(
               : Container(),
       maxLines: null,
       minLines: 6,
-      decoration: const material.InputDecoration(
-        focusedBorder: material.UnderlineInputBorder(
+      decoration: const InputDecoration(
+        focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.transparent),
         ),
-        enabledBorder: material.UnderlineInputBorder(
+        enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.transparent),
         ),
       ),

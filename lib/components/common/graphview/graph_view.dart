@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../../types/graph_node.dart';
 import 'graph.dart';
 import 'algorithm.dart';
-import 'forcedirected/fruchterman_reingold_algorithm.dart';
 
 typedef NodeWidgetBuilder = Widget Function(GraphNode node);
 
@@ -32,77 +31,13 @@ class GraphView extends StatefulWidget {
 class _GraphViewState extends State<GraphView> {
   @override
   Widget build(BuildContext context) {
-    if (widget.algorithm is FruchtermanReingoldAlgorithm) {
-      return _GraphViewAnimated(
-        key: widget.key,
-        graph: widget.graph,
-        algorithm: widget.algorithm,
-        paint: widget.paint,
-        builder: widget.builder,
-      );
-    } else {
-      return _GraphView(
-        key: widget.key,
-        graph: widget.graph,
-        algorithm: widget.algorithm,
-        paint: widget.paint,
-        builder: widget.builder,
-      );
-    }
-  }
-}
-
-class _GraphView extends MultiChildRenderObjectWidget {
-  final Graph graph;
-  final Algorithm algorithm;
-  final Paint? paint;
-
-  _GraphView(
-      {Key? key,
-      required this.graph,
-      required this.algorithm,
-      this.paint,
-      required NodeWidgetBuilder builder})
-      : super(key: key, children: _extractChildren(graph, builder)) {
-    assert(() {
-      if (children.isEmpty) {
-        throw FlutterError(
-          'Children must not be empty, ensure you are overriding the builder',
-        );
-      }
-
-      return true;
-    }());
-  }
-
-  // Traverses the nodes depth-first collects the list of child widgets that are created.
-  static List<Widget> _extractChildren(Graph graph, NodeWidgetBuilder builder) {
-    final result = <Widget>[];
-
-    for (var node in graph.nodes) {
-      var widget = builder(node);
-      result.add(widget);
-    }
-
-    return result;
-  }
-
-  @override
-  RenderCustomLayoutBox createRenderObject(BuildContext context) {
-    return RenderCustomLayoutBox(
-      graph,
-      algorithm,
-      paint,
+    return _GraphViewAnimated(
+      key: widget.key,
+      graph: widget.graph,
+      algorithm: widget.algorithm,
+      paint: widget.paint,
+      builder: widget.builder,
     );
-  }
-
-  @override
-  void updateRenderObject(
-      BuildContext context, RenderCustomLayoutBox renderObject) {
-    renderObject
-      ..graph = graph
-      ..algorithm = algorithm
-      ..edgePaint = paint;
   }
 }
 
