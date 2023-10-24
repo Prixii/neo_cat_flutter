@@ -2,38 +2,38 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/graph_edge.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
+import '../../../utils/bloc_util.dart';
+
 /// @author wang.jiaqi
 /// @date 2023-10-04 09
 
 class TripletTile extends StatefulWidget {
-  final GraphEdge relation;
+  final GraphEdge edge;
 
-  const TripletTile({super.key, required this.relation});
+  const TripletTile({super.key, required this.edge});
 
   @override
   State<TripletTile> createState() => _TripletTileState();
 }
 
 class _TripletTileState extends State<TripletTile> {
-  late final GraphNode sourceNode;
+  Color backgroundColor = opacity;
+  late final GraphNode startNode;
   late final GraphNode endNode;
-  late final GraphEdge relation;
+  late final GraphEdge edge;
 
   @override
   void initState() {
     super.initState();
-    var triplet =
-        context.read<RelationChartDataBloc>().getTriplet(widget.relation);
-    if (triplet != null) {
-      sourceNode = triplet.$1;
-      relation = triplet.$2;
-      endNode = triplet.$3;
-    }
+    startNode = widget.edge.start;
+    edge = widget.edge;
+    endNode = widget.edge.end;
   }
 
   Widget _sourceNodeBuilder() {
@@ -49,7 +49,7 @@ class _TripletTileState extends State<TripletTile> {
         ),
         Center(
           child: Text(
-            sourceNode.name,
+            startNode.name,
             style: defaultText,
           ),
         ),
@@ -57,7 +57,7 @@ class _TripletTileState extends State<TripletTile> {
     );
   }
 
-  Widget _relationBuilder() {
+  Widget _edgeBuilder() {
     return Stack(
       children: [
         LayoutBuilder(
@@ -71,14 +71,10 @@ class _TripletTileState extends State<TripletTile> {
         Column(
           children: [
             Expanded(
-              flex: 1,
-              child: Container(),
-            ),
-            Expanded(
-              flex: 1,
+              flex: 2,
               child: Center(
                 child: Text(
-                  relation.type,
+                  edge.type,
                   style: defaultTextBlack,
                 ),
               ),
@@ -114,19 +110,51 @@ class _TripletTileState extends State<TripletTile> {
     );
   }
 
+  void _handleHover() {
+    setState(() {
+      backgroundColor = const Color.fromRGBO(0, 0, 0, 0.04);
+    });
+  }
+
+  void _handleExit() {
+    setState(() {
+      backgroundColor = opacity;
+    });
+  }
+
+  void _handleChooseEdge() {
+    tripletEditorBloc(context).add(ChooseEdge(edge: widget.edge));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-      builder: (context, state) => SizedBox(
-        height: 80,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-          child: Row(
-            children: [
-              Expanded(flex: 1, child: _sourceNodeBuilder()),
-              Expanded(flex: 2, child: _relationBuilder()),
-              Expanded(flex: 1, child: _endNodeBuiler()),
-            ],
+      builder: (context, state) => Padding(
+        padding: const EdgeInsets.all(6),
+        child: MouseRegion(
+          onEnter: (event) => _handleHover(),
+          onExit: (event) => _handleExit(),
+          child: GestureDetector(
+            onTap: _handleChooseEdge,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: backgroundColor,
+              ),
+              child: SizedBox(
+                height: 60,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
+                  child: Row(
+                    children: [
+                      Expanded(flex: 1, child: _sourceNodeBuilder()),
+                      Expanded(flex: 2, child: _edgeBuilder()),
+                      Expanded(flex: 1, child: _endNodeBuiler()),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

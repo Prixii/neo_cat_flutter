@@ -29,14 +29,14 @@ class TripletEditorState {
         showNode = null;
 
   TripletEditorState copyWith({
-    GraphNode? sourceNode,
+    GraphNode? startNode,
     GraphEdge? edge,
     GraphNode? endNode,
     TripletPosition? viewMode,
     GraphNode? showNode,
   }) =>
       TripletEditorState(
-        startNode: sourceNode ?? this.startNode,
+        startNode: startNode ?? this.startNode,
         edge: edge ?? this.edge,
         endNode: endNode ?? this.endNode,
         viewMode: viewMode ?? this.viewMode,
@@ -47,7 +47,7 @@ class TripletEditorState {
     var newShowNode = viewMode == TripletPosition.start ? null : showNode;
     return TripletEditorState(
       startNode: null,
-      edge: edge,
+      edge: null,
       endNode: endNode,
       viewMode: viewMode,
       showNode: newShowNode,
@@ -58,7 +58,7 @@ class TripletEditorState {
     var newShowNode = viewMode == TripletPosition.end ? null : showNode;
     return TripletEditorState(
       startNode: startNode,
-      edge: edge,
+      edge: null,
       endNode: null,
       viewMode: viewMode,
       showNode: newShowNode,

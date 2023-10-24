@@ -18,10 +18,10 @@ class RemoveNode extends TripletEditorEvent {
   RemoveNode({required this.position});
 }
 
-class ChooseRelation extends TripletEditorEvent {
-  final GraphEdge relation;
+class ChooseEdge extends TripletEditorEvent {
+  final GraphEdge edge;
 
-  ChooseRelation({required this.relation});
+  ChooseEdge({required this.edge});
 }
 
 class ClickTripletNode extends TripletEditorEvent {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart' show Material;
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/bloc/label/label_event.dart';
-import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';

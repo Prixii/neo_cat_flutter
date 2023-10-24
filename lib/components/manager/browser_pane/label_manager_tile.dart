@@ -1,13 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/bloc/label/label_event.dart';
-import 'package:neo_cat_flutter/components/common/popup_menu/menu_options.dart';
-import 'package:neo_cat_flutter/types/graph_node.dart';
-import 'package:neo_cat_flutter/types/label_data.dart';
-import 'package:neo_cat_flutter/utils/bloc_util.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
 
+import '../../../bloc/label/label_event.dart';
 import '../../../theme/common_theme.dart';
+import '../../../types/graph_node.dart';
+import '../../../types/label_data.dart';
 import '../../../types/typdef.dart';
+import '../../../utils/bloc_util.dart';
+import '../../common/popup_menu/menu_options.dart';
 import '../../common/popup_menu/popup_menu.dart';
 import 'node_tile.dart';
 
@@ -62,7 +61,6 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
   void dispose() {
     try {
       overlayEntry.remove();
-      // ignore: empty_catches
     } catch (e) {}
     super.dispose();
   }

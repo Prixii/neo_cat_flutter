@@ -22,18 +22,17 @@ class _RelationManagerState extends State<RelationManager> {
     super.initState();
   }
 
-  List<GraphEdge> getRelationList() =>
+  List<GraphEdge> getEdgeList() =>
       relationChartDataBloc(context).state.edgeMap.values.toList();
 
   @override
   Widget build(BuildContext context) {
-    var relationList = getRelationList();
+    var edgeList = getEdgeList();
     return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
       builder: (context, state) => ListView.builder(
-        itemCount: relationList.length,
+        itemCount: edgeList.length,
         itemBuilder: (context, index) {
-          var relation = relationList[index];
-          return TripletTile(relation: relation);
+          return TripletTile(edge: edgeList[index]);
         },
       ),
     );

@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/types/graph_node.dart';
 import '../../types/enums.dart';
 import '../../types/graph_edge.dart';
 import '../../types/typdef.dart';
@@ -19,7 +18,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
       : super(TripletEditorState.initial()) {
     on<ChooseNode>((event, emit) async => emit(await _handleChooseNode(event)));
     on<RemoveNode>((event, emit) => emit(_handleRemoveNode(event)));
-    on<ChooseRelation>((event, emit) => emit(_handleChooseRelation(event)));
+    on<ChooseEdge>((event, emit) => emit(_handleChooseEdge(event)));
     on<ClickTripletNode>((event, emit) => emit(_handleClickTripletNode(event)));
   }
 
@@ -30,14 +29,31 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     if (startNode == null) {
       startNode = event.newNode;
       GraphEdge? edge;
+      GraphNode? showNode;
+      TripletPosition? viewMode;
       if (endNode != null) {
         edge = await getEdge(startNode.id, endNode.id);
       }
-      return state.copyWith(sourceNode: event.newNode, edge: edge);
+      showNode = startNode;
+      viewMode = TripletPosition.start;
+      return state.copyWith(
+        startNode: event.newNode,
+        edge: edge,
+        viewMode: viewMode,
+        showNode: showNode,
+      );
     } else if (endNode == null) {
       endNode = event.newNode;
-      var edge = await getEdge(startNode.id, endNode.id);
-      return state.copyWith(endNode: endNode, edge: edge);
+      var edge = await getEdge(
+        startNode.id,
+        endNode.id,
+      );
+      return state.copyWith(
+        endNode: endNode,
+        edge: edge,
+        showNode: endNode,
+        viewMode: TripletPosition.end,
+      );
     } else {
       return state;
     }
@@ -61,9 +77,13 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     }
   }
 
-  TripletEditorState _handleChooseRelation(ChooseRelation event) {
+  TripletEditorState _handleChooseEdge(ChooseEdge event) {
     logger.i('[tripletEditorState]: ChooseRelation!');
-    var newState = state.copyWith(edge: event.relation);
+    var newState = state.copyWith(
+        edge: event.edge,
+        startNode: event.edge.start,
+        endNode: event.edge.end,
+        showNode: event.edge.start);
     return newState;
   }
 
@@ -88,10 +108,10 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     }
   }
 
-  Future<GraphEdge?> getEdge(NodeId source, NodeId end) async {
+  Future<GraphEdge?> getEdge(NodeId start, NodeId end) async {
     var edgeMap = dataBloc.state.edgeMap;
     for (var edge in edgeMap.values.toList()) {
-      if (edge.start.id == source && edge.end.id == end) {
+      if (edge.start.id == start && edge.end.id == end) {
         return edge;
       }
     }
