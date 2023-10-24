@@ -7,10 +7,9 @@ import '../../theme/common_theme.dart';
 
 class PropertyTile extends StatefulWidget {
   const PropertyTile(
-      {super.key, required this.propertyName, this.propertyValue});
-
+      {super.key, required this.propertyName, required this.controller});
+  final TextEditingController controller;
   final String propertyName;
-  final String? propertyValue;
 
   @override
   State<PropertyTile> createState() => PropertyTileState();
@@ -24,8 +23,6 @@ class PropertyTileState extends State<PropertyTile> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController()
-      ..text = widget.propertyValue ?? '';
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),
       child: Center(
@@ -45,7 +42,7 @@ class PropertyTileState extends State<PropertyTile> {
             Expanded(
               flex: 3,
               child: TextBox(
-                controller: controller,
+                controller: widget.controller,
                 style: defaultTextBlack,
               ),
             )

@@ -8,6 +8,7 @@ import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 import '../../types/graph_edge.dart';
@@ -31,6 +32,10 @@ class TripletEditor extends StatefulWidget {
 }
 
 class _TripletEditorState extends State<TripletEditor> {
+  TextEditingController nameController = TextEditingController();
+  List<TextEditingController> controllers = [];
+  String? newLabel;
+
   GraphNode? _getSourceNode() {
     GraphNode? startNode = tripletEditorBloc(context).state.startNode;
     if (startNode != null) {
@@ -161,34 +166,47 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   Widget _propertiesListBuiler() {
+    nameController.text = '';
+    newLabel = null;
+    disposeControllers();
     GraphNode? showNode() => tripletEditorBloc(context).state.showNode;
     LabelData? labelData() =>
         relationChartDataBloc(context).state.labelMap[showNode()?.label];
-    return (showNode() == null)
-        ? emptyView
-        : Padding(
-            padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-            child: Column(
-              children: [
-                PropertyTile(
-                    propertyName: 'name', propertyValue: showNode()!.name),
-                _labelSetterBuilder(showNode()!.label),
-                Expanded(
-                  flex: 1,
-                  child: ListView.builder(
-                    itemCount: labelData()?.properties.length ?? 0,
-                    itemBuilder: (BuildContext context, int index) {
-                      return PropertyTile(
-                        propertyName: labelData()!.properties[index],
-                        propertyValue: showNode()!
-                            .properties?[labelData()!.properties[index]],
-                      );
-                    },
-                  ),
-                ),
-              ],
+    if (showNode() == null) {
+      return emptyView;
+    } else {
+      var itemCount = labelData()?.properties.length ?? 0;
+      for (var i = 0; i < itemCount; i++) {
+        controllers.add(TextEditingController());
+      }
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+        child: Column(
+          children: [
+            PropertyTile(
+              propertyName: 'name',
+              controller: nameController..text = showNode()!.name,
             ),
-          );
+            _labelSetterBuilder(showNode()!.label),
+            Expanded(
+              flex: 1,
+              child: ListView.builder(
+                itemCount: itemCount,
+                itemBuilder: (BuildContext context, int index) {
+                  return PropertyTile(
+                    controller: controllers[index]
+                      ..text = showNode()!
+                              .properties?[labelData()!.properties[index]] ??
+                          '',
+                    propertyName: labelData()!.properties[index],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _confirmButtonBuilder() {
@@ -204,14 +222,19 @@ class _TripletEditorState extends State<TripletEditor> {
               style: defaultTextBlack,
             ),
           ),
-          onPressed: () => {
-            // TODO 提交实现
+          onPressed: () {
+            logger.d(nameController.text);
+            logger.d(newLabel);
+            for (var controller in controllers) {
+              logger.d(controller.text);
+            }
           },
         ),
       ),
     );
   }
 
+  // TODO 更换为LabelSetter类
   Widget _labelSetterBuilder(String label) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),
@@ -246,10 +269,32 @@ class _TripletEditorState extends State<TripletEditor> {
     var list = <AutoSuggestBoxItem>[];
     for (var labelEntry
         in relationChartDataBloc(context).state.labelMap.entries) {
-      list.add(
-          AutoSuggestBoxItem(value: labelEntry.value, label: labelEntry.key));
+      list.add(AutoSuggestBoxItem(
+        value: labelEntry.value,
+        label: labelEntry.key,
+        onSelected: () => {newLabel = labelEntry.value.name},
+      ));
     }
     return list;
+  }
+
+  void disposeControllers() {
+    for (var controller in controllers) {
+      controller.dispose();
+    }
+    controllers = [];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    disposeControllers();
+    super.dispose();
   }
 
   @override
