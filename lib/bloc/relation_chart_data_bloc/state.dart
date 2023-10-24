@@ -5,6 +5,7 @@ import 'package:neo_cat_flutter/types/typdef.dart';
 import '../../components/common/graphview/graph.dart';
 import '../../types/graph_node.dart';
 import '../../types/label_data.dart';
+import '../../utils/common_util.dart';
 import 'relation_chart_data_model.dart';
 part 'state.freezed.dart';
 
@@ -68,6 +69,7 @@ class RelationChartDataState with _$RelationChartDataState {
     var graph =
         Graph(nodes: nodeMap.values.toList(), edges: edgeMap.values.toList());
 
+    logger.i('nodeMap${nodeMap.entries.toList()}');
     return RelationChartDataState(
       relationChartData: relationChartData,
       labelMap: classMap,

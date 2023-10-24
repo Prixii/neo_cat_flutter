@@ -7,44 +7,61 @@ import '../../types/graph_node.dart';
 /// @date 2023-10-09 09
 
 class TripletEditorState {
-  final GraphNode? sourceNode;
+  final GraphNode? startNode;
   final GraphEdge? edge;
   final GraphNode? endNode;
   final TripletPosition viewMode;
+  final GraphNode? showNode;
 
   TripletEditorState({
-    required this.sourceNode,
+    required this.startNode,
     required this.edge,
     required this.endNode,
     required this.viewMode,
+    required this.showNode,
   });
 
   TripletEditorState.initial()
-      : sourceNode = null,
+      : startNode = null,
         edge = null,
         endNode = null,
-        viewMode = TripletPosition.start;
+        viewMode = TripletPosition.start,
+        showNode = null;
 
   TripletEditorState copyWith({
     GraphNode? sourceNode,
     GraphEdge? edge,
     GraphNode? endNode,
     TripletPosition? viewMode,
+    GraphNode? showNode,
   }) =>
       TripletEditorState(
-        sourceNode: sourceNode ?? this.sourceNode,
+        startNode: sourceNode ?? this.startNode,
         edge: edge ?? this.edge,
         endNode: endNode ?? this.endNode,
         viewMode: viewMode ?? this.viewMode,
+        showNode: showNode ?? this.showNode,
       );
 
   TripletEditorState removeStartNode() {
+    var newShowNode = viewMode == TripletPosition.start ? null : showNode;
     return TripletEditorState(
-        sourceNode: null, edge: edge, endNode: endNode, viewMode: viewMode);
+      startNode: null,
+      edge: edge,
+      endNode: endNode,
+      viewMode: viewMode,
+      showNode: newShowNode,
+    );
   }
 
   TripletEditorState removeEndNode() {
+    var newShowNode = viewMode == TripletPosition.end ? null : showNode;
     return TripletEditorState(
-        sourceNode: sourceNode, edge: edge, endNode: null, viewMode: viewMode);
+      startNode: startNode,
+      edge: edge,
+      endNode: null,
+      viewMode: viewMode,
+      showNode: newShowNode,
+    );
   }
 }

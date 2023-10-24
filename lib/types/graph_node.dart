@@ -12,17 +12,16 @@ class GraphNode {
   Offset position = Offset(
       random.nextDouble() * 20 + 10, random.nextDouble() * 20 + 10); // 节点的位置
 
-  int id; // 用于表示节点的键
+  int id;
   LabelName label;
-  String name; // 结点的名字
+  String name;
   Map<String, dynamic>? properties;
 
-  // 节点的构造函数
   GraphNode({
     required this.name,
     required this.id,
     required this.label,
-    required Map<String, dynamic>? properties,
+    required this.properties,
   });
 
   factory GraphNode.fromNode(SourceNode node) {
@@ -76,6 +75,6 @@ class GraphNode {
   // 转换为字符串
   @override
   String toString() {
-    return 'Node{position: $position, key: $id, _size: $size}';
+    return 'Node{position: $position, key: $id, _size: $size, properties:${properties?.entries.toList()}}';
   }
 }

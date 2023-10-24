@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../types/enums.dart';
 import '../../types/graph_edge.dart';
@@ -23,7 +25,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
 
   Future<TripletEditorState> _handleChooseNode(ChooseNode event) async {
     logger.i('[tripletEditorState]: ChooseNode!');
-    var startNode = state.sourceNode;
+    var startNode = state.startNode;
     var endNode = state.endNode;
     if (startNode == null) {
       startNode = event.newNode;
@@ -66,9 +68,24 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   }
 
   TripletEditorState _handleClickTripletNode(ClickTripletNode event) {
-    logger
-        .i('[tripletEditorState] new ${event.position} last ${state.viewMode}');
-    return state.copyWith(viewMode: event.position);
+    logger.i('[tripletEditorState]: setPosition! ${event.position}');
+
+    switch (event.position) {
+      case TripletPosition.start:
+        {
+          return state.copyWith(
+              showNode: state.startNode, viewMode: event.position);
+        }
+      case TripletPosition.end:
+        {
+          return state.copyWith(
+              showNode: state.endNode, viewMode: event.position);
+        }
+      default:
+        {
+          return state;
+        }
+    }
   }
 
   Future<GraphEdge?> getEdge(NodeId source, NodeId end) async {

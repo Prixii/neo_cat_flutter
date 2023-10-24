@@ -108,7 +108,6 @@ class RelationChartDataBloc
     var labelVisibilityMap = <LabelName, bool>{}
       ..addAll(state.labelVisibilityMap);
     labelVisibilityMap[event.labelData.name] = true;
-    logger.d(labelMap);
     return state.copyWith(
         labelMap: labelMap, labelVisibilityMap: labelVisibilityMap);
   }

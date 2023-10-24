@@ -31,9 +31,7 @@ class Graph {
 
   void addNodes(List<SourceNode> nodeList) {
     for (var node in nodeList) {
-      logger.d('[addNode]${node.toString()}');
       addNode(GraphNode.fromNode(node));
-      logger.d('[nodes]${nodes.toList()}');
     }
   }
 

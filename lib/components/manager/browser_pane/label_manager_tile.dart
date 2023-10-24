@@ -44,7 +44,6 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
           ),
           label: 'Accept',
           onTap: () {
-            logger.d(node?.name);
             overlayEntry.remove();
           },
         ),

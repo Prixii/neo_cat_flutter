@@ -6,6 +6,7 @@ import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import '../../../types/graph_node.dart';
+import '../../../utils/common_util.dart';
 import '../graphview/algorithm.dart';
 import '../graphview/forcedirected/fruchterman_reingold_algorithm.dart';
 import '../graphview/graph.dart';

@@ -7,7 +7,7 @@ import 'package:neo_cat_flutter/components/common/property_tile.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
+import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 import '../../types/graph_edge.dart';
@@ -31,10 +31,8 @@ class TripletEditor extends StatefulWidget {
 }
 
 class _TripletEditorState extends State<TripletEditor> {
-  List<String>? properties = [];
-  Map<String, dynamic> nodeProperties = {};
   GraphNode? _getSourceNode() {
-    GraphNode? startNode = tripletEditorBloc(context).state.sourceNode;
+    GraphNode? startNode = tripletEditorBloc(context).state.startNode;
     if (startNode != null) {
       return startNode;
     }
@@ -162,58 +160,38 @@ class _TripletEditorState extends State<TripletEditor> {
     );
   }
 
-  Widget _innerPropertiesListBuiler(
-      List<String> properties, Map<String, dynamic> nodeProperties) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-      child: ListView.builder(
-        itemCount: properties.length,
-        itemBuilder: (BuildContext context, int index) {
-          return PropertyTile(
-            propertyName: properties[index],
-            propertyValue: nodeProperties[properties[index]],
+  Widget _propertiesListBuiler() {
+    GraphNode? showNode() => tripletEditorBloc(context).state.showNode;
+    LabelData? labelData() =>
+        relationChartDataBloc(context).state.labelMap[showNode()?.label];
+    return (showNode() == null)
+        ? emptyView
+        : Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+            child: Column(
+              children: [
+                PropertyTile(
+                    propertyName: 'name', propertyValue: showNode()!.name),
+                _labelSetterBuilder(showNode()!.label),
+                Expanded(
+                  flex: 1,
+                  child: ListView.builder(
+                    itemCount: labelData()?.properties.length ?? 0,
+                    itemBuilder: (BuildContext context, int index) {
+                      return PropertyTile(
+                        propertyName: labelData()!.properties[index],
+                        propertyValue: showNode()!
+                            .properties?[labelData()!.properties[index]],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           );
-        },
-      ),
-    );
   }
 
-  Widget _propertiesListBuilder() {
-    switch (tripletEditorBloc(context).state.viewMode) {
-      case TripletPosition.start:
-        {
-          if (_getSourceNode() != null) {
-            var node = _getSourceNode()!;
-            var labelData =
-                relationChartDataBloc(context).state.labelMap[node.label];
-            List<String> properties = labelData?.properties ?? [];
-            Map<String, dynamic> nodeProperties = node.properties ?? {};
-            return _innerPropertiesListBuiler(properties, nodeProperties);
-          }
-          break;
-        }
-      case TripletPosition.end:
-        {
-          if (_getEndNode() != null) {
-            var node = _getEndNode()!;
-            var labelData =
-                relationChartDataBloc(context).state.labelMap[node.label];
-            List<String> properties = labelData?.properties ?? [];
-            Map<String, dynamic> nodeProperties = node.properties ?? {};
-            return _innerPropertiesListBuiler(properties, nodeProperties);
-          }
-          break;
-        }
-
-      case TripletPosition.edge:
-        {
-          return emptyView;
-        }
-    }
-    return emptyView;
-  }
-
-  Widget _confirmBtnBuilder() {
+  Widget _confirmButtonBuilder() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SizedBox(
@@ -234,6 +212,46 @@ class _TripletEditorState extends State<TripletEditor> {
     );
   }
 
+  Widget _labelSetterBuilder(String label) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),
+      child: Center(
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Text(
+                'Label',
+                textAlign: TextAlign.center,
+                style: defaultTextBlack,
+              ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              flex: 3,
+              child: AutoSuggestBox(
+                placeholder: label,
+                items: _itemGenerator(),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<AutoSuggestBoxItem> _itemGenerator() {
+    var list = <AutoSuggestBoxItem>[];
+    for (var labelEntry
+        in relationChartDataBloc(context).state.labelMap.entries) {
+      list.add(
+          AutoSuggestBoxItem(value: labelEntry.value, label: labelEntry.key));
+    }
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TripletEditorBloc, TripletEditorState>(
@@ -244,10 +262,10 @@ class _TripletEditorState extends State<TripletEditor> {
           Expanded(
             child: Container(
               decoration: normalBoxDecoration,
-              child: _propertiesListBuilder(),
+              child: _propertiesListBuiler(),
             ),
           ),
-          _confirmBtnBuilder(),
+          _confirmButtonBuilder(),
         ],
       ),
     );

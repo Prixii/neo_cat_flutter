@@ -17,16 +17,15 @@ class PropertyTile extends StatefulWidget {
 }
 
 class PropertyTileState extends State<PropertyTile> {
-  late TextEditingController controller;
-
   @override
   void initState() {
-    controller = TextEditingController()..text = widget.propertyValue ?? '';
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController()
+      ..text = widget.propertyValue ?? '';
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),
       child: Center(
@@ -47,6 +46,7 @@ class PropertyTileState extends State<PropertyTile> {
               flex: 3,
               child: TextBox(
                 controller: controller,
+                style: defaultTextBlack,
               ),
             )
           ],

@@ -80,8 +80,6 @@ class _ClassCreatorState extends State<ClassCreator> {
       Expanded(
         child: GestureDetector(
           onTap: () {
-            logger.d(
-                context.read<RelationChartDataBloc>().state.relationChartData);
             Navigator.pop(context);
           },
           child: Container(
