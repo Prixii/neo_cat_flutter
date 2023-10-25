@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/event.dart';
-import 'package:neo_cat_flutter/pages/save/index.dart';
+import 'package:neo_cat_flutter/pages/saver/index.dart';
 
 import '../bloc/relation_chart_data_bloc/bloc.dart';
 import 'initializr/index.dart';

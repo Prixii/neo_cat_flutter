@@ -22,6 +22,11 @@ Future<String?> pickFileAndGetPath(List<String> fileExtension) async {
   return null;
 }
 
+Future<String?> pickFolderPath() async {
+  String? result = await FilePicker.platform.getDirectoryPath();
+  return result;
+}
+
 Future<String?> readFile(String filePath) async {
   try {
     File file = File(filePath);
@@ -49,6 +54,28 @@ Future<bool> writeFile(
   } catch (e) {
     return false;
   }
+}
+
+void customDisplayInfoBar({
+  required BuildContext context,
+  required String title,
+  required String content,
+  InfoBarSeverity? severity,
+}) {
+  displayInfoBar(
+    context,
+    builder: ((context, close) {
+      return InfoBar(
+        title: Text(title),
+        content: Text(content),
+        action: IconButton(
+          icon: const Icon(FluentIcons.clear),
+          onPressed: close,
+        ),
+        severity: severity ?? InfoBarSeverity.info,
+      );
+    }),
+  );
 }
 
 /// 通过 [hexString] 转化成color

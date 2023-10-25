@@ -149,9 +149,8 @@ class RelationChartDataBloc
   int instanceCount(LabelName className) =>
       state.nodeToLabelMap[className]?.length ?? 0;
 
-  Future<void> save() async {
-    // var rawData = jsonEncode(state.relationChartData.toJson());
-    // TODO 保存
+  Future<String> getRawData() async {
+    return jsonEncode(state.relationChartData.toJson());
   }
 
   GraphNode getGraphNode(NodeId id) {
