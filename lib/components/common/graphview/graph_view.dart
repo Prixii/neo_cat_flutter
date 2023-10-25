@@ -1,7 +1,13 @@
 import 'dart:async';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
 
+import '../../../bloc/triplet_editor_bloc/event.dart';
+import '../../../theme/common_theme.dart';
 import '../../../types/graph_node.dart';
 import 'graph.dart';
 import 'algorithm.dart';
@@ -9,19 +15,12 @@ import 'algorithm.dart';
 typedef NodeWidgetBuilder = Widget Function(GraphNode node);
 
 class GraphView extends StatefulWidget {
-  final Graph graph;
   final Algorithm algorithm;
   final Paint? paint;
-  final NodeWidgetBuilder builder;
   final bool animated;
 
   const GraphView(
-      {Key? key,
-      required this.graph,
-      required this.algorithm,
-      this.paint,
-      required this.builder,
-      this.animated = true})
+      {Key? key, required this.algorithm, this.paint, this.animated = true})
       : super(key: key);
 
   @override
@@ -29,14 +28,47 @@ class GraphView extends StatefulWidget {
 }
 
 class _GraphViewState extends State<GraphView> {
+  Widget circularWidget(GraphNode node) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click, // 设置鼠标光标为小手指样式
+      child: GestureDetector(
+        onTap: () {
+          tripletEditorBloc(context).add(ChooseNode(newNode: node));
+          // TODO 点击事件
+        },
+        child: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [BoxShadow(color: Colors.blue, spreadRadius: 5)],
+          ),
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.center,
+            child: Text(
+              relationChartDataBloc(context).state.nodeMap[node.id]?.name ?? '',
+              style: defaultText,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _GraphViewAnimated(
-      key: widget.key,
-      graph: widget.graph,
-      algorithm: widget.algorithm,
-      paint: widget.paint,
-      builder: widget.builder,
+    return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+      builder: (context, state) => _GraphViewAnimated(
+        key: widget.key,
+        graph: relationChartDataBloc(context).state.graph!,
+        algorithm: widget.algorithm,
+        paint: widget.paint,
+        builder: (GraphNode node) {
+          node.size = const Size(45, 45);
+          return circularWidget(node); // 返回一个圆形小部件
+        },
+      ),
     );
   }
 }

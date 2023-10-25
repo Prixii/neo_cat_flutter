@@ -21,6 +21,7 @@ class RelationChartDataState with _$RelationChartDataState {
     required Map<EdgeId, GraphEdge> edgeMap,
     required Map<LabelName, bool> labelVisibilityMap,
     required Map<LabelName, List<GraphNode>> nodeToLabelMap,
+    @Default(false) bool forceRefreshFlag,
     Graph? graph,
   }) = _RelationChartDataState;
 
@@ -31,6 +32,7 @@ class RelationChartDataState with _$RelationChartDataState {
         edgeMap: <EdgeId, GraphEdge>{},
         labelVisibilityMap: <LabelName, bool>{},
         nodeToLabelMap: <LabelName, List<GraphNode>>{},
+        forceRefreshFlag: false,
         graph: Graph(edges: [], nodes: []),
       );
 
@@ -77,6 +79,7 @@ class RelationChartDataState with _$RelationChartDataState {
       edgeMap: edgeMap,
       labelVisibilityMap: classVisibilityMap,
       nodeToLabelMap: nodeToLabelMap,
+      forceRefreshFlag: false,
       graph: graph,
     );
   }

@@ -132,7 +132,9 @@ class RelationChartDataBloc
     var nodeMap = <NodeId, GraphNode>{}..addAll(state.nodeMap);
     nodeMap[event.node.id] = event.node;
     logger.i(nodeMap);
-    return state.copyWith(nodeMap: nodeMap);
+    state.graph?.updateNode(event.node);
+    var newFlag = !state.forceRefreshFlag;
+    return state.copyWith(nodeMap: nodeMap, forceRefreshFlag: newFlag);
   }
 
   Triplet? getTriplet(GraphEdge edge) {
@@ -154,5 +156,11 @@ class RelationChartDataBloc
 
   GraphNode getGraphNode(NodeId id) {
     return state.nodeMap[id]!;
+  }
+
+  @override
+  void onChange(Change<RelationChartDataState> change) {
+    logger.i('[change!]');
+    super.onChange(change);
   }
 }

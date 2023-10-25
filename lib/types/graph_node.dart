@@ -63,13 +63,13 @@ class GraphNode {
   // 重写等于运算符
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
       other is GraphNode && hashCode == other.hashCode;
 
   // 获取哈希码
   @override
   int get hashCode {
-    return id.hashCode;
+    return ("$id $name ${properties?.entries.toList() ?? name} $label")
+        .hashCode;
   }
 
   // 转换为字符串

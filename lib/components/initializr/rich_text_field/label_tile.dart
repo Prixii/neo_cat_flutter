@@ -1,5 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/node/node_event.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/components/initializr/rich_text_field/rich_text_editing_controller.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
@@ -82,36 +85,38 @@ class _LabelTileState extends State<LabelTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4),
-      child: GestureDetector(
-        child: MouseRegion(
-          child: SizedBox(
-            height: 30,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: backgroundColor,
-              ),
-              child: Row(
-                children: [
-                  Expanded(flex: 1, child: _classNameBuilder()),
-                  _colorBoxBuilder(),
-                ],
+    return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+      builder: (context, state) => Padding(
+        padding: const EdgeInsets.all(4),
+        child: GestureDetector(
+          child: MouseRegion(
+            child: SizedBox(
+              height: 30,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: backgroundColor,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(flex: 1, child: _classNameBuilder()),
+                    _colorBoxBuilder(),
+                  ],
+                ),
               ),
             ),
+            onEnter: (event) => setState(() {
+              backgroundColor = Colors.black.withOpacity(0.05);
+            }),
+            onExit: (event) => setState(() {
+              backgroundColor = Colors.transparent;
+            }),
           ),
-          onEnter: (event) => setState(() {
-            backgroundColor = Colors.black.withOpacity(0.05);
-          }),
-          onExit: (event) => setState(() {
-            backgroundColor = Colors.transparent;
-          }),
+          onTap: () {
+            ContextMenuController.removeAny();
+            _setClass(widget.getController());
+          },
         ),
-        onTap: () {
-          ContextMenuController.removeAny();
-          _setClass(widget.getController());
-        },
       ),
     );
   }

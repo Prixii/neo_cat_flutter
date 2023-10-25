@@ -1,9 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
+import '../../../bloc/relation_chart_data_bloc/bloc.dart';
+import '../../../bloc/relation_chart_data_bloc/state.dart';
 import '../../../theme/common_theme.dart';
 
 /// @author wang.jiaqi
@@ -62,9 +65,11 @@ class _NodeTileState extends State<NodeTile> {
   Widget _nodeNameBuilder() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-      child: Text(
-        widget.node.name,
-        style: defaultTextBlack,
+      child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+        builder: (context, state) => Text(
+          relationChartDataBloc(context).state.nodeMap[widget.node.id]!.name,
+          style: defaultTextBlack,
+        ),
       ),
     );
   }
