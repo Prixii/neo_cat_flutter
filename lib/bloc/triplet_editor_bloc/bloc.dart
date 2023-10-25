@@ -4,6 +4,7 @@ import '../../types/enums.dart';
 import '../../types/graph_edge.dart';
 import '../../types/typdef.dart';
 import '../../utils/common_util.dart';
+import '../node/node_event.dart' as dataEvent;
 import '../relation_chart_data_bloc/bloc.dart';
 import 'event.dart';
 import 'state.dart';
@@ -21,6 +22,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     on<SetNodeLabel>((event, emit) => emit(_onSetNodeLabel(event)));
     on<ChooseEdge>((event, emit) => emit(_onChooseEdge(event)));
     on<ClickTripletNode>((event, emit) => emit(_onClickTripletNode(event)));
+    on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
   }
 
   Future<TripletEditorState> _onChooseNode(ChooseNode event) async {
@@ -112,8 +114,33 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   TripletEditorState _onSetNodeLabel(SetNodeLabel event) {
     logger.i('[tripletEditorState]: setLabel! ${event.label}');
     var newNode = state.showNode?..label = event.label;
-    logger.d('[newNode]${newNode!.label}');
+
     return state.copyWith(showNode: newNode);
+  }
+
+  TripletEditorState _onUpdateNode(UpdateNode event) {
+    var newNode = state.showNode!
+      ..properties = event.properties
+      ..name = event.name;
+    logger.i('[newNode] $newNode');
+    dataBloc.add(dataEvent.UpdateNode(newNode));
+    //TODO 和Graph响应
+    switch (state.viewMode) {
+      case TripletPosition.start:
+        {
+          return state.copyWith(startNode: newNode, showNode: newNode);
+        }
+      case TripletPosition.end:
+        {
+          {
+            return state.copyWith(endNode: newNode, showNode: newNode);
+          }
+        }
+      default:
+        {
+          return state;
+        }
+    }
   }
 
   Future<GraphEdge?> getEdge(NodeId start, NodeId end) async {

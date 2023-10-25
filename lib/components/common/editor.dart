@@ -34,7 +34,7 @@ class TripletEditor extends StatefulWidget {
 
 class _TripletEditorState extends State<TripletEditor> {
   TextEditingController nameController = TextEditingController();
-  List<TextEditingController> controllers = [];
+  Map<String, TextEditingController> controllers = {};
 
   GraphNode? _getSourceNode() {
     GraphNode? startNode = tripletEditorBloc(context).state.startNode;
@@ -81,6 +81,8 @@ class _TripletEditorState extends State<TripletEditor> {
       onTap: () => tripletEditorBloc(context)
           .add(ClickTripletNode(TripletPosition.start)),
       onSecondaryTap: () => tripletEditorBloc(context)
+          .add(RemoveNode(position: TripletPosition.start)),
+      onLongPress: () => tripletEditorBloc(context)
           .add(RemoveNode(position: TripletPosition.start)),
       child: Stack(
         children: [
@@ -145,6 +147,8 @@ class _TripletEditorState extends State<TripletEditor> {
           tripletEditorBloc(context).add(ClickTripletNode(TripletPosition.end)),
       onSecondaryTap: () => tripletEditorBloc(context)
           .add(RemoveNode(position: TripletPosition.end)),
+      onLongPress: () => tripletEditorBloc(context)
+          .add(RemoveNode(position: TripletPosition.end)),
       child: Stack(
         children: [
           LayoutBuilder(
@@ -178,7 +182,7 @@ class _TripletEditorState extends State<TripletEditor> {
       logger.d('reset!');
       var itemCount = labelData()?.properties.length ?? 0;
       for (var i = 0; i < itemCount; i++) {
-        controllers.add(TextEditingController());
+        controllers[labelData()!.properties[i]] = TextEditingController();
       }
       return Padding(
         padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
@@ -195,7 +199,7 @@ class _TripletEditorState extends State<TripletEditor> {
                 itemCount: itemCount,
                 itemBuilder: (BuildContext context, int index) {
                   return PropertyTile(
-                    controller: controllers[index]
+                    controller: controllers[labelData()!.properties[index]]!
                       ..text = showNode()!
                               .properties?[labelData()!.properties[index]] ??
                           '',
@@ -255,10 +259,12 @@ class _TripletEditorState extends State<TripletEditor> {
             ),
           ),
           onPressed: () {
-            logger.d(nameController.text);
-            for (var controller in controllers) {
-              logger.d(controller.text);
+            var properties = <String, dynamic>{};
+            for (var entry in controllers.entries.toList()) {
+              properties[entry.key] = entry.value.text;
             }
+            tripletEditorBloc(context)
+                .add(UpdateNode(properties, nameController.text));
           },
         ),
       ),
@@ -277,8 +283,13 @@ class _TripletEditorState extends State<TripletEditor> {
             label.name,
             style: defaultTextBlack,
           ),
-          onTap: () =>
-              tripletEditorBloc(context).add(SetNodeLabel(label: label.name)),
+          onTap: () {
+            if (label.name ==
+                tripletEditorBloc(context).state.showNode!.label) {
+              return;
+            }
+            tripletEditorBloc(context).add(SetNodeLabel(label: label.name));
+          },
         ),
       );
     }
@@ -286,10 +297,10 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   void disposeControllers() {
-    for (var controller in controllers) {
+    for (var controller in controllers.values) {
       controller.dispose();
     }
-    controllers = [];
+    controllers = {};
   }
 
   @override

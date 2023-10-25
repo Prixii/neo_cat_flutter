@@ -36,3 +36,10 @@ class ClickTripletNode extends TripletEditorEvent {
 
   ClickTripletNode(this.position);
 }
+
+class UpdateNode extends TripletEditorEvent {
+  final Map<String, dynamic> properties;
+  final String name;
+
+  UpdateNode(this.properties, this.name);
+}

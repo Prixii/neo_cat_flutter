@@ -9,3 +9,9 @@ class AddNode extends NodeEvent {
 
   AddNode(this.node);
 }
+
+class UpdateNode extends NodeEvent {
+  final GraphNode node;
+
+  UpdateNode(this.node);
+}

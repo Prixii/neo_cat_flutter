@@ -29,6 +29,7 @@ class RelationChartDataBloc
     on<DeleteRelation>((event, emit) => emit(_handleDeleteRelation(event)));
     on<CreateLabel>((event, emit) => emit(_handleCreateLabel(event)));
     on<AddNode>((event, emit) => emit(_handleAddNode(event)));
+    on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
   }
 
   RelationChartDataState _handleInitRelationChartData(
@@ -125,6 +126,13 @@ class RelationChartDataBloc
 
     state.graph!.addNode(event.node);
     return state.copyWith(nodeMap: nodeMap, nodeToLabelMap: nodeToLabelMap);
+  }
+
+  RelationChartDataState _onUpdateNode(UpdateNode event) {
+    var nodeMap = <NodeId, GraphNode>{}..addAll(state.nodeMap);
+    nodeMap[event.node.id] = event.node;
+    logger.i(nodeMap);
+    return state.copyWith(nodeMap: nodeMap);
   }
 
   Triplet? getTriplet(GraphEdge edge) {
