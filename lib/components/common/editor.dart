@@ -8,6 +8,7 @@ import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
@@ -34,7 +35,6 @@ class TripletEditor extends StatefulWidget {
 class _TripletEditorState extends State<TripletEditor> {
   TextEditingController nameController = TextEditingController();
   List<TextEditingController> controllers = [];
-  String? newLabel;
 
   GraphNode? _getSourceNode() {
     GraphNode? startNode = tripletEditorBloc(context).state.startNode;
@@ -67,107 +67,107 @@ class _TripletEditorState extends State<TripletEditor> {
         padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
         child: Row(
           children: [
-            Expanded(
-              flex: 1,
-              child: GestureDetector(
-                onTap: () => tripletEditorBloc(context)
-                    .add(ClickTripletNode(TripletPosition.start)),
-                onSecondaryTap: () => tripletEditorBloc(context)
-                    .add(RemoveNode(position: TripletPosition.start)),
-                child: Stack(
-                  children: [
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        return CustomPaint(
-                          size:
-                              Size(constraints.maxWidth, constraints.maxHeight),
-                          painter: CirclePainter(),
-                        );
-                      },
-                    ),
-                    Center(
-                      child: Text(
-                        _getSourceNode()?.name ?? '待选择',
-                        style: defaultText,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Stack(
-                children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      return CustomPaint(
-                        size: Size(constraints.maxWidth, constraints.maxHeight),
-                        painter: ArrowPainter(),
-                      );
-                    },
-                  ),
-                  Column(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: Text(
-                            _getEdge()?.type ?? '待选择',
-                            style: defaultTextBlack,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: GestureDetector(
-                onTap: () => tripletEditorBloc(context)
-                    .add(ClickTripletNode(TripletPosition.end)),
-                onSecondaryTap: () => tripletEditorBloc(context)
-                    .add(RemoveNode(position: TripletPosition.end)),
-                child: Stack(
-                  children: [
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        return CustomPaint(
-                          size:
-                              Size(constraints.maxWidth, constraints.maxHeight),
-                          painter: CirclePainter(),
-                        );
-                      },
-                    ),
-                    Center(
-                      child: Text(
-                        _getEndNode()?.name ?? '待选择',
-                        style: defaultText,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            Expanded(flex: 1, child: _startNodeBuilder()),
+            Expanded(flex: 2, child: _edgeBuilder()),
+            Expanded(flex: 1, child: _endNodeBuilder()),
           ],
         ),
       ),
     );
   }
 
+  Widget _startNodeBuilder() {
+    return GestureDetector(
+      onTap: () => tripletEditorBloc(context)
+          .add(ClickTripletNode(TripletPosition.start)),
+      onSecondaryTap: () => tripletEditorBloc(context)
+          .add(RemoveNode(position: TripletPosition.start)),
+      child: Stack(
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return CustomPaint(
+                size: Size(constraints.maxWidth, constraints.maxHeight),
+                painter: CirclePainter(),
+              );
+            },
+          ),
+          Center(
+            child: Text(
+              _getSourceNode()?.name ?? '待选择',
+              style: defaultText,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _edgeBuilder() {
+    return Stack(
+      children: [
+        LayoutBuilder(
+          builder: (context, constraints) {
+            return CustomPaint(
+              size: Size(constraints.maxWidth, constraints.maxHeight),
+              painter: ArrowPainter(),
+            );
+          },
+        ),
+        Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(),
+            ),
+            Expanded(
+              flex: 1,
+              child: Center(
+                child: Text(
+                  _getEdge()?.type ?? '待选择',
+                  style: defaultTextBlack,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _endNodeBuilder() {
+    return GestureDetector(
+      onTap: () =>
+          tripletEditorBloc(context).add(ClickTripletNode(TripletPosition.end)),
+      onSecondaryTap: () => tripletEditorBloc(context)
+          .add(RemoveNode(position: TripletPosition.end)),
+      child: Stack(
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return CustomPaint(
+                size: Size(constraints.maxWidth, constraints.maxHeight),
+                painter: CirclePainter(),
+              );
+            },
+          ),
+          Center(
+            child: Text(
+              _getEndNode()?.name ?? '待选择',
+              style: defaultText,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _propertiesListBuiler() {
     nameController.text = '';
-    newLabel = null;
     disposeControllers();
     GraphNode? showNode() => tripletEditorBloc(context).state.showNode;
     LabelData? labelData() =>
@@ -175,6 +175,7 @@ class _TripletEditorState extends State<TripletEditor> {
     if (showNode() == null) {
       return emptyView;
     } else {
+      logger.d('reset!');
       var itemCount = labelData()?.properties.length ?? 0;
       for (var i = 0; i < itemCount; i++) {
         controllers.add(TextEditingController());
@@ -209,32 +210,6 @@ class _TripletEditorState extends State<TripletEditor> {
     }
   }
 
-  Widget _confirmButtonBuilder() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SizedBox(
-        height: 40,
-        width: double.infinity,
-        child: Button(
-          child: Center(
-            child: Text(
-              'confirm',
-              style: defaultTextBlack,
-            ),
-          ),
-          onPressed: () {
-            logger.d(nameController.text);
-            logger.d(newLabel);
-            for (var controller in controllers) {
-              logger.d(controller.text);
-            }
-          },
-        ),
-      ),
-    );
-  }
-
-  // TODO 更换为LabelSetter类
   Widget _labelSetterBuilder(String label) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),
@@ -254,28 +229,60 @@ class _TripletEditorState extends State<TripletEditor> {
             ),
             Expanded(
               flex: 3,
-              child: AutoSuggestBox(
-                placeholder: label,
-                items: _itemGenerator(),
+              child: ComboBox<LabelName>(
+                value: tripletEditorBloc(context).state.showNode!.label,
+                items: _comboItemGenerator(),
+                onChanged: (label) => {},
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-  List<AutoSuggestBoxItem> _itemGenerator() {
-    var list = <AutoSuggestBoxItem>[];
-    for (var labelEntry
-        in relationChartDataBloc(context).state.labelMap.entries) {
-      list.add(AutoSuggestBoxItem(
-        value: labelEntry.value,
-        label: labelEntry.key,
-        onSelected: () => {newLabel = labelEntry.value.name},
-      ));
+  Widget _confirmButtonBuilder() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SizedBox(
+        height: 40,
+        width: double.infinity,
+        child: Button(
+          child: Center(
+            child: Text(
+              'confirm',
+              style: defaultTextBlack,
+            ),
+          ),
+          onPressed: () {
+            logger.d(nameController.text);
+            for (var controller in controllers) {
+              logger.d(controller.text);
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  List<ComboBoxItem<String>> _comboItemGenerator() {
+    var labelList =
+        relationChartDataBloc(context).state.labelMap.values.toList();
+    var itemList = <ComboBoxItem<String>>[];
+    for (var label in labelList) {
+      itemList.add(
+        ComboBoxItem(
+          value: label.name,
+          child: Text(
+            label.name,
+            style: defaultTextBlack,
+          ),
+          onTap: () =>
+              tripletEditorBloc(context).add(SetNodeLabel(label: label.name)),
+        ),
+      );
     }
-    return list;
+    return itemList;
   }
 
   void disposeControllers() {

@@ -16,13 +16,14 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
 
   TripletEditorBloc({required this.dataBloc})
       : super(TripletEditorState.initial()) {
-    on<ChooseNode>((event, emit) async => emit(await _handleChooseNode(event)));
-    on<RemoveNode>((event, emit) => emit(_handleRemoveNode(event)));
-    on<ChooseEdge>((event, emit) => emit(_handleChooseEdge(event)));
-    on<ClickTripletNode>((event, emit) => emit(_handleClickTripletNode(event)));
+    on<ChooseNode>((event, emit) async => emit(await _onChooseNode(event)));
+    on<RemoveNode>((event, emit) => emit(_onRemoveNode(event)));
+    on<SetNodeLabel>((event, emit) => emit(_onSetNodeLabel(event)));
+    on<ChooseEdge>((event, emit) => emit(_onChooseEdge(event)));
+    on<ClickTripletNode>((event, emit) => emit(_onClickTripletNode(event)));
   }
 
-  Future<TripletEditorState> _handleChooseNode(ChooseNode event) async {
+  Future<TripletEditorState> _onChooseNode(ChooseNode event) async {
     logger.i('[tripletEditorState]: ChooseNode!');
     var startNode = state.startNode;
     var endNode = state.endNode;
@@ -59,7 +60,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     }
   }
 
-  TripletEditorState _handleRemoveNode(RemoveNode event) {
+  TripletEditorState _onRemoveNode(RemoveNode event) {
     logger.i('[tripletEditorState]: RemoveNode!');
     switch (event.position) {
       case TripletPosition.start:
@@ -77,7 +78,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     }
   }
 
-  TripletEditorState _handleChooseEdge(ChooseEdge event) {
+  TripletEditorState _onChooseEdge(ChooseEdge event) {
     logger.i('[tripletEditorState]: ChooseRelation!');
     var newState = state.copyWith(
         edge: event.edge,
@@ -87,7 +88,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     return newState;
   }
 
-  TripletEditorState _handleClickTripletNode(ClickTripletNode event) {
+  TripletEditorState _onClickTripletNode(ClickTripletNode event) {
     logger.i('[tripletEditorState]: setPosition! ${event.position}');
 
     switch (event.position) {
@@ -106,6 +107,13 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
           return state;
         }
     }
+  }
+
+  TripletEditorState _onSetNodeLabel(SetNodeLabel event) {
+    logger.i('[tripletEditorState]: setLabel! ${event.label}');
+    var newNode = state.showNode?..label = event.label;
+    logger.d('[newNode]${newNode!.label}');
+    return state.copyWith(showNode: newNode);
   }
 
   Future<GraphEdge?> getEdge(NodeId start, NodeId end) async {
