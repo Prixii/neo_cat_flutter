@@ -131,12 +131,46 @@ class RelationChartDataBloc
   }
 
   RelationChartDataState _onUpdateNode(UpdateNode event) {
+    var newNode = event.node;
+    logger.d('[newLabel]${newNode.label}');
     var nodeMap = <NodeId, GraphNode>{}..addAll(state.nodeMap);
-    nodeMap[event.node.id] = event.node;
-    logger.i(nodeMap);
+    var oldLabel = nodeMap[newNode.id]!.label;
+    nodeMap[newNode.id] = newNode;
+    var nodeToLabelMap = <LabelName, List<GraphNode>>{}
+      ..addAll(state.nodeToLabelMap);
+    if (oldLabel == newNode.label) {
+      var nodes = nodeToLabelMap[oldLabel] ?? [];
+      for (var node in nodes) {
+        if (node.id == newNode.id) {
+          logger.d('[update]NodeUpdate!');
+          node = newNode;
+          break;
+        }
+      }
+      nodeToLabelMap[oldLabel] = nodes;
+    } else {
+      var oldLabelNodes = nodeToLabelMap[oldLabel] ?? [];
+      for (var i = 0; i < oldLabelNodes.length; i++) {
+        if (oldLabelNodes[i].id == newNode.id) {
+          logger.d('[remove]$oldLabel');
+          oldLabelNodes.removeAt(i);
+          break;
+        }
+      }
+      var newLabelNodes = nodeToLabelMap[newNode.label] ?? [];
+      logger.d('[add]${newNode.label}');
+      newLabelNodes.add(newNode);
+      nodeToLabelMap[oldLabel] = oldLabelNodes;
+      nodeToLabelMap[newNode.label] = newLabelNodes;
+    }
+
     state.graph?.updateNode(event.node);
     var newFlag = !state.forceRefreshFlag;
-    return state.copyWith(nodeMap: nodeMap, forceRefreshFlag: newFlag);
+    return state.copyWith(
+      nodeMap: nodeMap,
+      forceRefreshFlag: newFlag,
+      nodeToLabelMap: nodeToLabelMap,
+    );
   }
 
   Triplet? getTriplet(GraphEdge edge) {

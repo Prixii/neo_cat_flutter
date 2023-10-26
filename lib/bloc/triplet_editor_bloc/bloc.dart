@@ -4,7 +4,7 @@ import '../../types/enums.dart';
 import '../../types/graph_edge.dart';
 import '../../types/typdef.dart';
 import '../../utils/common_util.dart';
-import '../node/node_event.dart' as dataEvent;
+import '../node/node_event.dart' as data_event;
 import '../relation_chart_data_bloc/bloc.dart';
 import 'event.dart';
 import 'state.dart';
@@ -113,7 +113,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
 
   TripletEditorState _onSetNodeLabel(SetNodeLabel event) {
     logger.i('[tripletEditorState]: setLabel! ${event.label}');
-    var newNode = state.showNode?..label = event.label;
+    var newNode = state.showNode?.copyWith(label: event.label);
 
     return state.copyWith(showNode: newNode);
   }
@@ -123,8 +123,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
       ..properties = event.properties
       ..name = event.name;
     logger.i('[newNode] $newNode');
-    dataBloc.add(dataEvent.UpdateNode(newNode));
-    //TODO 和Graph响应
+    dataBloc.add(data_event.UpdateNode(newNode));
     switch (state.viewMode) {
       case TripletPosition.start:
         {

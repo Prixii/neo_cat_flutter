@@ -1,4 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/components/manager/browser_pane/label_manager_tile.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
@@ -30,12 +33,14 @@ class _ClassManagerState extends State<ClassManager> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(6),
-      child: ListView.builder(
-        itemCount: _getClassDataList().length,
-        itemBuilder: (BuildContext context, int index) => GestureDetector(
-          child: ClassManagerTile(
-            classData: _getClassDataList()[index],
-            nodeList: _getNodeList(classIndex: index),
+      child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+        builder: (context, state) => ListView.builder(
+          itemCount: _getClassDataList().length,
+          itemBuilder: (BuildContext context, int index) => GestureDetector(
+            child: ClassManagerTile(
+              classData: _getClassDataList()[index],
+              nodeList: _getNodeList(classIndex: index),
+            ),
           ),
         ),
       ),

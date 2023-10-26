@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:neo_cat_flutter/types/source_node.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../../types/graph_edge.dart';
 import '../../../types/graph_node.dart';
@@ -61,7 +60,6 @@ class Graph {
     for (var i = 0; i < nodes.length; i++) {
       if (nodes[i].id == newNode.id) {
         nodes[i] = newNode;
-        logger.d('[newNodes]$nodes');
         notifyGraphObserver();
         return;
       }

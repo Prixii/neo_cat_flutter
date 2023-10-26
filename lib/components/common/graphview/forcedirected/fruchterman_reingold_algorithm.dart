@@ -19,7 +19,7 @@ const int defaultClusterPadding = 15;
 const double epsilon = 0.0001;
 
 class FruchtermanReingoldAlgorithm implements Algorithm {
-  Map<GraphNode, Offset> displacement = {};
+  Map<int, Offset> displacement = {};
   Random rand = Random();
   double graphHeight = 500; //default value, change ahead of time
   double graphWidth = 500;
@@ -47,7 +47,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
   @override
   void init(Graph? graph) {
     for (var node in graph!.nodes) {
-      displacement[node] = Offset.zero;
+      displacement[node.id] = Offset.zero;
       node.position = Offset(
           rand.nextDouble() * graphWidth, rand.nextDouble() * graphHeight);
     }
@@ -57,7 +57,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
   void step(Graph? graph) {
     displacement = {};
     for (var node in graph!.nodes) {
-      displacement[node] = Offset.zero;
+      displacement[node.id] = Offset.zero;
     }
     calculateRepulsion(graph.nodes);
     calculateAttraction(graph.edges);
@@ -66,7 +66,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
 
   void moveNodes(Graph graph) {
     for (var node in graph.nodes) {
-      var newPosition = node.position += displacement[node]!;
+      var newPosition = node.position += displacement[node.id]!;
       double newDX = min(graphWidth - 40, max(0, newPosition.dx));
       double newDY = min(graphHeight - 40, max(0, newPosition.dy));
 
@@ -81,11 +81,11 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
   void limitMaximumDisplacement(List<GraphNode> nodes) {
     for (var node in nodes) {
       if (node != focusedNode) {
-        var dispLength = max(epsilon, displacement[node]!.distance);
+        var dispLength = max(epsilon, displacement[node.id]!.distance);
         node.position +=
-            displacement[node]! / dispLength * min(dispLength, tick);
+            displacement[node.id]! / dispLength * min(dispLength, tick);
       } else {
-        displacement[node] = Offset.zero;
+        displacement[node.id] = Offset.zero;
       }
     }
   }
@@ -103,8 +103,9 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
               (maxAttractionDistance * 2);
       var attractionVector = delta * attractionForce * attractionRate;
 
-      displacement[source] = displacement[source]! - attractionVector;
-      displacement[destination] = displacement[destination]! + attractionVector;
+      displacement[source.id] = displacement[source.id]! - attractionVector;
+      displacement[destination.id] =
+          displacement[destination.id]! + attractionVector;
     }
   }
 
@@ -120,13 +121,14 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
               maxRepulsionDistance; //value between 0-1
           var repulsionVector = delta * repulsionForce * repulsionRate;
 
-          displacement[nodeA] = displacement[nodeA]! + repulsionVector;
+          displacement[nodeA.id] = displacement[nodeA.id]! + repulsionVector;
         }
       }
     }
 
     for (var nodeA in nodes) {
-      displacement[nodeA] = displacement[nodeA]! / nodes.length.toDouble();
+      displacement[nodeA.id] =
+          displacement[nodeA.id]! / nodes.length.toDouble();
     }
   }
 

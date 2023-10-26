@@ -33,6 +33,17 @@ class GraphNode {
     );
   }
 
+  GraphNode copyWith(
+          {String? name,
+          int? id,
+          LabelName? label,
+          Map<String, dynamic>? properties}) =>
+      GraphNode(
+          name: name ?? this.name,
+          id: id ?? this.id,
+          label: label ?? this.label,
+          properties: properties ?? this.properties);
+
   double get height => size.height; // 获取节点的高度
 
   double get width => size.width; // 获取节点的宽度
