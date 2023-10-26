@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/bloc/node/node_event.dart';
 
 import '../../../bloc/label/label_event.dart';
 import '../../../theme/common_theme.dart';
@@ -38,11 +39,12 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
       options: [
         SingleMenuOption(
           icon: Icon(
-            FluentIcons.accept,
+            FluentIcons.delete,
             color: Colors.blue,
           ),
-          label: 'Accept',
+          label: 'Delete',
           onTap: () {
+            relationChartDataBloc(context).add(DeleteNode(node!));
             overlayEntry.remove();
           },
         ),

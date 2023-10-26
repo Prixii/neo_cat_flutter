@@ -15,3 +15,9 @@ class UpdateNode extends NodeEvent {
 
   UpdateNode(this.node);
 }
+
+class DeleteNode extends NodeEvent {
+  final GraphNode node;
+
+  DeleteNode(this.node);
+}

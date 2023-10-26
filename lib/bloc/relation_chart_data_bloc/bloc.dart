@@ -22,19 +22,19 @@ class RelationChartDataBloc
     extends Bloc<RelationChartDataEvent, RelationChartDataState> {
   RelationChartDataBloc() : super(RelationChartDataState.initial()) {
     on<InitRelationChartData>(
-        (event, emit) => emit(_handleInitRelationChartData(event)));
-    on<SetLabelVisibility>(
-        (event, emit) => emit(_handleSetClassVisibility(event)));
-    on<UpdateClassData>((event, emit) => emit(_handleUpdateClassData(event)));
-    on<DeleteLabel>((event, emit) => emit(_handleDeleteClass(event)));
-    on<UpdateRelation>((event, emit) => emit(_handleUpdateRelation(event)));
-    on<DeleteRelation>((event, emit) => emit(_handleDeleteRelation(event)));
-    on<CreateLabel>((event, emit) => emit(_handleCreateLabel(event)));
-    on<AddNode>((event, emit) => emit(_handleAddNode(event)));
+        (event, emit) => emit(_onInitRelationChartData(event)));
+    on<SetLabelVisibility>((event, emit) => emit(_onSetClassVisibility(event)));
+    on<UpdateClassData>((event, emit) => emit(_onUpdateClassData(event)));
+    on<DeleteLabel>((event, emit) => emit(_onDeleteLabel(event)));
+    on<UpdateEdge>((event, emit) => emit(_onUpdateEdge(event)));
+    on<DeleteEdge>((event, emit) => emit(_onDeleteEdge(event)));
+    on<CreateLabel>((event, emit) => emit(_onCreateLabel(event)));
+    on<AddNode>((event, emit) => emit(_onAddNode(event)));
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
+    on<DeleteNode>((event, emit) => emit(_onDeleteNode(event)));
   }
 
-  RelationChartDataState _handleInitRelationChartData(
+  RelationChartDataState _onInitRelationChartData(
     InitRelationChartData event,
   ) {
     var state = RelationChartDataState.fromJson(jsonDecode(event.rawData));
@@ -42,7 +42,7 @@ class RelationChartDataBloc
     return state;
   }
 
-  RelationChartDataState _handleSetClassVisibility(SetLabelVisibility event) {
+  RelationChartDataState _onSetClassVisibility(SetLabelVisibility event) {
     var labelVisibilityMap = state.labelVisibilityMap;
     logger.i('[classBrowser]: SetClassVisible!');
     if (labelVisibilityMap[event.labelName] != null) {
@@ -53,7 +53,7 @@ class RelationChartDataBloc
     return state;
   }
 
-  RelationChartDataState _handleUpdateClassData(UpdateClassData event) {
+  RelationChartDataState _onUpdateClassData(UpdateClassData event) {
     /// 未改名则不需要更新map
     if (event.oldName == event.classData.name) {
       var labelMap = state.labelMap;
@@ -82,7 +82,7 @@ class RelationChartDataBloc
   }
 
   /// 确保class没有实例！！！
-  RelationChartDataState _handleDeleteClass(DeleteLabel event) {
+  RelationChartDataState _onDeleteLabel(DeleteLabel event) {
     var labelMap = state.labelMap..remove(event.labelName);
     var classVisiblityMap = state.labelVisibilityMap..remove(event.labelName);
     var nodeToLabelMap = state.nodeToLabelMap..remove(event.labelName);
@@ -96,17 +96,17 @@ class RelationChartDataBloc
     );
   }
 
-  RelationChartDataState _handleUpdateRelation(UpdateRelation event) {
+  RelationChartDataState _onUpdateEdge(UpdateEdge event) {
     var edgeMap = state.edgeMap;
     edgeMap[event.edge.id] = event.edge;
     return state.copyWith(edgeMap: edgeMap);
   }
 
-  RelationChartDataState _handleDeleteRelation(DeleteRelation event) {
+  RelationChartDataState _onDeleteEdge(DeleteEdge event) {
     return state.copyWith(edgeMap: state.edgeMap..remove(event.targetId));
   }
 
-  RelationChartDataState _handleCreateLabel(CreateLabel event) {
+  RelationChartDataState _onCreateLabel(CreateLabel event) {
     var labelMap = <LabelName, LabelData>{}..addAll(state.labelMap);
     labelMap[event.labelData.name] = event.labelData;
     var labelVisibilityMap = <LabelName, bool>{}
@@ -116,7 +116,7 @@ class RelationChartDataBloc
         labelMap: labelMap, labelVisibilityMap: labelVisibilityMap);
   }
 
-  RelationChartDataState _handleAddNode(AddNode event) {
+  RelationChartDataState _onAddNode(AddNode event) {
     var nodeMap = <NodeId, GraphNode>{}..addAll(state.nodeMap);
     var node = event.node;
     nodeMap[node.id] = event.node;
@@ -133,9 +133,13 @@ class RelationChartDataBloc
 
   RelationChartDataState _onUpdateNode(UpdateNode event) {
     var newNode = event.node;
-    logger.d('[newLabel]${newNode.label}');
     var nodeMap = <NodeId, GraphNode>{}..addAll(state.nodeMap);
-    var oldLabel = nodeMap[newNode.id]!.label;
+
+    if (nodeMap[newNode.id] == null) {
+      return _onAddNode(AddNode(newNode));
+    }
+
+    var oldLabel = nodeMap[newNode.id]?.label ?? '';
     nodeMap[newNode.id] = newNode;
     var nodeToLabelMap = <LabelName, List<GraphNode>>{}
       ..addAll(state.nodeToLabelMap);
@@ -171,6 +175,35 @@ class RelationChartDataBloc
       nodeMap: nodeMap,
       forceRefreshFlag: newFlag,
       nodeToLabelMap: nodeToLabelMap,
+    );
+  }
+
+  RelationChartDataState _onDeleteNode(DeleteNode event) {
+    var node = event.node;
+    state.graph?.removeNode(node);
+    var nodeMap = <NodeId, GraphNode>{}..addAll(state.nodeMap);
+    nodeMap.remove(node.id);
+
+    var nodeToLabelMap = <LabelName, List<GraphNode>>{}
+      ..addAll(state.nodeToLabelMap);
+    var nodes = nodeToLabelMap[node.label];
+    nodes = (nodes == null) ? [] : (nodes..remove(node));
+    nodeToLabelMap[node.label] = nodes;
+
+    var edgeMap = <EdgeId, GraphEdge>{}..addAll(state.edgeMap);
+    var entries = edgeMap.entries.toList();
+    for (var entry in entries) {
+      if ((entry.value.end.id == node.id) ||
+          (entry.value.start.id == node.id)) {
+        edgeMap.remove(entry.key);
+        state.graph?.removeEdge(entry.value);
+      }
+    }
+
+    return state.copyWith(
+      nodeToLabelMap: nodeToLabelMap,
+      nodeMap: nodeMap,
+      edgeMap: edgeMap,
     );
   }
 

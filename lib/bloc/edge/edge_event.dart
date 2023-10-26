@@ -18,15 +18,15 @@ class InitRelationBrowserState extends RelationBrowserEvent {
 }
 
 /// 更新/添加 [edge] 到Map
-class UpdateRelation extends RelationBrowserEvent {
+class UpdateEdge extends RelationBrowserEvent {
   final GraphEdge edge;
 
-  UpdateRelation({required this.edge});
+  UpdateEdge({required this.edge});
 }
 
 /// 移除Id为 [targetId] 的关系
-class DeleteRelation extends RelationBrowserEvent {
+class DeleteEdge extends RelationBrowserEvent {
   final EdgeId targetId;
 
-  DeleteRelation({required this.targetId});
+  DeleteEdge({required this.targetId});
 }

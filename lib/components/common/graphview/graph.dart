@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/types/source_node.dart';
 
 import '../../../types/graph_edge.dart';
