@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/components/common/create_label_dialog.dart';
+import 'package:neo_cat_flutter/components/initializr/create_label_dialog.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
 class LabelSetter extends StatefulWidget {

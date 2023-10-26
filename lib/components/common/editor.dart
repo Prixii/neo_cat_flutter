@@ -1,5 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
@@ -123,17 +125,13 @@ class _TripletEditorState extends State<TripletEditor> {
             child: Visibility(
               visible: tripletEditorBloc(context).showEdge(),
               child: Container(
-                  color: Colors.white,
-                  child: ComboBox(
-                    items: _edgeItemGenerator(),
-                    value: _getEdge()?.type ?? '',
-                    onChanged: (e) => {},
-                  )
-                  // Text(
-                  //   _getEdge()?.type ?? '待选择',
-                  //   style: defaultTextBlack,
-                  // ),
-                  ),
+                color: Colors.white,
+                child: ComboBox(
+                  items: _edgeItemGenerator(),
+                  value: _getEdge()?.type ?? '',
+                  onChanged: (e) => {},
+                ),
+              ),
             ),
           ),
         ),
@@ -149,7 +147,9 @@ class _TripletEditorState extends State<TripletEditor> {
         '创建Type',
         style: defaultTextBlack,
       ),
-      onTap: () => {},
+      onTap: () {
+        tripletEditorBloc(context).add(CreateType(context));
+      },
     ));
     for (var type in edgeList) {
       itemList.add(
@@ -264,12 +264,15 @@ class _TripletEditorState extends State<TripletEditor> {
             ),
             Expanded(
               flex: 3,
-              child: ComboBox<LabelName>(
-                value: tripletEditorBloc(context).state.showNode!.label,
-                items: _labelItemGenerator(),
-                onChanged: (label) => {},
+              // TODO 响应
+              child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+                builder: (context, state) => ComboBox<LabelName>(
+                  value: tripletEditorBloc(context).state.showNode!.label,
+                  items: _labelItemGenerator(),
+                  onChanged: (label) => {},
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),
@@ -335,10 +338,9 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   List<ComboBoxItem<String>> _labelItemGenerator() {
-    var labelList =
-        relationChartDataBloc(context).state.labelMap.values.toList();
     var itemList = <ComboBoxItem<String>>[];
-    for (var label in labelList) {
+    for (var label
+        in relationChartDataBloc(context).state.labelMap.values.toList()) {
       itemList.add(
         ComboBoxItem(
           value: label.name,

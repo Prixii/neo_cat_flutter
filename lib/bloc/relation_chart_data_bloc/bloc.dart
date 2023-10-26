@@ -33,6 +33,7 @@ class RelationChartDataBloc
     on<AddNode>((event, emit) => emit(_onAddNode(event)));
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
     on<DeleteNode>((event, emit) => emit(_onDeleteNode(event)));
+    on<CreateEdgeType>((event, emit) => emit(_onCreateEdgeType(event)));
   }
 
   RelationChartDataState _onInitRelationChartData(
@@ -136,7 +137,11 @@ class RelationChartDataBloc
       ..addAll(state.edgeMap)
       ..[edge.id] = edge;
     state.graph!.updateEdge(edge);
-    return state.copyWith(edgeMap: edgeMap);
+    var newFlag = !state.forceRefreshFlag;
+    return state.copyWith(
+      edgeMap: edgeMap,
+      forceRefreshFlag: newFlag,
+    );
   }
 
   RelationChartDataState _onCreateEdge(CreateEdge event) {
@@ -257,6 +262,17 @@ class RelationChartDataBloc
       nodeToLabelMap: nodeToLabelMap,
       nodeMap: nodeMap,
       edgeMap: edgeMap,
+    );
+  }
+
+  RelationChartDataState _onCreateEdgeType(CreateEdgeType event) {
+    var edgeTypes = <EdgeType>{}
+      ..addAll(state.edgeTypes)
+      ..add(event.type);
+    var newFlag = !state.forceRefreshFlag;
+    return state.copyWith(
+      edgeTypes: edgeTypes,
+      forceRefreshFlag: newFlag,
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/graph_edge.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
@@ -48,4 +49,10 @@ class SetEdgeType extends TripletEditorEvent {
   final EdgeType type;
 
   SetEdgeType(this.type);
+}
+
+class CreateType extends TripletEditorEvent {
+  final BuildContext context;
+
+  CreateType(this.context);
 }

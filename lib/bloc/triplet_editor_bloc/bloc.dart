@@ -1,6 +1,8 @@
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/edge/edge_event.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
+import '../../theme/common_theme.dart';
 import '../../types/enums.dart';
 import '../../types/graph_edge.dart';
 import '../../types/typdef.dart';
@@ -25,6 +27,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     on<ClickTripletNode>((event, emit) => emit(_onClickTripletNode(event)));
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
     on<SetEdgeType>((event, emit) => emit(_onSetEdgeType(event)));
+    on<CreateType>((event, emit) async => emit(await _onCreateType(event)));
   }
 
   Future<TripletEditorState> _onChooseNode(ChooseNode event) async {
@@ -159,6 +162,37 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     var edge = GraphEdge(state.startNode!, state.endNode!, type, hashCode);
     dataBloc.add(CreateEdge(edge));
     return state.copyWith(edge: edge);
+  }
+
+  Future<TripletEditorState> _onCreateType(CreateType event) async {
+    var controller = TextEditingController();
+    await showDialog(
+      context: event.context,
+      builder: (context) => ContentDialog(
+        title: Text(
+          '警告!',
+          style: defaultTextBlack,
+        ),
+        content: TextBox(
+          controller: controller,
+        ),
+        actions: [
+          Button(
+              child: const Text('算了'),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          Button(
+              child: const Text('创建'),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ],
+      ),
+    );
+    dataBloc.add(CreateEdgeType(controller.text));
+    controller.dispose();
+    return state;
   }
 
   Future<GraphEdge?> getEdge(NodeId start, NodeId end) async {
