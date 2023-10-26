@@ -79,8 +79,7 @@ class GraphNode {
   // 获取哈希码
   @override
   int get hashCode {
-    return ("$id $name ${properties?.entries.toList() ?? name} $label")
-        .hashCode;
+    return ("$id ").hashCode;
   }
 
   // 转换为字符串

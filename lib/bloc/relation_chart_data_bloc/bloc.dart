@@ -72,6 +72,7 @@ class RelationChartDataBloc
           nodeToLabelMap[event.oldName] ?? [];
       nodeToLabelMap.remove(event.oldName);
       logger.i('[classBrowser]: updateClassData renamed!');
+
       return state.copyWith(
         nodeToLabelMap: nodeToLabelMap,
         labelMap: labelMap,

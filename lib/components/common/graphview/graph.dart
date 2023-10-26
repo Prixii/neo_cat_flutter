@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:neo_cat_flutter/bloc/node/node_event.dart';
 import 'package:neo_cat_flutter/types/source_node.dart';
 
 import '../../../types/graph_edge.dart';
@@ -9,15 +10,16 @@ import '../../../types/graph_node.dart';
 class Graph {
   final List<GraphNode> nodes;
   final List<GraphEdge> edges;
-  List<GraphObserver> graphObserver = [];
+  List<GraphObserver>? graphObserver;
 
   var isTree = false;
 
-  Graph({required this.nodes, required this.edges});
+  Graph({required this.nodes, required this.edges, this.graphObserver});
 
   Graph.init()
       : nodes = [],
-        edges = [];
+        edges = [],
+        graphObserver = [];
 
   int nodeCount() => nodes.length;
 
@@ -53,16 +55,6 @@ class Graph {
   void removeNodes(List<GraphNode> nodeList) {
     for (var node in nodeList) {
       removeNode(node);
-    }
-  }
-
-  void updateNode(GraphNode newNode) {
-    for (var i = 0; i < nodes.length; i++) {
-      if (nodes[i].id == newNode.id) {
-        nodes[i] = newNode;
-        notifyGraphObserver();
-        return;
-      }
     }
   }
 
@@ -114,13 +106,13 @@ class Graph {
       edges.any((element) => element.start == node);
 
   List<GraphNode> successorsOf(GraphNode? node) =>
-      getOutEdges(node!).map((e) => e.end).toList();
+      getOutEdges(node!.id).map((e) => e.end).toList();
 
   bool hasPredecessor(GraphNode node) =>
       edges.any((element) => element.end == node);
 
   List<GraphNode> predecessorsOf(GraphNode? node) =>
-      getInEdges(node!).map((edge) => edge.start).toList();
+      getInEdges(node!.id).map((edge) => edge.start).toList();
 
   bool contains({GraphNode? node, GraphEdge? edge}) =>
       node != null && nodes.contains(node) ||
@@ -143,14 +135,14 @@ class Graph {
   GraphNode getNodeUsingId(int id) =>
       nodes.firstWhere((element) => element.id == id);
 
-  List<GraphEdge> getOutEdges(GraphNode node) =>
-      edges.where((element) => element.start == node).toList();
+  List<GraphEdge> getOutEdges(int id) =>
+      edges.where((element) => element.start.id == id).toList();
 
-  List<GraphEdge> getInEdges(GraphNode node) =>
-      edges.where((element) => element.end == node).toList();
+  List<GraphEdge> getInEdges(int id) =>
+      edges.where((element) => element.end.id == id).toList();
 
   void notifyGraphObserver() {
-    for (var element in graphObserver) {
+    for (var element in graphObserver!) {
       element.notifyGraphInvalidated();
     }
   }
@@ -167,5 +159,24 @@ class Graph {
     };
 
     return jsonEncode(jsonString);
+  }
+
+  void updateNode(GraphNode newNode) {
+    for (var node in nodes) {
+      if (node.id == newNode.id) node = newNode;
+      return;
+    }
+  }
+
+  Graph copyWith(
+    List<GraphNode>? nodes,
+    List<GraphEdge>? edges,
+    List<GraphObserver>? graphObserver,
+  ) {
+    return Graph(
+      nodes: nodes ?? this.nodes,
+      edges: edges ?? this.edges,
+      graphObserver: graphObserver ?? this.graphObserver,
+    );
   }
 }
