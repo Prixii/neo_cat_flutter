@@ -49,10 +49,12 @@ class _NodeTileState extends State<NodeTile> {
             Center(
               child: SizedBox(
                 width: (constraints.maxWidth > 40) ? 40 : constraints.maxWidth,
-                child: Text(
-                  widget.node.name,
-                  overflow: TextOverflow.ellipsis,
-                  style: defaultText.copyWith(fontSize: 12),
+                child: Center(
+                  child: Text(
+                    widget.node.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: defaultText.copyWith(fontSize: 12),
+                  ),
                 ),
               ),
             ),
@@ -65,11 +67,9 @@ class _NodeTileState extends State<NodeTile> {
   Widget _nodeNameBuilder() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-      child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-        builder: (context, state) => Text(
-          relationChartDataBloc(context).state.nodeMap[widget.node.id]!.name,
-          style: defaultTextBlack,
-        ),
+      child: Text(
+        relationChartDataBloc(context).state.nodeMap[widget.node.id]!.name,
+        style: defaultTextBlack,
       ),
     );
   }
@@ -94,11 +94,13 @@ class _NodeTileState extends State<NodeTile> {
             height: 60,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
-              child: Row(
-                children: [
-                  Expanded(flex: 1, child: _nodeBuilder()),
-                  Expanded(flex: 3, child: _nodeNameBuilder()),
-                ],
+              child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+                builder: (context, state) => Row(
+                  children: [
+                    Expanded(flex: 1, child: _nodeBuilder()),
+                    Expanded(flex: 3, child: _nodeNameBuilder()),
+                  ],
+                ),
               ),
             ),
           ),

@@ -32,7 +32,11 @@ class RelationChartDataState with _$RelationChartDataState {
         labelVisibilityMap: <LabelName, bool>{},
         nodeToLabelMap: <LabelName, List<GraphNode>>{},
         forceRefreshFlag: false,
-        graph: Graph(edges: [], nodes: []),
+        graph: Graph(
+          edges: [],
+          nodes: [],
+          graphObserver: [],
+        ),
       );
 
   factory RelationChartDataState.fromJson(Map<String, dynamic> json) {
@@ -67,8 +71,10 @@ class RelationChartDataState with _$RelationChartDataState {
       classMap[classData.name] = classData;
     }
 
-    var graph =
-        Graph(nodes: nodeMap.values.toList(), edges: edgeMap.values.toList());
+    var graph = Graph(
+        nodes: nodeMap.values.toList(),
+        edges: edgeMap.values.toList(),
+        graphObserver: []);
 
     return RelationChartDataState(
       relationChartData: relationChartData,

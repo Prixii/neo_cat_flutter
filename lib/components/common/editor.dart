@@ -97,7 +97,8 @@ class _TripletEditorState extends State<TripletEditor> {
           Center(
             child: Text(
               _getSourceNode()?.name ?? '待选择',
-              style: defaultText,
+              overflow: TextOverflow.ellipsis,
+              style: defaultText.copyWith(fontSize: 12),
             ),
           ),
         ],
@@ -162,7 +163,8 @@ class _TripletEditorState extends State<TripletEditor> {
           Center(
             child: Text(
               _getEndNode()?.name ?? '待选择',
-              style: defaultText,
+              overflow: TextOverflow.ellipsis,
+              style: defaultText.copyWith(fontSize: 12),
             ),
           ),
         ],

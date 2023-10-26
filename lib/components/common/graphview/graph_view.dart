@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
-import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
-import 'package:neo_cat_flutter/utils/bloc_util.dart';
 
+import '../../../bloc/relation_chart_data_bloc/bloc.dart';
+import '../../../bloc/relation_chart_data_bloc/state.dart';
 import '../../../bloc/triplet_editor_bloc/event.dart';
 import '../../../theme/common_theme.dart';
 import '../../../types/graph_node.dart';
+import '../../../utils/bloc_util.dart';
 import 'graph.dart';
 import 'algorithm.dart';
 
@@ -34,7 +34,6 @@ class _GraphViewState extends State<GraphView> {
       child: GestureDetector(
         onTap: () {
           tripletEditorBloc(context).add(ChooseNode(newNode: node));
-          // TODO 点击事件
         },
         child: Container(
           width: 40,
@@ -43,12 +42,11 @@ class _GraphViewState extends State<GraphView> {
             shape: BoxShape.circle,
             boxShadow: [BoxShadow(color: Colors.blue, spreadRadius: 5)],
           ),
-          child: FittedBox(
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.center,
+          child: Center(
             child: Text(
               relationChartDataBloc(context).state.nodeMap[node.id]?.name ?? '',
-              style: defaultText,
+              overflow: TextOverflow.ellipsis,
+              style: defaultText.copyWith(fontSize: 12),
             ),
           ),
         ),
