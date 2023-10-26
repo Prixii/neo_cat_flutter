@@ -21,6 +21,9 @@ class GraphEdge {
     return null;
   }
 
+  SourceEdge toSourceEdge() =>
+      SourceEdge(id: id, type: type, start: start.id, end: end.id);
+
   GraphEdge(this.start, this.end, this.type, this.id, {this.paint});
 
   @override

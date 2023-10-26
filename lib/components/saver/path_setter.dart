@@ -1,5 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/saver/cubit.dart';
+import 'package:neo_cat_flutter/bloc/saver/state.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
 class PathSetter extends StatefulWidget {
@@ -89,12 +93,20 @@ class _PathSetterState extends State<PathSetter> {
     return SizedBox(
       height: 60,
       child: Center(
-        child: FilledButton(
-          child: const Text(
-            'Save',
-            style: defaultText,
+        child: BlocBuilder<SaverCubit, SaverState>(
+          builder: (context, state) => FilledButton(
+            child: const Text(
+              'Save',
+              style: defaultText,
+            ),
+            onPressed: () => {
+              saverCubit(context).save(
+                folderPath: _folderNameController.text,
+                fileName: _fileNameController.text,
+                context: context,
+              ),
+            },
           ),
-          onPressed: () => {},
         ),
       ),
     );

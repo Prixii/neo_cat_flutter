@@ -1,7 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../utils/bloc_util.dart';
 import 'state.dart';
@@ -9,14 +11,14 @@ import 'state.dart';
 class SaverCubit extends Cubit<SaverState> {
   SaverCubit() : super(SaverState.initial());
 
-  Future<void> onSave({
+  Future<void> save({
     required String folderPath,
     required String fileName,
     required BuildContext context,
   }) async {
     // 路径空判定
     if (folderPath.isEmpty || fileName.isEmpty) {
-      emit(state.copyWith(isAlertVisible: false, alertMessage: '路径为空'));
+      customDisplayInfoBar(context: context, title: "不行！", content: "你丫的路径是空的");
       return;
     }
 
@@ -24,29 +26,56 @@ class SaverCubit extends Cubit<SaverState> {
     var path = '$folderPath\\$fileName.json';
     var file = File(path);
     if (file.existsSync()) {
-      emit(state.copyWith(isNameConflict: true));
+      showDialog(
+        context: context,
+        builder: (context) => ContentDialog(
+          title: Text(
+            '警告!',
+            style: defaultTextBlack,
+          ),
+          content: const Text('文件名冲突！是否要覆盖原有的文件'),
+          actions: [
+            Button(
+                child: const Text('算了'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            Button(
+                child: const Text('覆盖'),
+                onPressed: () {
+                  _doWrite(file, context);
+                  Navigator.pop(context);
+                }),
+          ],
+        ),
+      );
       return;
     }
 
     // 保存
-    doWrite(file, context);
+    _doWrite(file, context);
   }
 
-  Future<void> forceWrite({
-    required String folderPath,
-    required String fileName,
-    required BuildContext context,
-  }) async {
-    var path = '$folderPath\\$fileName.json';
-    var file = File(path);
-    doWrite(file, context);
-  }
-
-  Future<void> doWrite(File file, BuildContext context) async {
-    file.createSync();
+  Future<void> _doWrite(File file, BuildContext context) async {
+    if (!file.existsSync()) {
+      file.createSync();
+    }
     file
         .writeAsString(await relationChartDataBloc(context).getRawData())
-        .then((value) => true)
-        .catchError((error) => false);
+        .then((value) {
+      customDisplayInfoBar(
+        context: context,
+        title: '保存成功',
+        content: '文件路径: ${file.path}',
+        severity: InfoBarSeverity.success,
+      );
+    }).catchError((error) {
+      customDisplayInfoBar(
+        context: context,
+        title: '保存失败',
+        content: error.toString(),
+        severity: InfoBarSeverity.error,
+      );
+    });
   }
 }

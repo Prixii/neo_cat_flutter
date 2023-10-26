@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/node/node_event.dart';
 import 'package:neo_cat_flutter/types/graph_edge.dart';
+import 'package:neo_cat_flutter/types/source_edge.dart';
+import 'package:neo_cat_flutter/types/source_node.dart';
 
 import '../../types/graph_node.dart';
 import '../../types/label_data.dart';
@@ -150,7 +152,22 @@ class RelationChartDataBloc
       state.nodeToLabelMap[className]?.length ?? 0;
 
   Future<String> getRawData() async {
-    return jsonEncode(state.relationChartData.toJson());
+    var graphNodeList = state.nodeMap.values.toList();
+    var nodeList = <SourceNode>[];
+    for (var graphNode in graphNodeList) {
+      nodeList.add(graphNode.toSourceNode());
+    }
+    var graphEdgeList = state.edgeMap.values.toList();
+    var edgeList = <SourceEdge>[];
+    for (var edge in graphEdgeList) {
+      edgeList.add(edge.toSourceEdge());
+    }
+    var newRawData = state.relationChartData.copyWith(
+        labelDataList: state.labelMap.values.toList(),
+        nodeList: nodeList,
+        relationList: edgeList);
+    logger.d(newRawData.toJson());
+    return jsonEncode(newRawData.toJson());
   }
 
   GraphNode getGraphNode(NodeId id) {

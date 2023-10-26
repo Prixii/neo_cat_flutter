@@ -59,7 +59,7 @@ Future<bool> writeFile(
 void customDisplayInfoBar({
   required BuildContext context,
   required String title,
-  required String content,
+  String? content,
   InfoBarSeverity? severity,
 }) {
   displayInfoBar(
@@ -67,7 +67,7 @@ void customDisplayInfoBar({
     builder: ((context, close) {
       return InfoBar(
         title: Text(title),
-        content: Text(content),
+        content: Text(content ?? ''),
         action: IconButton(
           icon: const Icon(FluentIcons.clear),
           onPressed: close,

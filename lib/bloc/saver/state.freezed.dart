@@ -16,10 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SaverState {
-  bool get isAlertVisible => throw _privateConstructorUsedError;
-  String get alertMessage => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  bool get isNameConflict => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SaverStateCopyWith<SaverState> get copyWith =>
@@ -32,11 +29,7 @@ abstract class $SaverStateCopyWith<$Res> {
           SaverState value, $Res Function(SaverState) then) =
       _$SaverStateCopyWithImpl<$Res, SaverState>;
   @useResult
-  $Res call(
-      {bool isAlertVisible,
-      String alertMessage,
-      bool isLoading,
-      bool isNameConflict});
+  $Res call({bool isLoading});
 }
 
 /// @nodoc
@@ -52,27 +45,12 @@ class _$SaverStateCopyWithImpl<$Res, $Val extends SaverState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isAlertVisible = null,
-    Object? alertMessage = null,
     Object? isLoading = null,
-    Object? isNameConflict = null,
   }) {
     return _then(_value.copyWith(
-      isAlertVisible: null == isAlertVisible
-          ? _value.isAlertVisible
-          : isAlertVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-      alertMessage: null == alertMessage
-          ? _value.alertMessage
-          : alertMessage // ignore: cast_nullable_to_non_nullable
-              as String,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isNameConflict: null == isNameConflict
-          ? _value.isNameConflict
-          : isNameConflict // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -86,11 +64,7 @@ abstract class _$$SaverStateImplCopyWith<$Res>
       __$$SaverStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool isAlertVisible,
-      String alertMessage,
-      bool isLoading,
-      bool isNameConflict});
+  $Res call({bool isLoading});
 }
 
 /// @nodoc
@@ -104,27 +78,12 @@ class __$$SaverStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isAlertVisible = null,
-    Object? alertMessage = null,
     Object? isLoading = null,
-    Object? isNameConflict = null,
   }) {
     return _then(_$SaverStateImpl(
-      isAlertVisible: null == isAlertVisible
-          ? _value.isAlertVisible
-          : isAlertVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-      alertMessage: null == alertMessage
-          ? _value.alertMessage
-          : alertMessage // ignore: cast_nullable_to_non_nullable
-              as String,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isNameConflict: null == isNameConflict
-          ? _value.isNameConflict
-          : isNameConflict // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -133,24 +92,14 @@ class __$$SaverStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SaverStateImpl implements _SaverState {
-  const _$SaverStateImpl(
-      {required this.isAlertVisible,
-      required this.alertMessage,
-      required this.isLoading,
-      required this.isNameConflict});
+  const _$SaverStateImpl({required this.isLoading});
 
   @override
-  final bool isAlertVisible;
-  @override
-  final String alertMessage;
-  @override
   final bool isLoading;
-  @override
-  final bool isNameConflict;
 
   @override
   String toString() {
-    return 'SaverState(isAlertVisible: $isAlertVisible, alertMessage: $alertMessage, isLoading: $isLoading, isNameConflict: $isNameConflict)';
+    return 'SaverState(isLoading: $isLoading)';
   }
 
   @override
@@ -158,19 +107,12 @@ class _$SaverStateImpl implements _SaverState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SaverStateImpl &&
-            (identical(other.isAlertVisible, isAlertVisible) ||
-                other.isAlertVisible == isAlertVisible) &&
-            (identical(other.alertMessage, alertMessage) ||
-                other.alertMessage == alertMessage) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.isNameConflict, isNameConflict) ||
-                other.isNameConflict == isNameConflict));
+                other.isLoading == isLoading));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, isAlertVisible, alertMessage, isLoading, isNameConflict);
+  int get hashCode => Object.hash(runtimeType, isLoading);
 
   @JsonKey(ignore: true)
   @override
@@ -180,20 +122,10 @@ class _$SaverStateImpl implements _SaverState {
 }
 
 abstract class _SaverState implements SaverState {
-  const factory _SaverState(
-      {required final bool isAlertVisible,
-      required final String alertMessage,
-      required final bool isLoading,
-      required final bool isNameConflict}) = _$SaverStateImpl;
+  const factory _SaverState({required final bool isLoading}) = _$SaverStateImpl;
 
   @override
-  bool get isAlertVisible;
-  @override
-  String get alertMessage;
-  @override
   bool get isLoading;
-  @override
-  bool get isNameConflict;
   @override
   @JsonKey(ignore: true)
   _$$SaverStateImplCopyWith<_$SaverStateImpl> get copyWith =>
