@@ -27,6 +27,7 @@ class RelationChartDataBloc
     on<UpdateClassData>((event, emit) => emit(_onUpdateClassData(event)));
     on<DeleteLabel>((event, emit) => emit(_onDeleteLabel(event)));
     on<UpdateEdge>((event, emit) => emit(_onUpdateEdge(event)));
+    on<CreateEdge>((event, emit) => emit(_onCreateEdge(event)));
     on<DeleteEdge>((event, emit) => emit(_onDeleteEdge(event)));
     on<CreateLabel>((event, emit) => emit(_onCreateLabel(event)));
     on<AddNode>((event, emit) => emit(_onAddNode(event)));
@@ -130,9 +131,28 @@ class RelationChartDataBloc
   }
 
   RelationChartDataState _onUpdateEdge(UpdateEdge event) {
-    var edgeMap = state.edgeMap;
-    edgeMap[event.edge.id] = event.edge;
+    var edge = event.edge;
+    var edgeMap = <EdgeId, GraphEdge>{}
+      ..addAll(state.edgeMap)
+      ..[edge.id] = edge;
+    state.graph!.updateEdge(edge);
     return state.copyWith(edgeMap: edgeMap);
+  }
+
+  RelationChartDataState _onCreateEdge(CreateEdge event) {
+    var edge = event.edge;
+    var edgeTypes = <EdgeType>{}
+      ..addAll(state.edgeTypes)
+      ..add(edge.type);
+    var edgeMap = <EdgeId, GraphEdge>{}
+      ..addAll(state.edgeMap)
+      ..[edge.id] = edge;
+
+    state.graph!.addEdgeS(edge);
+    return state.copyWith(
+      edgeTypes: edgeTypes,
+      edgeMap: edgeMap,
+    );
   }
 
   RelationChartDataState _onDeleteEdge(DeleteEdge event) {
@@ -266,7 +286,7 @@ class RelationChartDataBloc
     var newRawData = state.relationChartData.copyWith(
         labelDataList: state.labelMap.values.toList(),
         nodeList: nodeList,
-        relationList: edgeList);
+        edgeList: edgeList);
     logger.d(newRawData.toJson());
     return jsonEncode(newRawData.toJson());
   }

@@ -1,5 +1,5 @@
-import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/edge/edge_event.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import '../../types/enums.dart';
 import '../../types/graph_edge.dart';
@@ -24,6 +24,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     on<ChooseEdge>((event, emit) => emit(_onChooseEdge(event)));
     on<ClickTripletNode>((event, emit) => emit(_onClickTripletNode(event)));
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
+    on<SetEdgeType>((event, emit) => emit(_onSetEdgeType(event)));
   }
 
   Future<TripletEditorState> _onChooseNode(ChooseNode event) async {
@@ -51,7 +52,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
       var edge = await getEdge(
         startNode.id,
         endNode.id,
-      );
+      ).then((value) => value?.copyWith());
       return state.copyWith(
         endNode: endNode,
         edge: edge,
@@ -84,7 +85,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   TripletEditorState _onChooseEdge(ChooseEdge event) {
     logger.i('[tripletEditorState]: ChooseRelation!');
     var newState = state.copyWith(
-        edge: event.edge,
+        edge: event.edge.copyWith(),
         startNode: event.edge.start,
         endNode: event.edge.end,
         showNode: event.edge.start);
@@ -143,6 +144,23 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     }
   }
 
+  TripletEditorState _onSetEdgeType(SetEdgeType event) {
+    if (state.edge != null) {
+      var newEdge = state.edge!.copyWith(type: event.type);
+      dataBloc.add(UpdateEdge(edge: newEdge));
+      return state.copyWith(edge: newEdge);
+    }
+    return _onCreateEdge(event.type);
+  }
+
+  TripletEditorState _onCreateEdge(EdgeType type) {
+    var hashCode =
+        (state.startNode.toString() + state.endNode.toString() + type).hashCode;
+    var edge = GraphEdge(state.startNode!, state.endNode!, type, hashCode);
+    dataBloc.add(CreateEdge(edge));
+    return state.copyWith(edge: edge);
+  }
+
   Future<GraphEdge?> getEdge(NodeId start, NodeId end) async {
     var edgeMap = dataBloc.state.edgeMap;
     for (var edge in edgeMap.values.toList()) {
@@ -152,4 +170,6 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     }
     return null;
   }
+
+  bool showEdge() => (state.startNode != null && state.endNode != null);
 }

@@ -7,7 +7,7 @@ import 'typdef.dart';
 class GraphEdge {
   GraphNode start;
   GraphNode end;
-  String type;
+  EdgeType type;
   EdgeId id;
   Paint? paint;
 
@@ -25,6 +25,17 @@ class GraphEdge {
       SourceEdge(id: id, type: type, start: start.id, end: end.id);
 
   GraphEdge(this.start, this.end, this.type, this.id, {this.paint});
+
+  GraphEdge copyWith({
+    GraphNode? start,
+    GraphNode? end,
+    EdgeType? type,
+    EdgeId? id,
+    Paint? paint,
+  }) =>
+      GraphEdge(start ?? this.start, end ?? this.end, type ?? this.type,
+          id ?? this.id,
+          paint: paint ?? this.paint);
 
   @override
   bool operator ==(Object? other) =>

@@ -30,3 +30,9 @@ class DeleteEdge extends RelationBrowserEvent {
 
   DeleteEdge({required this.targetId});
 }
+
+class CreateEdge extends RelationBrowserEvent {
+  final GraphEdge edge;
+
+  CreateEdge(this.edge);
+}

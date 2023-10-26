@@ -9,4 +9,6 @@ typedef EdgeId = int;
 
 typedef LabelName = String;
 
+typedef EdgeType = String;
+
 typedef Triplet = (GraphNode, GraphEdge, GraphNode);

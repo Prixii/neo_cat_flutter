@@ -25,6 +25,7 @@ mixin _$RelationChartDataState {
       throw _privateConstructorUsedError;
   Map<String, List<GraphNode>> get nodeToLabelMap =>
       throw _privateConstructorUsedError;
+  Set<String> get edgeTypes => throw _privateConstructorUsedError;
   bool get forceRefreshFlag => throw _privateConstructorUsedError;
   Graph? get graph => throw _privateConstructorUsedError;
 
@@ -46,6 +47,7 @@ abstract class $RelationChartDataStateCopyWith<$Res> {
       Map<int, GraphEdge> edgeMap,
       Map<String, bool> labelVisibilityMap,
       Map<String, List<GraphNode>> nodeToLabelMap,
+      Set<String> edgeTypes,
       bool forceRefreshFlag,
       Graph? graph});
 
@@ -72,6 +74,7 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
     Object? edgeMap = null,
     Object? labelVisibilityMap = null,
     Object? nodeToLabelMap = null,
+    Object? edgeTypes = null,
     Object? forceRefreshFlag = null,
     Object? graph = freezed,
   }) {
@@ -100,6 +103,10 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
           ? _value.nodeToLabelMap
           : nodeToLabelMap // ignore: cast_nullable_to_non_nullable
               as Map<String, List<GraphNode>>,
+      edgeTypes: null == edgeTypes
+          ? _value.edgeTypes
+          : edgeTypes // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
       forceRefreshFlag: null == forceRefreshFlag
           ? _value.forceRefreshFlag
           : forceRefreshFlag // ignore: cast_nullable_to_non_nullable
@@ -137,6 +144,7 @@ abstract class _$$RelationChartDataStateImplCopyWith<$Res>
       Map<int, GraphEdge> edgeMap,
       Map<String, bool> labelVisibilityMap,
       Map<String, List<GraphNode>> nodeToLabelMap,
+      Set<String> edgeTypes,
       bool forceRefreshFlag,
       Graph? graph});
 
@@ -163,6 +171,7 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
     Object? edgeMap = null,
     Object? labelVisibilityMap = null,
     Object? nodeToLabelMap = null,
+    Object? edgeTypes = null,
     Object? forceRefreshFlag = null,
     Object? graph = freezed,
   }) {
@@ -191,6 +200,10 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
           ? _value._nodeToLabelMap
           : nodeToLabelMap // ignore: cast_nullable_to_non_nullable
               as Map<String, List<GraphNode>>,
+      edgeTypes: null == edgeTypes
+          ? _value._edgeTypes
+          : edgeTypes // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
       forceRefreshFlag: null == forceRefreshFlag
           ? _value.forceRefreshFlag
           : forceRefreshFlag // ignore: cast_nullable_to_non_nullable
@@ -213,13 +226,15 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
       required final Map<int, GraphEdge> edgeMap,
       required final Map<String, bool> labelVisibilityMap,
       required final Map<String, List<GraphNode>> nodeToLabelMap,
+      required final Set<String> edgeTypes,
       this.forceRefreshFlag = false,
       this.graph})
       : _labelMap = labelMap,
         _nodeMap = nodeMap,
         _edgeMap = edgeMap,
         _labelVisibilityMap = labelVisibilityMap,
-        _nodeToLabelMap = nodeToLabelMap;
+        _nodeToLabelMap = nodeToLabelMap,
+        _edgeTypes = edgeTypes;
 
   @override
   final RelationChartDataModel relationChartData;
@@ -264,6 +279,14 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
     return EqualUnmodifiableMapView(_nodeToLabelMap);
   }
 
+  final Set<String> _edgeTypes;
+  @override
+  Set<String> get edgeTypes {
+    if (_edgeTypes is EqualUnmodifiableSetView) return _edgeTypes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_edgeTypes);
+  }
+
   @override
   @JsonKey()
   final bool forceRefreshFlag;
@@ -272,7 +295,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
 
   @override
   String toString() {
-    return 'RelationChartDataState(relationChartData: $relationChartData, labelMap: $labelMap, nodeMap: $nodeMap, edgeMap: $edgeMap, labelVisibilityMap: $labelVisibilityMap, nodeToLabelMap: $nodeToLabelMap, forceRefreshFlag: $forceRefreshFlag, graph: $graph)';
+    return 'RelationChartDataState(relationChartData: $relationChartData, labelMap: $labelMap, nodeMap: $nodeMap, edgeMap: $edgeMap, labelVisibilityMap: $labelVisibilityMap, nodeToLabelMap: $nodeToLabelMap, edgeTypes: $edgeTypes, forceRefreshFlag: $forceRefreshFlag, graph: $graph)';
   }
 
   @override
@@ -289,6 +312,8 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
                 .equals(other._labelVisibilityMap, _labelVisibilityMap) &&
             const DeepCollectionEquality()
                 .equals(other._nodeToLabelMap, _nodeToLabelMap) &&
+            const DeepCollectionEquality()
+                .equals(other._edgeTypes, _edgeTypes) &&
             (identical(other.forceRefreshFlag, forceRefreshFlag) ||
                 other.forceRefreshFlag == forceRefreshFlag) &&
             (identical(other.graph, graph) || other.graph == graph));
@@ -303,6 +328,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
       const DeepCollectionEquality().hash(_edgeMap),
       const DeepCollectionEquality().hash(_labelVisibilityMap),
       const DeepCollectionEquality().hash(_nodeToLabelMap),
+      const DeepCollectionEquality().hash(_edgeTypes),
       forceRefreshFlag,
       graph);
 
@@ -322,6 +348,7 @@ abstract class _RelationChartDataState implements RelationChartDataState {
       required final Map<int, GraphEdge> edgeMap,
       required final Map<String, bool> labelVisibilityMap,
       required final Map<String, List<GraphNode>> nodeToLabelMap,
+      required final Set<String> edgeTypes,
       final bool forceRefreshFlag,
       final Graph? graph}) = _$RelationChartDataStateImpl;
 
@@ -337,6 +364,8 @@ abstract class _RelationChartDataState implements RelationChartDataState {
   Map<String, bool> get labelVisibilityMap;
   @override
   Map<String, List<GraphNode>> get nodeToLabelMap;
+  @override
+  Set<String> get edgeTypes;
   @override
   bool get forceRefreshFlag;
   @override

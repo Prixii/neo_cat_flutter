@@ -68,7 +68,7 @@ class _TripletEditorState extends State<TripletEditor> {
         child: Row(
           children: [
             Expanded(flex: 1, child: _startNodeBuilder()),
-            Expanded(flex: 2, child: _edgeBuilder()),
+            Expanded(flex: 3, child: _edgeBuilder()),
             Expanded(flex: 1, child: _endNodeBuilder()),
           ],
         ),
@@ -90,7 +90,7 @@ class _TripletEditorState extends State<TripletEditor> {
             builder: (context, constraints) {
               return CustomPaint(
                 size: Size(constraints.maxWidth, constraints.maxHeight),
-                painter: CirclePainter(),
+                painter: CirclePainter(radius: 25),
               );
             },
           ),
@@ -117,29 +117,58 @@ class _TripletEditorState extends State<TripletEditor> {
             );
           },
         ),
-        Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Container(),
+        Center(
+          child: SizedBox(
+            height: 40,
+            child: Visibility(
+              visible: tripletEditorBloc(context).showEdge(),
+              child: Container(
+                  color: Colors.white,
+                  child: ComboBox(
+                    items: _edgeItemGenerator(),
+                    value: _getEdge()?.type ?? '',
+                    onChanged: (e) => {},
+                  )
+                  // Text(
+                  //   _getEdge()?.type ?? '待选择',
+                  //   style: defaultTextBlack,
+                  // ),
+                  ),
             ),
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: Text(
-                  _getEdge()?.type ?? '待选择',
-                  style: defaultTextBlack,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(),
-            ),
-          ],
-        )
+          ),
+        ),
       ],
     );
+  }
+
+  List<ComboBoxItem<String>> _edgeItemGenerator() {
+    var edgeList = relationChartDataBloc(context).state.edgeTypes.toList();
+    var itemList = <ComboBoxItem<String>>[];
+    itemList.add(ComboBoxItem(
+      child: Text(
+        '创建Type',
+        style: defaultTextBlack,
+      ),
+      onTap: () => {},
+    ));
+    for (var type in edgeList) {
+      itemList.add(
+        ComboBoxItem(
+          value: type,
+          child: Text(
+            type,
+            style: defaultTextBlack,
+          ),
+          onTap: () {
+            if (type == tripletEditorBloc(context).state.edge?.type) {
+              return;
+            }
+            tripletEditorBloc(context).add(SetEdgeType(type));
+          },
+        ),
+      );
+    }
+    return itemList;
   }
 
   Widget _endNodeBuilder() {
@@ -156,7 +185,7 @@ class _TripletEditorState extends State<TripletEditor> {
             builder: (context, constraints) {
               return CustomPaint(
                 size: Size(constraints.maxWidth, constraints.maxHeight),
-                painter: CirclePainter(),
+                painter: CirclePainter(radius: 25),
               );
             },
           ),
@@ -237,7 +266,7 @@ class _TripletEditorState extends State<TripletEditor> {
               flex: 3,
               child: ComboBox<LabelName>(
                 value: tripletEditorBloc(context).state.showNode!.label,
-                items: _comboItemGenerator(),
+                items: _labelItemGenerator(),
                 onChanged: (label) => {},
               ),
             ),
@@ -305,7 +334,7 @@ class _TripletEditorState extends State<TripletEditor> {
     return true;
   }
 
-  List<ComboBoxItem<String>> _comboItemGenerator() {
+  List<ComboBoxItem<String>> _labelItemGenerator() {
     var labelList =
         relationChartDataBloc(context).state.labelMap.values.toList();
     var itemList = <ComboBoxItem<String>>[];

@@ -14,7 +14,7 @@ part 'relation_chart_data_model.freezed.dart';
 class RelationChartDataModel with _$RelationChartDataModel {
   const factory RelationChartDataModel({
     required List<SourceNode> nodeList,
-    required List<SourceEdge> relationList,
+    required List<SourceEdge> edgeList,
     required List<LabelData> labelDataList,
   }) = _RelationChartDataModel;
 
@@ -23,7 +23,7 @@ class RelationChartDataModel with _$RelationChartDataModel {
 
   factory RelationChartDataModel.initial() => const RelationChartDataModel(
         nodeList: [],
-        relationList: [],
+        edgeList: [],
         labelDataList: <LabelData>[],
       );
 }

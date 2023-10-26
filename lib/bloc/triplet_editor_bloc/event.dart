@@ -43,3 +43,9 @@ class UpdateNode extends TripletEditorEvent {
 
   UpdateNode(this.properties, this.name);
 }
+
+class SetEdgeType extends TripletEditorEvent {
+  final EdgeType type;
+
+  SetEdgeType(this.type);
+}

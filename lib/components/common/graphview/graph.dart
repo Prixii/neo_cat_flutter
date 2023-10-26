@@ -167,6 +167,15 @@ class Graph {
     }
   }
 
+  void updateEdge(GraphEdge newEdge) {
+    for (var edge in edges) {
+      if (edge.id == newEdge.id) {
+        edge = newEdge;
+        return;
+      }
+    }
+  }
+
   Graph copyWith(
     List<GraphNode>? nodes,
     List<GraphEdge>? edges,

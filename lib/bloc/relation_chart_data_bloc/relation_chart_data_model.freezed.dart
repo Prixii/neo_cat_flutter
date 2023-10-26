@@ -22,7 +22,7 @@ RelationChartDataModel _$RelationChartDataModelFromJson(
 /// @nodoc
 mixin _$RelationChartDataModel {
   List<SourceNode> get nodeList => throw _privateConstructorUsedError;
-  List<SourceEdge> get relationList => throw _privateConstructorUsedError;
+  List<SourceEdge> get edgeList => throw _privateConstructorUsedError;
   List<LabelData> get labelDataList => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $RelationChartDataModelCopyWith<$Res> {
   @useResult
   $Res call(
       {List<SourceNode> nodeList,
-      List<SourceEdge> relationList,
+      List<SourceEdge> edgeList,
       List<LabelData> labelDataList});
 }
 
@@ -58,7 +58,7 @@ class _$RelationChartDataModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? nodeList = null,
-    Object? relationList = null,
+    Object? edgeList = null,
     Object? labelDataList = null,
   }) {
     return _then(_value.copyWith(
@@ -66,9 +66,9 @@ class _$RelationChartDataModelCopyWithImpl<$Res,
           ? _value.nodeList
           : nodeList // ignore: cast_nullable_to_non_nullable
               as List<SourceNode>,
-      relationList: null == relationList
-          ? _value.relationList
-          : relationList // ignore: cast_nullable_to_non_nullable
+      edgeList: null == edgeList
+          ? _value.edgeList
+          : edgeList // ignore: cast_nullable_to_non_nullable
               as List<SourceEdge>,
       labelDataList: null == labelDataList
           ? _value.labelDataList
@@ -89,7 +89,7 @@ abstract class _$$RelationChartDataModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<SourceNode> nodeList,
-      List<SourceEdge> relationList,
+      List<SourceEdge> edgeList,
       List<LabelData> labelDataList});
 }
 
@@ -107,7 +107,7 @@ class __$$RelationChartDataModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? nodeList = null,
-    Object? relationList = null,
+    Object? edgeList = null,
     Object? labelDataList = null,
   }) {
     return _then(_$RelationChartDataModelImpl(
@@ -115,9 +115,9 @@ class __$$RelationChartDataModelImplCopyWithImpl<$Res>
           ? _value._nodeList
           : nodeList // ignore: cast_nullable_to_non_nullable
               as List<SourceNode>,
-      relationList: null == relationList
-          ? _value._relationList
-          : relationList // ignore: cast_nullable_to_non_nullable
+      edgeList: null == edgeList
+          ? _value._edgeList
+          : edgeList // ignore: cast_nullable_to_non_nullable
               as List<SourceEdge>,
       labelDataList: null == labelDataList
           ? _value._labelDataList
@@ -132,10 +132,10 @@ class __$$RelationChartDataModelImplCopyWithImpl<$Res>
 class _$RelationChartDataModelImpl implements _RelationChartDataModel {
   const _$RelationChartDataModelImpl(
       {required final List<SourceNode> nodeList,
-      required final List<SourceEdge> relationList,
+      required final List<SourceEdge> edgeList,
       required final List<LabelData> labelDataList})
       : _nodeList = nodeList,
-        _relationList = relationList,
+        _edgeList = edgeList,
         _labelDataList = labelDataList;
 
   factory _$RelationChartDataModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -149,12 +149,12 @@ class _$RelationChartDataModelImpl implements _RelationChartDataModel {
     return EqualUnmodifiableListView(_nodeList);
   }
 
-  final List<SourceEdge> _relationList;
+  final List<SourceEdge> _edgeList;
   @override
-  List<SourceEdge> get relationList {
-    if (_relationList is EqualUnmodifiableListView) return _relationList;
+  List<SourceEdge> get edgeList {
+    if (_edgeList is EqualUnmodifiableListView) return _edgeList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_relationList);
+    return EqualUnmodifiableListView(_edgeList);
   }
 
   final List<LabelData> _labelDataList;
@@ -167,7 +167,7 @@ class _$RelationChartDataModelImpl implements _RelationChartDataModel {
 
   @override
   String toString() {
-    return 'RelationChartDataModel(nodeList: $nodeList, relationList: $relationList, labelDataList: $labelDataList)';
+    return 'RelationChartDataModel(nodeList: $nodeList, edgeList: $edgeList, labelDataList: $labelDataList)';
   }
 
   @override
@@ -176,8 +176,7 @@ class _$RelationChartDataModelImpl implements _RelationChartDataModel {
         (other.runtimeType == runtimeType &&
             other is _$RelationChartDataModelImpl &&
             const DeepCollectionEquality().equals(other._nodeList, _nodeList) &&
-            const DeepCollectionEquality()
-                .equals(other._relationList, _relationList) &&
+            const DeepCollectionEquality().equals(other._edgeList, _edgeList) &&
             const DeepCollectionEquality()
                 .equals(other._labelDataList, _labelDataList));
   }
@@ -187,7 +186,7 @@ class _$RelationChartDataModelImpl implements _RelationChartDataModel {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_nodeList),
-      const DeepCollectionEquality().hash(_relationList),
+      const DeepCollectionEquality().hash(_edgeList),
       const DeepCollectionEquality().hash(_labelDataList));
 
   @JsonKey(ignore: true)
@@ -208,7 +207,7 @@ class _$RelationChartDataModelImpl implements _RelationChartDataModel {
 abstract class _RelationChartDataModel implements RelationChartDataModel {
   const factory _RelationChartDataModel(
           {required final List<SourceNode> nodeList,
-          required final List<SourceEdge> relationList,
+          required final List<SourceEdge> edgeList,
           required final List<LabelData> labelDataList}) =
       _$RelationChartDataModelImpl;
 
@@ -218,7 +217,7 @@ abstract class _RelationChartDataModel implements RelationChartDataModel {
   @override
   List<SourceNode> get nodeList;
   @override
-  List<SourceEdge> get relationList;
+  List<SourceEdge> get edgeList;
   @override
   List<LabelData> get labelDataList;
   @override

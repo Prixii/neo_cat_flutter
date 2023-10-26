@@ -20,6 +20,7 @@ class RelationChartDataState with _$RelationChartDataState {
     required Map<EdgeId, GraphEdge> edgeMap,
     required Map<LabelName, bool> labelVisibilityMap,
     required Map<LabelName, List<GraphNode>> nodeToLabelMap,
+    required Set<EdgeType> edgeTypes,
     @Default(false) bool forceRefreshFlag,
     Graph? graph,
   }) = _RelationChartDataState;
@@ -37,6 +38,7 @@ class RelationChartDataState with _$RelationChartDataState {
           nodes: [],
           graphObserver: [],
         ),
+        edgeTypes: {},
       );
 
   factory RelationChartDataState.fromJson(Map<String, dynamic> json) {
@@ -46,11 +48,13 @@ class RelationChartDataState with _$RelationChartDataState {
       nodeMap[node.id] = GraphNode.fromNode(node);
     }
 
+    var edgeTypes = <EdgeType>{};
     var edgeMap = <EdgeId, GraphEdge>{};
-    for (var relation in relationChartData.relationList) {
-      var newEdge = GraphEdge.fromSourceEdge(relation, nodeMap);
+    for (var edge in relationChartData.edgeList) {
+      edgeTypes.add(edge.type);
+      var newEdge = GraphEdge.fromSourceEdge(edge, nodeMap);
       if (newEdge != null) {
-        edgeMap[relation.id] = newEdge;
+        edgeMap[edge.id] = newEdge;
       }
     }
 
@@ -85,6 +89,7 @@ class RelationChartDataState with _$RelationChartDataState {
       nodeToLabelMap: nodeToLabelMap,
       forceRefreshFlag: false,
       graph: graph,
+      edgeTypes: edgeTypes,
     );
   }
 }
