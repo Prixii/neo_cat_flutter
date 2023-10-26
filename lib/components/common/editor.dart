@@ -261,6 +261,9 @@ class _TripletEditorState extends State<TripletEditor> {
             ),
           ),
           onPressed: () {
+            if (!_isLabelExist()) {
+              return;
+            }
             var properties = <String, dynamic>{};
             for (var entry in controllers.entries.toList()) {
               properties[entry.key] = entry.value.text;
@@ -271,6 +274,35 @@ class _TripletEditorState extends State<TripletEditor> {
         ),
       ),
     );
+  }
+
+  bool _isLabelExist() {
+    if (!relationChartDataBloc(context)
+        .state
+        .labelMap
+        .keys
+        .toList()
+        .contains(tripletEditorBloc(context).state.showNode?.label ?? '')) {
+      showDialog(
+        context: context,
+        builder: (context) => ContentDialog(
+          title: Text(
+            '警告',
+            style: defaultTextBlack,
+          ),
+          content: const Text('此Label不存在，请先创建对应的Label'),
+          actions: [
+            Button(
+                child: const Text('我知道了'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+          ],
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 
   List<ComboBoxItem<String>> _comboItemGenerator() {
