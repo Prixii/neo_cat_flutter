@@ -38,7 +38,7 @@ class _ClassManagerState extends State<ClassManager> {
           itemCount: _getClassDataList().length,
           itemBuilder: (BuildContext context, int index) => GestureDetector(
             child: ClassManagerTile(
-              classData: _getClassDataList()[index],
+              label: _getClassDataList()[index],
               nodeList: _getNodeList(classIndex: index),
             ),
           ),

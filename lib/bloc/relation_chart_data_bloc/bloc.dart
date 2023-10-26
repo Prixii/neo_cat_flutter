@@ -81,18 +81,51 @@ class RelationChartDataBloc
     }
   }
 
-  /// 确保class没有实例！！！
   RelationChartDataState _onDeleteLabel(DeleteLabel event) {
-    var labelMap = state.labelMap..remove(event.labelName);
-    var classVisiblityMap = state.labelVisibilityMap..remove(event.labelName);
-    var nodeToLabelMap = state.nodeToLabelMap..remove(event.labelName);
+    var targetLabel = event.labelName;
+    var labelMap = <LabelName, LabelData>{}
+      ..addAll(state.labelMap)
+      ..remove(targetLabel);
+    // 不需要清除节点
+    var nodeToLabelMap = <LabelName, List<GraphNode>>{}
+      ..addAll(state.nodeToLabelMap);
+    var nodes = nodeToLabelMap[targetLabel];
+    if (nodes == null || nodes.isEmpty) {
+      return state.copyWith(labelMap: labelMap);
+    }
+    nodeToLabelMap.remove(targetLabel);
 
+    // 需要清除节点
+    var edgeMap = <EdgeId, GraphEdge>{}..addAll(state.edgeMap);
+    var edgeEntries = edgeMap.entries.toList();
+    for (var entry in edgeEntries) {
+      if (entry.value.start.label == targetLabel ||
+          entry.value.end.label == targetLabel) {
+        edgeMap.remove(entry.key);
+        state.graph?.removeEdge(entry.value);
+      }
+    }
+
+    var nodeMap = <NodeId, GraphNode>{}..addAll(state.nodeMap);
+    var nodeEntries = nodeMap.entries.toList();
+    for (var entry in nodeEntries) {
+      if (entry.value.label == event.labelName) {
+        nodeMap.remove(entry.key);
+        state.graph!.removeNode(entry.value);
+      }
+    }
+
+    var labelVisiblityMap = <LabelName, bool>{}
+      ..addAll(state.labelVisibilityMap)
+      ..remove(targetLabel);
     logger.i('[classBrowser]: DeleteClassData!');
 
     return state.copyWith(
       nodeToLabelMap: nodeToLabelMap,
-      labelVisibilityMap: classVisiblityMap,
+      labelVisibilityMap: labelVisiblityMap,
+      nodeMap: nodeMap,
       labelMap: labelMap,
+      edgeMap: edgeMap,
     );
   }
 

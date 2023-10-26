@@ -5,7 +5,6 @@ import 'package:neo_cat_flutter/components/hello/open_project_card.dart';
 /// @author wang.jiaqi
 /// @date 2023-09-29 11
 
-// TODO 改为静态页面
 class HelloPage extends StatefulWidget {
   const HelloPage({super.key});
 

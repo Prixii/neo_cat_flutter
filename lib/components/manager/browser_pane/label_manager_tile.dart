@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/bloc/node/node_event.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../../bloc/label/label_event.dart';
 import '../../../theme/common_theme.dart';
@@ -16,9 +17,9 @@ import 'node_tile.dart';
 
 class ClassManagerTile extends StatefulWidget {
   const ClassManagerTile(
-      {super.key, required this.classData, required this.nodeList});
+      {super.key, required this.label, required this.nodeList});
 
-  final LabelData classData;
+  final LabelData label;
   final List<GraphNode> nodeList;
 
   @override
@@ -59,11 +60,44 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
     );
   }
 
+  void _checkConflict() {
+    showDialog(
+      context: context,
+      builder: (context) => ContentDialog(
+        title: Text(
+          '警告',
+          style: defaultTextBlack,
+        ),
+        content:
+            const Text('此Label仍有子节点, 如果执行删除操作, 所有子节点(包括其相关的边)都会被删除，确认要删除吗'),
+        actions: [
+          Button(
+              child: const Text('算了'),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          Button(
+              child: Text(
+                '删除',
+                style: defaultText.copyWith(color: Colors.errorPrimaryColor),
+              ),
+              onPressed: () {
+                relationChartDataBloc(context)
+                    .add(DeleteLabel(labelName: widget.label.name));
+                Navigator.pop(context);
+              }),
+        ],
+      ),
+    );
+  }
+
   @override
   void dispose() {
     try {
       overlayEntry.remove();
-    } catch (e) {}
+    } catch (e) {
+      logger.d('dispose overLay');
+    }
     super.dispose();
   }
 
@@ -91,7 +125,7 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
   bool isClassVisible() =>
       relationChartDataBloc(context)
           .state
-          .labelVisibilityMap[widget.classData.name] ??
+          .labelVisibilityMap[widget.label.name] ??
       false;
 
   @override
@@ -103,16 +137,36 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
           Checkbox(
             checked: isClassVisible(),
             onChanged: (value) => relationChartDataBloc(context).add(
-              SetLabelVisibility(labelName: widget.classData.name),
+              SetLabelVisibility(labelName: widget.label.name),
             ),
           ),
           const SizedBox(
             width: 12,
           ),
           Text(
-            widget.classData.name,
+            widget.label.name,
             style: defaultTextBlack,
-          )
+          ),
+          Expanded(child: Container()),
+          IconButton(
+            icon: const Icon(
+              FluentIcons.delete,
+              color: Colors.errorPrimaryColor,
+            ),
+            onPressed: () {
+              var nodeCount = relationChartDataBloc(context)
+                      .state
+                      .nodeToLabelMap[widget.label.name]
+                      ?.length ??
+                  0;
+              if (nodeCount != 0) {
+                _checkConflict();
+                return;
+              }
+              relationChartDataBloc(context)
+                  .add(DeleteLabel(labelName: widget.label.name));
+            },
+          ),
         ],
       ),
       content: _nodeListBuilder(),
