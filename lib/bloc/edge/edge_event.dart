@@ -43,3 +43,9 @@ class CreateEdgeType extends RelationBrowserEvent {
 
   CreateEdgeType(this.type);
 }
+
+class DeleteEdgeType extends RelationBrowserEvent {
+  final EdgeType type;
+
+  DeleteEdgeType(this.type);
+}

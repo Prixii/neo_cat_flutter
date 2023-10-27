@@ -34,6 +34,7 @@ class RelationChartDataBloc
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
     on<DeleteNode>((event, emit) => emit(_onDeleteNode(event)));
     on<CreateEdgeType>((event, emit) => emit(_onCreateEdgeType(event)));
+    on<DeleteEdgeType>((event, emit) => emit(_onDeleteEdgeType(event)));
   }
 
   RelationChartDataState _onInitRelationChartData(
@@ -95,6 +96,7 @@ class RelationChartDataBloc
     if (nodes == null || nodes.isEmpty) {
       return state.copyWith(labelMap: labelMap);
     }
+
     nodeToLabelMap.remove(targetLabel);
 
     // 需要清除节点
@@ -121,13 +123,19 @@ class RelationChartDataBloc
       ..addAll(state.labelVisibilityMap)
       ..remove(targetLabel);
     logger.i('[classBrowser]: DeleteClassData!');
-
+    var edgeToTypeMap = <EdgeType, List<GraphEdge>>{};
+    for (var edge in edgeMap.values) {
+      var edgeList = edgeToTypeMap[edge.type] ?? [];
+      edgeList.add(edge);
+      edgeToTypeMap[edge.type] = edgeList;
+    }
     return state.copyWith(
       nodeToLabelMap: nodeToLabelMap,
       labelVisibilityMap: labelVisiblityMap,
       nodeMap: nodeMap,
       labelMap: labelMap,
       edgeMap: edgeMap,
+      edgeToTypeMap: edgeToTypeMap,
     );
   }
 
@@ -297,6 +305,37 @@ class RelationChartDataBloc
     return state.copyWith(
       edgeTypes: edgeTypes,
       forceRefreshFlag: newFlag,
+    );
+  }
+
+  RelationChartDataState _onDeleteEdgeType(DeleteEdgeType event) {
+    var edgeMap = <EdgeId, GraphEdge>{}..addAll(state.edgeMap);
+    var edgeToTypeMap = <EdgeType, List<GraphEdge>>{}
+      ..addAll(state.edgeToTypeMap);
+    var edges = edgeToTypeMap[event.type];
+    var edgeTypes = <EdgeType>{}
+      ..addAll(state.edgeTypes)
+      ..remove(event.type);
+    if (edges == null) {
+      return state.copyWith(edgeTypes: edgeTypes);
+    }
+    if (edges == []) {
+      edgeToTypeMap.remove(event.type);
+      return state.copyWith(
+        edgeTypes: edgeTypes,
+        edgeToTypeMap: edgeToTypeMap,
+      );
+    }
+    for (var edge in edges) {
+      edgeMap.remove(edge);
+      state.graph!.removeEdge(edge);
+    }
+    edgeToTypeMap.remove(event.type);
+
+    return state.copyWith(
+      edgeMap: edgeMap,
+      edgeToTypeMap: edgeToTypeMap,
+      edgeTypes: edgeTypes,
     );
   }
 

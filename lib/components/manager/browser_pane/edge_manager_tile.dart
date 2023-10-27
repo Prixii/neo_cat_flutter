@@ -52,6 +52,36 @@ class _EdgeManagerTileState extends State<EdgeManagerTile> {
     );
   }
 
+  void _alertConflict() {
+    showDialog(
+      context: context,
+      builder: (context) => ContentDialog(
+        title: Text(
+          '警告',
+          style: defaultTextBlack,
+        ),
+        content:
+            const Text('此Label仍有子节点, 如果执行删除操作, 所有子节点(包括其相关的边)都会被删除，确认要删除吗'),
+        actions: [
+          Button(
+              child: const Text('算了'),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          Button(
+              child: Text(
+                '删除',
+                style: defaultText.copyWith(color: Colors.errorPrimaryColor),
+              ),
+              onPressed: () {
+                relationChartDataBloc(context).add(DeleteEdgeType(widget.type));
+                Navigator.pop(context);
+              }),
+        ],
+      ),
+    );
+  }
+
   Widget _edgeListBuilder() {
     return ListView.builder(
       itemCount: widget.edges.length,
@@ -93,7 +123,16 @@ class _EdgeManagerTileState extends State<EdgeManagerTile> {
               color: Colors.errorPrimaryColor,
             ),
             onPressed: () {
-              //  TODO 删除EdgeType
+              var edgeCount = relationChartDataBloc(context)
+                      .state
+                      .edgeToTypeMap[widget.type]
+                      ?.length ??
+                  0;
+              if (edgeCount != 0) {
+                _alertConflict();
+                return;
+              }
+              relationChartDataBloc(context).add(DeleteEdgeType(widget.type));
             },
           ),
         ],
