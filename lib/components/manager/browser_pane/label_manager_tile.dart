@@ -105,10 +105,8 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
     return ListView.builder(
       itemCount: widget.nodeList.length,
       shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) => GestureDetector(
-        child: NodeTile(
-          node: widget.nodeList[index],
-        ),
+      itemBuilder: (context, index) => GestureDetector(
+        child: NodeTile(node: widget.nodeList[index]),
         onSecondaryTapDown: (details) {
           setState(
             () {

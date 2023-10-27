@@ -170,7 +170,8 @@ class Graph {
   void updateEdge(GraphEdge newEdge) {
     for (var edge in edges) {
       if (edge.id == newEdge.id) {
-        edge = newEdge;
+        removeEdge(newEdge);
+        addEdgeS(newEdge);
         return;
       }
     }

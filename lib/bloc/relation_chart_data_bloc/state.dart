@@ -21,6 +21,7 @@ class RelationChartDataState with _$RelationChartDataState {
     required Map<LabelName, bool> labelVisibilityMap,
     required Map<LabelName, List<GraphNode>> nodeToLabelMap,
     required Set<EdgeType> edgeTypes,
+    // TODO edge to type
     @Default(false) bool forceRefreshFlag,
     Graph? graph,
   }) = _RelationChartDataState;

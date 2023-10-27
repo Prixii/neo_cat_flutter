@@ -1,11 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/components/manager/browser_pane/edge_manager_tile.dart';
 import 'package:neo_cat_flutter/types/graph_edge.dart';
+import 'package:neo_cat_flutter/types/typdef.dart';
 
 import '../../../bloc/relation_chart_data_bloc/bloc.dart';
 import '../../../bloc/relation_chart_data_bloc/state.dart';
 import '../../../utils/bloc_util.dart';
-import 'triplet_tile.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-09 22
@@ -22,18 +23,36 @@ class _RelationManagerState extends State<RelationManager> {
     super.initState();
   }
 
-  List<GraphEdge> getEdgeList() =>
-      relationChartDataBloc(context).state.edgeMap.values.toList();
+  List<GraphEdge> _getEdgeList(EdgeType type) {
+    var edges = <GraphEdge>[];
+    for (var edge
+        in relationChartDataBloc(context).state.edgeMap.values.toList()) {
+      if (edge.type == type) {
+        edges.add(edge);
+      }
+    }
+    return edges;
+  }
+
+  List<EdgeType> _edgeTypeList() =>
+      relationChartDataBloc(context).state.edgeTypes.toList();
 
   @override
   Widget build(BuildContext context) {
-    var edgeList = getEdgeList();
     return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-      builder: (context, state) => ListView.builder(
-        itemCount: edgeList.length,
-        itemBuilder: (context, index) {
-          return TripletTile(edge: edgeList[index]);
-        },
+      builder: (context, state) => Padding(
+        padding: const EdgeInsets.all(6),
+        child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+          builder: (context, state) => ListView.builder(
+            itemCount: _edgeTypeList().length,
+            itemBuilder: (BuildContext context, int index) => GestureDetector(
+              child: EdgeManagerTile(
+                type: _edgeTypeList()[index],
+                edges: _getEdgeList(_edgeTypeList()[index]),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
