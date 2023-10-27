@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/bloc/edge/edge_event.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
@@ -8,7 +9,10 @@ import 'package:neo_cat_flutter/types/graph_edge.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
+import '../../../types/typdef.dart';
 import '../../../utils/bloc_util.dart';
+import '../../common/popup_menu/menu_options.dart';
+import '../../common/popup_menu/popup_menu.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-10-04 09
@@ -23,10 +27,12 @@ class TripletTile extends StatefulWidget {
 }
 
 class _TripletTileState extends State<TripletTile> {
+  late OverlayEntry overlayEntry;
   Color backgroundColor = opacity;
   late final GraphNode startNode;
   late final GraphNode endNode;
   late final GraphEdge edge;
+  Position position = (0, 0);
 
   @override
   void initState() {
@@ -34,6 +40,30 @@ class _TripletTileState extends State<TripletTile> {
     startNode = widget.edge.start;
     edge = widget.edge;
     endNode = widget.edge.end;
+
+    overlayEntry = popupMenuBuilder(
+      getPosition: () => position,
+      options: [
+        SingleMenuOption(
+          icon: Icon(
+            FluentIcons.delete,
+            color: Colors.blue,
+          ),
+          label: 'Delete',
+          onTap: () {
+            relationChartDataBloc(context).add(DeleteEdge(edge: widget.edge));
+            overlayEntry.remove();
+          },
+        ),
+        SingleMenuOption(
+          icon: Icon(
+            FluentIcons.accounts,
+            color: Colors.blue,
+          ),
+          label: "Accounts",
+        ),
+      ],
+    );
   }
 
   Widget _sourceNodeBuilder() {
@@ -136,6 +166,16 @@ class _TripletTileState extends State<TripletTile> {
           onExit: (event) => _handleExit(),
           child: GestureDetector(
             onTap: _handleChooseEdge,
+            // TODO 和 Label-Node 一样， 并完成响应Bloc
+            onSecondaryTapDown: (details) {
+              setState(
+                () {
+                  position =
+                      (details.globalPosition.dx, details.globalPosition.dy);
+                },
+              );
+              Overlay.of(context).insert(overlayEntry);
+            },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),

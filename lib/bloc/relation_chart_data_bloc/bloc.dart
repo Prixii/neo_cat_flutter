@@ -161,7 +161,11 @@ class RelationChartDataBloc
   }
 
   RelationChartDataState _onDeleteEdge(DeleteEdge event) {
-    return state.copyWith(edgeMap: state.edgeMap..remove(event.targetId));
+    var edgeMap = <EdgeId, GraphEdge>{}..addAll(state.edgeMap);
+    var edge = event.edge;
+    state.graph?.removeEdge(edge);
+    edgeMap.remove(edge.id);
+    return state.copyWith(edgeMap: edgeMap);
   }
 
   RelationChartDataState _onCreateLabel(CreateLabel event) {

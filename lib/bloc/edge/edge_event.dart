@@ -24,11 +24,11 @@ class UpdateEdge extends RelationBrowserEvent {
   UpdateEdge({required this.edge});
 }
 
-/// 移除Id为 [targetId] 的关系
+/// 移除 [edge] 的关系
 class DeleteEdge extends RelationBrowserEvent {
-  final EdgeId targetId;
+  final GraphEdge edge;
 
-  DeleteEdge({required this.targetId});
+  DeleteEdge({required this.edge});
 }
 
 class CreateEdge extends RelationBrowserEvent {
