@@ -318,15 +318,21 @@ class RelationChartDataBloc
     for (var graphNode in graphNodeList) {
       nodeList.add(graphNode.toSourceNode());
     }
+
     var graphEdgeList = state.edgeMap.values.toList();
+
     var edgeList = <SourceEdge>[];
     for (var edge in graphEdgeList) {
       edgeList.add(edge.toSourceEdge());
     }
+
+    var edgeTypeList = state.edgeTypes.toList();
+
     var newRawData = state.relationChartData.copyWith(
         labelDataList: state.labelMap.values.toList(),
         nodeList: nodeList,
-        edgeList: edgeList);
+        edgeList: edgeList,
+        edgeTypeList: edgeTypeList);
     logger.d(newRawData.toJson());
     return jsonEncode(newRawData.toJson());
   }

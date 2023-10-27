@@ -172,7 +172,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
       context: event.context,
       builder: (context) => ContentDialog(
         title: Text(
-          '警告!',
+          '创建新的Edge Type',
           style: defaultTextBlack,
         ),
         content: TextBox(

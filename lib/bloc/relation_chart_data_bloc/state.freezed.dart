@@ -27,7 +27,7 @@ mixin _$RelationChartDataState {
   Map<String, List<GraphNode>> get nodeToLabelMap =>
       throw _privateConstructorUsedError;
   Map<String, List<GraphEdge>> get edgeToTypeMap =>
-      throw _privateConstructorUsedError; // TODO edge to type
+      throw _privateConstructorUsedError;
   bool get forceRefreshFlag => throw _privateConstructorUsedError;
   Graph? get graph => throw _privateConstructorUsedError;
 
@@ -318,7 +318,6 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
     return EqualUnmodifiableMapView(_edgeToTypeMap);
   }
 
-// TODO edge to type
   @override
   @JsonKey()
   final bool forceRefreshFlag;
@@ -404,7 +403,7 @@ abstract class _RelationChartDataState implements RelationChartDataState {
   Map<String, List<GraphNode>> get nodeToLabelMap;
   @override
   Map<String, List<GraphEdge>> get edgeToTypeMap;
-  @override // TODO edge to type
+  @override
   bool get forceRefreshFlag;
   @override
   Graph? get graph;
