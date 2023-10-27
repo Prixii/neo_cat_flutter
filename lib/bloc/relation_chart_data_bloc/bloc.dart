@@ -132,28 +132,46 @@ class RelationChartDataBloc
   }
 
   RelationChartDataState _onUpdateEdge(UpdateEdge event) {
-    var edge = event.edge;
+    var newEdge = event.edge;
     var edgeMap = <EdgeId, GraphEdge>{}
       ..addAll(state.edgeMap)
-      ..[edge.id] = edge;
-    state.graph!.updateEdge(edge);
+      ..[newEdge.id] = newEdge;
+    state.graph!.updateEdge(newEdge);
+
+    var edgeToTypeMap = <EdgeType, List<GraphEdge>>{}
+      ..addAll(state.edgeToTypeMap);
+    var edgeList = edgeToTypeMap[newEdge.type] ?? [];
+    for (var edge in edgeList) {
+      if (edge.id == newEdge.id) {
+        edge = newEdge;
+        break;
+      }
+    }
+    edgeToTypeMap[newEdge.type] = edgeList;
+
     var newFlag = !state.forceRefreshFlag;
     return state.copyWith(
       edgeMap: edgeMap,
       forceRefreshFlag: newFlag,
+      edgeToTypeMap: edgeToTypeMap,
     );
   }
 
   RelationChartDataState _onCreateEdge(CreateEdge event) {
-    var edge = event.edge;
+    var newEdge = event.edge;
     var edgeTypes = <EdgeType>{}
       ..addAll(state.edgeTypes)
-      ..add(edge.type);
+      ..add(newEdge.type);
     var edgeMap = <EdgeId, GraphEdge>{}
       ..addAll(state.edgeMap)
-      ..[edge.id] = edge;
+      ..[newEdge.id] = newEdge;
+    var edgeToTypeMap = <EdgeType, List<GraphEdge>>{}
+      ..addAll(state.edgeToTypeMap);
+    var edgeList = edgeToTypeMap[newEdge.type] ?? [];
+    edgeList.add(newEdge);
+    edgeToTypeMap[newEdge.type] = edgeList;
 
-    state.graph!.addEdgeS(edge);
+    state.graph!.addEdgeS(newEdge);
     return state.copyWith(
       edgeTypes: edgeTypes,
       edgeMap: edgeMap,

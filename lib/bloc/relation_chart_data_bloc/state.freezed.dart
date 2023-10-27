@@ -23,9 +23,11 @@ mixin _$RelationChartDataState {
   Map<int, GraphEdge> get edgeMap => throw _privateConstructorUsedError;
   Map<String, bool> get labelVisibilityMap =>
       throw _privateConstructorUsedError;
+  Set<String> get edgeTypes => throw _privateConstructorUsedError;
   Map<String, List<GraphNode>> get nodeToLabelMap =>
       throw _privateConstructorUsedError;
-  Set<String> get edgeTypes => throw _privateConstructorUsedError;
+  Map<String, List<GraphEdge>> get edgeToTypeMap =>
+      throw _privateConstructorUsedError; // TODO edge to type
   bool get forceRefreshFlag => throw _privateConstructorUsedError;
   Graph? get graph => throw _privateConstructorUsedError;
 
@@ -46,8 +48,9 @@ abstract class $RelationChartDataStateCopyWith<$Res> {
       Map<int, GraphNode> nodeMap,
       Map<int, GraphEdge> edgeMap,
       Map<String, bool> labelVisibilityMap,
-      Map<String, List<GraphNode>> nodeToLabelMap,
       Set<String> edgeTypes,
+      Map<String, List<GraphNode>> nodeToLabelMap,
+      Map<String, List<GraphEdge>> edgeToTypeMap,
       bool forceRefreshFlag,
       Graph? graph});
 
@@ -73,8 +76,9 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
     Object? nodeMap = null,
     Object? edgeMap = null,
     Object? labelVisibilityMap = null,
-    Object? nodeToLabelMap = null,
     Object? edgeTypes = null,
+    Object? nodeToLabelMap = null,
+    Object? edgeToTypeMap = null,
     Object? forceRefreshFlag = null,
     Object? graph = freezed,
   }) {
@@ -99,14 +103,18 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
           ? _value.labelVisibilityMap
           : labelVisibilityMap // ignore: cast_nullable_to_non_nullable
               as Map<String, bool>,
-      nodeToLabelMap: null == nodeToLabelMap
-          ? _value.nodeToLabelMap
-          : nodeToLabelMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<GraphNode>>,
       edgeTypes: null == edgeTypes
           ? _value.edgeTypes
           : edgeTypes // ignore: cast_nullable_to_non_nullable
               as Set<String>,
+      nodeToLabelMap: null == nodeToLabelMap
+          ? _value.nodeToLabelMap
+          : nodeToLabelMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<GraphNode>>,
+      edgeToTypeMap: null == edgeToTypeMap
+          ? _value.edgeToTypeMap
+          : edgeToTypeMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<GraphEdge>>,
       forceRefreshFlag: null == forceRefreshFlag
           ? _value.forceRefreshFlag
           : forceRefreshFlag // ignore: cast_nullable_to_non_nullable
@@ -143,8 +151,9 @@ abstract class _$$RelationChartDataStateImplCopyWith<$Res>
       Map<int, GraphNode> nodeMap,
       Map<int, GraphEdge> edgeMap,
       Map<String, bool> labelVisibilityMap,
-      Map<String, List<GraphNode>> nodeToLabelMap,
       Set<String> edgeTypes,
+      Map<String, List<GraphNode>> nodeToLabelMap,
+      Map<String, List<GraphEdge>> edgeToTypeMap,
       bool forceRefreshFlag,
       Graph? graph});
 
@@ -170,8 +179,9 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
     Object? nodeMap = null,
     Object? edgeMap = null,
     Object? labelVisibilityMap = null,
-    Object? nodeToLabelMap = null,
     Object? edgeTypes = null,
+    Object? nodeToLabelMap = null,
+    Object? edgeToTypeMap = null,
     Object? forceRefreshFlag = null,
     Object? graph = freezed,
   }) {
@@ -196,14 +206,18 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
           ? _value._labelVisibilityMap
           : labelVisibilityMap // ignore: cast_nullable_to_non_nullable
               as Map<String, bool>,
-      nodeToLabelMap: null == nodeToLabelMap
-          ? _value._nodeToLabelMap
-          : nodeToLabelMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<GraphNode>>,
       edgeTypes: null == edgeTypes
           ? _value._edgeTypes
           : edgeTypes // ignore: cast_nullable_to_non_nullable
               as Set<String>,
+      nodeToLabelMap: null == nodeToLabelMap
+          ? _value._nodeToLabelMap
+          : nodeToLabelMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<GraphNode>>,
+      edgeToTypeMap: null == edgeToTypeMap
+          ? _value._edgeToTypeMap
+          : edgeToTypeMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<GraphEdge>>,
       forceRefreshFlag: null == forceRefreshFlag
           ? _value.forceRefreshFlag
           : forceRefreshFlag // ignore: cast_nullable_to_non_nullable
@@ -221,25 +235,28 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
 class _$RelationChartDataStateImpl implements _RelationChartDataState {
   const _$RelationChartDataStateImpl(
       {required this.relationChartData,
-      required final Map<String, LabelData> labelMap,
-      required final Map<int, GraphNode> nodeMap,
-      required final Map<int, GraphEdge> edgeMap,
-      required final Map<String, bool> labelVisibilityMap,
-      required final Map<String, List<GraphNode>> nodeToLabelMap,
-      required final Set<String> edgeTypes,
+      final Map<String, LabelData> labelMap = const {},
+      final Map<int, GraphNode> nodeMap = const {},
+      final Map<int, GraphEdge> edgeMap = const {},
+      final Map<String, bool> labelVisibilityMap = const {},
+      final Set<String> edgeTypes = const {},
+      final Map<String, List<GraphNode>> nodeToLabelMap = const {},
+      final Map<String, List<GraphEdge>> edgeToTypeMap = const {},
       this.forceRefreshFlag = false,
       this.graph})
       : _labelMap = labelMap,
         _nodeMap = nodeMap,
         _edgeMap = edgeMap,
         _labelVisibilityMap = labelVisibilityMap,
+        _edgeTypes = edgeTypes,
         _nodeToLabelMap = nodeToLabelMap,
-        _edgeTypes = edgeTypes;
+        _edgeToTypeMap = edgeToTypeMap;
 
   @override
   final RelationChartDataModel relationChartData;
   final Map<String, LabelData> _labelMap;
   @override
+  @JsonKey()
   Map<String, LabelData> get labelMap {
     if (_labelMap is EqualUnmodifiableMapView) return _labelMap;
     // ignore: implicit_dynamic_type
@@ -248,6 +265,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
 
   final Map<int, GraphNode> _nodeMap;
   @override
+  @JsonKey()
   Map<int, GraphNode> get nodeMap {
     if (_nodeMap is EqualUnmodifiableMapView) return _nodeMap;
     // ignore: implicit_dynamic_type
@@ -256,6 +274,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
 
   final Map<int, GraphEdge> _edgeMap;
   @override
+  @JsonKey()
   Map<int, GraphEdge> get edgeMap {
     if (_edgeMap is EqualUnmodifiableMapView) return _edgeMap;
     // ignore: implicit_dynamic_type
@@ -264,6 +283,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
 
   final Map<String, bool> _labelVisibilityMap;
   @override
+  @JsonKey()
   Map<String, bool> get labelVisibilityMap {
     if (_labelVisibilityMap is EqualUnmodifiableMapView)
       return _labelVisibilityMap;
@@ -271,22 +291,34 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
     return EqualUnmodifiableMapView(_labelVisibilityMap);
   }
 
-  final Map<String, List<GraphNode>> _nodeToLabelMap;
-  @override
-  Map<String, List<GraphNode>> get nodeToLabelMap {
-    if (_nodeToLabelMap is EqualUnmodifiableMapView) return _nodeToLabelMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_nodeToLabelMap);
-  }
-
   final Set<String> _edgeTypes;
   @override
+  @JsonKey()
   Set<String> get edgeTypes {
     if (_edgeTypes is EqualUnmodifiableSetView) return _edgeTypes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableSetView(_edgeTypes);
   }
 
+  final Map<String, List<GraphNode>> _nodeToLabelMap;
+  @override
+  @JsonKey()
+  Map<String, List<GraphNode>> get nodeToLabelMap {
+    if (_nodeToLabelMap is EqualUnmodifiableMapView) return _nodeToLabelMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_nodeToLabelMap);
+  }
+
+  final Map<String, List<GraphEdge>> _edgeToTypeMap;
+  @override
+  @JsonKey()
+  Map<String, List<GraphEdge>> get edgeToTypeMap {
+    if (_edgeToTypeMap is EqualUnmodifiableMapView) return _edgeToTypeMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_edgeToTypeMap);
+  }
+
+// TODO edge to type
   @override
   @JsonKey()
   final bool forceRefreshFlag;
@@ -295,7 +327,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
 
   @override
   String toString() {
-    return 'RelationChartDataState(relationChartData: $relationChartData, labelMap: $labelMap, nodeMap: $nodeMap, edgeMap: $edgeMap, labelVisibilityMap: $labelVisibilityMap, nodeToLabelMap: $nodeToLabelMap, edgeTypes: $edgeTypes, forceRefreshFlag: $forceRefreshFlag, graph: $graph)';
+    return 'RelationChartDataState(relationChartData: $relationChartData, labelMap: $labelMap, nodeMap: $nodeMap, edgeMap: $edgeMap, labelVisibilityMap: $labelVisibilityMap, edgeTypes: $edgeTypes, nodeToLabelMap: $nodeToLabelMap, edgeToTypeMap: $edgeToTypeMap, forceRefreshFlag: $forceRefreshFlag, graph: $graph)';
   }
 
   @override
@@ -311,9 +343,11 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
             const DeepCollectionEquality()
                 .equals(other._labelVisibilityMap, _labelVisibilityMap) &&
             const DeepCollectionEquality()
+                .equals(other._edgeTypes, _edgeTypes) &&
+            const DeepCollectionEquality()
                 .equals(other._nodeToLabelMap, _nodeToLabelMap) &&
             const DeepCollectionEquality()
-                .equals(other._edgeTypes, _edgeTypes) &&
+                .equals(other._edgeToTypeMap, _edgeToTypeMap) &&
             (identical(other.forceRefreshFlag, forceRefreshFlag) ||
                 other.forceRefreshFlag == forceRefreshFlag) &&
             (identical(other.graph, graph) || other.graph == graph));
@@ -327,8 +361,9 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
       const DeepCollectionEquality().hash(_nodeMap),
       const DeepCollectionEquality().hash(_edgeMap),
       const DeepCollectionEquality().hash(_labelVisibilityMap),
-      const DeepCollectionEquality().hash(_nodeToLabelMap),
       const DeepCollectionEquality().hash(_edgeTypes),
+      const DeepCollectionEquality().hash(_nodeToLabelMap),
+      const DeepCollectionEquality().hash(_edgeToTypeMap),
       forceRefreshFlag,
       graph);
 
@@ -343,12 +378,13 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
 abstract class _RelationChartDataState implements RelationChartDataState {
   const factory _RelationChartDataState(
       {required final RelationChartDataModel relationChartData,
-      required final Map<String, LabelData> labelMap,
-      required final Map<int, GraphNode> nodeMap,
-      required final Map<int, GraphEdge> edgeMap,
-      required final Map<String, bool> labelVisibilityMap,
-      required final Map<String, List<GraphNode>> nodeToLabelMap,
-      required final Set<String> edgeTypes,
+      final Map<String, LabelData> labelMap,
+      final Map<int, GraphNode> nodeMap,
+      final Map<int, GraphEdge> edgeMap,
+      final Map<String, bool> labelVisibilityMap,
+      final Set<String> edgeTypes,
+      final Map<String, List<GraphNode>> nodeToLabelMap,
+      final Map<String, List<GraphEdge>> edgeToTypeMap,
       final bool forceRefreshFlag,
       final Graph? graph}) = _$RelationChartDataStateImpl;
 
@@ -363,10 +399,12 @@ abstract class _RelationChartDataState implements RelationChartDataState {
   @override
   Map<String, bool> get labelVisibilityMap;
   @override
-  Map<String, List<GraphNode>> get nodeToLabelMap;
-  @override
   Set<String> get edgeTypes;
   @override
+  Map<String, List<GraphNode>> get nodeToLabelMap;
+  @override
+  Map<String, List<GraphEdge>> get edgeToTypeMap;
+  @override // TODO edge to type
   bool get forceRefreshFlag;
   @override
   Graph? get graph;

@@ -23,16 +23,8 @@ class _RelationManagerState extends State<RelationManager> {
     super.initState();
   }
 
-  List<GraphEdge> _getEdgeList(EdgeType type) {
-    var edges = <GraphEdge>[];
-    for (var edge
-        in relationChartDataBloc(context).state.edgeMap.values.toList()) {
-      if (edge.type == type) {
-        edges.add(edge);
-      }
-    }
-    return edges;
-  }
+  List<GraphEdge> _getEdgeList(EdgeType type) =>
+      relationChartDataBloc(context).state.edgeToTypeMap[type] ?? [];
 
   List<EdgeType> _edgeTypeList() =>
       relationChartDataBloc(context).state.edgeTypes.toList();

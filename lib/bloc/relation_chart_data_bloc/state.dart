@@ -15,31 +15,25 @@ part 'state.freezed.dart';
 class RelationChartDataState with _$RelationChartDataState {
   const factory RelationChartDataState({
     required RelationChartDataModel relationChartData,
-    required Map<LabelName, LabelData> labelMap,
-    required Map<NodeId, GraphNode> nodeMap,
-    required Map<EdgeId, GraphEdge> edgeMap,
-    required Map<LabelName, bool> labelVisibilityMap,
-    required Map<LabelName, List<GraphNode>> nodeToLabelMap,
-    required Set<EdgeType> edgeTypes,
-    // TODO edge to type
+    @Default({}) Map<LabelName, LabelData> labelMap,
+    @Default({}) Map<NodeId, GraphNode> nodeMap,
+    @Default({}) Map<EdgeId, GraphEdge> edgeMap,
+    @Default({}) Map<LabelName, bool> labelVisibilityMap,
+    @Default({}) Set<EdgeType> edgeTypes,
+    @Default({}) Map<LabelName, List<GraphNode>> nodeToLabelMap,
+    @Default({}) Map<EdgeType, List<GraphEdge>> edgeToTypeMap,
     @Default(false) bool forceRefreshFlag,
     Graph? graph,
   }) = _RelationChartDataState;
 
   factory RelationChartDataState.initial() => RelationChartDataState(
         relationChartData: RelationChartDataModel.initial(),
-        labelMap: <LabelName, LabelData>{},
-        nodeMap: <NodeId, GraphNode>{},
-        edgeMap: <EdgeId, GraphEdge>{},
-        labelVisibilityMap: <LabelName, bool>{},
-        nodeToLabelMap: <LabelName, List<GraphNode>>{},
         forceRefreshFlag: false,
         graph: Graph(
           edges: [],
           nodes: [],
           graphObserver: [],
         ),
-        edgeTypes: {},
       );
 
   factory RelationChartDataState.fromJson(Map<String, dynamic> json) {
@@ -50,9 +44,12 @@ class RelationChartDataState with _$RelationChartDataState {
     }
 
     var edgeTypes = <EdgeType>{};
+    for (var type in relationChartData.edgeTypeList) {
+      edgeTypes.add(type);
+    }
+
     var edgeMap = <EdgeId, GraphEdge>{};
     for (var edge in relationChartData.edgeList) {
-      edgeTypes.add(edge.type);
       var newEdge = GraphEdge.fromSourceEdge(edge, nodeMap);
       if (newEdge != null) {
         edgeMap[edge.id] = newEdge;
@@ -69,6 +66,13 @@ class RelationChartDataState with _$RelationChartDataState {
       var nodeList = nodeToLabelMap[node.label] ?? [];
       nodeList.add(node);
       nodeToLabelMap[node.label] = nodeList;
+    }
+
+    var edgeToTypeMap = <EdgeType, List<GraphEdge>>{};
+    for (var edge in edgeMap.values) {
+      var edgeList = edgeToTypeMap[edge.type] ?? [];
+      edgeList.add(edge);
+      edgeToTypeMap[edge.type] = edgeList;
     }
 
     var classMap = <LabelName, LabelData>{};
@@ -91,6 +95,7 @@ class RelationChartDataState with _$RelationChartDataState {
       forceRefreshFlag: false,
       graph: graph,
       edgeTypes: edgeTypes,
+      edgeToTypeMap: edgeToTypeMap,
     );
   }
 }
