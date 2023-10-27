@@ -126,10 +126,13 @@ class _TripletEditorState extends State<TripletEditor> {
               visible: tripletEditorBloc(context).showEdge(),
               child: Container(
                 color: Colors.white,
-                child: ComboBox(
-                  items: _edgeItemGenerator(),
-                  value: _getEdge()?.type ?? '',
-                  onChanged: (e) => {},
+                child:
+                    BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+                  builder: (context, state) => ComboBox(
+                    items: _edgeItemGenerator(),
+                    value: _getEdge()?.type ?? '',
+                    onChanged: (e) => {},
+                  ),
                 ),
               ),
             ),
@@ -140,7 +143,7 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   List<ComboBoxItem<String>> _edgeItemGenerator() {
-    var edgeList = relationChartDataBloc(context).state.edgeTypes.toList();
+    logger.d('[generator]');
     var itemList = <ComboBoxItem<String>>[];
     itemList.add(ComboBoxItem(
       child: Text(
@@ -151,7 +154,7 @@ class _TripletEditorState extends State<TripletEditor> {
         tripletEditorBloc(context).add(CreateType(context));
       },
     ));
-    for (var type in edgeList) {
+    for (var type in relationChartDataBloc(context).state.edgeTypes.toList()) {
       itemList.add(
         ComboBoxItem(
           value: type,
@@ -210,7 +213,6 @@ class _TripletEditorState extends State<TripletEditor> {
     if (showNode() == null) {
       return emptyView;
     } else {
-      logger.d('reset!');
       var itemCount = labelData()?.properties.length ?? 0;
       for (var i = 0; i < itemCount; i++) {
         controllers[labelData()!.properties[i]] = TextEditingController();
@@ -264,15 +266,12 @@ class _TripletEditorState extends State<TripletEditor> {
             ),
             Expanded(
               flex: 3,
-              // TODO 响应
-              child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-                builder: (context, state) => ComboBox<LabelName>(
-                  value: tripletEditorBloc(context).state.showNode!.label,
-                  items: _labelItemGenerator(),
-                  onChanged: (label) => {},
-                ),
+              child: ComboBox<LabelName>(
+                value: tripletEditorBloc(context).state.showNode!.label,
+                items: _labelItemGenerator(),
+                onChanged: (label) => {},
               ),
-            )
+            ),
           ],
         ),
       ),
