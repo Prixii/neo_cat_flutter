@@ -20,8 +20,9 @@ class InitRelationBrowserState extends RelationBrowserEvent {
 /// 更新/添加 [edge] 到Map
 class UpdateEdge extends RelationBrowserEvent {
   final GraphEdge edge;
+  final EdgeType oldType;
 
-  UpdateEdge({required this.edge});
+  UpdateEdge({required this.edge, required this.oldType});
 }
 
 /// 移除 [edge] 的关系

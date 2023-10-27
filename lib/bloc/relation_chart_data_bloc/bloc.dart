@@ -141,12 +141,14 @@ class RelationChartDataBloc
     var edgeToTypeMap = <EdgeType, List<GraphEdge>>{}
       ..addAll(state.edgeToTypeMap);
     var edgeList = edgeToTypeMap[newEdge.type] ?? [];
-    for (var edge in edgeList) {
+    var oldTypeList = edgeToTypeMap[event.oldType] ?? [];
+    for (var edge in oldTypeList) {
       if (edge.id == newEdge.id) {
-        edge = newEdge;
+        oldTypeList.remove(edge);
         break;
       }
     }
+    edgeList.add(newEdge);
     edgeToTypeMap[newEdge.type] = edgeList;
 
     var newFlag = !state.forceRefreshFlag;

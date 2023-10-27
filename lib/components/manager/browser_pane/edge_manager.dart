@@ -23,25 +23,25 @@ class _RelationManagerState extends State<RelationManager> {
     super.initState();
   }
 
-  List<GraphEdge> _getEdgeList(EdgeType type) =>
-      relationChartDataBloc(context).state.edgeToTypeMap[type] ?? [];
+  List<GraphEdge> _getEdgeList(int index) {
+    var type = _edgeTypeList()[index];
+    return relationChartDataBloc(context).state.edgeToTypeMap[type] ?? [];
+  }
 
   List<EdgeType> _edgeTypeList() =>
       relationChartDataBloc(context).state.edgeTypes.toList();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-      builder: (context, state) => Padding(
-        padding: const EdgeInsets.all(6),
-        child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
-          builder: (context, state) => ListView.builder(
-            itemCount: _edgeTypeList().length,
-            itemBuilder: (BuildContext context, int index) => GestureDetector(
-              child: EdgeManagerTile(
-                type: _edgeTypeList()[index],
-                edges: _getEdgeList(_edgeTypeList()[index]),
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(6),
+      child: BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
+        builder: (context, state) => ListView.builder(
+          itemCount: _edgeTypeList().length,
+          itemBuilder: (BuildContext context, int index) => GestureDetector(
+            child: EdgeManagerTile(
+              type: _edgeTypeList()[index],
+              edges: _getEdgeList(index),
             ),
           ),
         ),

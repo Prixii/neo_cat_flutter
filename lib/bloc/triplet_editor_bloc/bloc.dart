@@ -148,9 +148,11 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   }
 
   TripletEditorState _onSetEdgeType(SetEdgeType event) {
+    logger.i('[setEdgeType] ${event.type}');
     if (state.edge != null) {
+      var oldType = state.edge!.type;
       var newEdge = state.edge!.copyWith(type: event.type);
-      dataBloc.add(UpdateEdge(edge: newEdge));
+      dataBloc.add(UpdateEdge(edge: newEdge, oldType: oldType));
       return state.copyWith(edge: newEdge);
     }
     return _onCreateEdge(event.type);
