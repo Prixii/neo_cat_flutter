@@ -302,9 +302,13 @@ class RelationChartDataBloc
       ..addAll(state.edgeTypes)
       ..add(event.type);
     var newFlag = !state.forceRefreshFlag;
+    var edgeToTypeMap = <EdgeType, List<GraphEdge>>{}
+      ..addAll(state.edgeToTypeMap)
+      ..[event.type] = [];
     return state.copyWith(
       edgeTypes: edgeTypes,
       forceRefreshFlag: newFlag,
+      edgeToTypeMap: edgeToTypeMap,
     );
   }
 
