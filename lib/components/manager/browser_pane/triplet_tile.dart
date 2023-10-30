@@ -43,7 +43,9 @@ class _TripletTileState extends State<TripletTile> {
           builder: (context, constraints) {
             return CustomPaint(
               size: Size(constraints.maxWidth, constraints.maxHeight),
-              painter: CirclePainter(),
+              painter: CirclePainter(
+                color: relationChartDataBloc(context).getColor(startNode.label),
+              ),
             );
           },
         ),
@@ -96,7 +98,9 @@ class _TripletTileState extends State<TripletTile> {
           builder: (context, constraints) {
             return CustomPaint(
               size: Size(constraints.maxWidth, constraints.maxHeight),
-              painter: CirclePainter(),
+              painter: CirclePainter(
+                  color:
+                      relationChartDataBloc(context).getColor(endNode.label)),
             );
           },
         ),

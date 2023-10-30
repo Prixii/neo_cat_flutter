@@ -40,7 +40,11 @@ class _GraphViewState extends State<GraphView> {
           height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            boxShadow: [BoxShadow(color: Colors.blue, spreadRadius: 5)],
+            boxShadow: [
+              BoxShadow(
+                  color: relationChartDataBloc(context).getColor(node.label),
+                  spreadRadius: 5)
+            ],
           ),
           child: Center(
             child: Text(

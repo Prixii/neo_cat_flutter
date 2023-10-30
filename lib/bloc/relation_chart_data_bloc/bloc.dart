@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/node/node_event.dart';
 import 'package:neo_cat_flutter/types/graph_edge.dart';
@@ -383,6 +384,9 @@ class RelationChartDataBloc
   GraphNode getGraphNode(NodeId id) {
     return state.nodeMap[id]!;
   }
+
+  Color getColor(LabelName? label) =>
+      state.labelMap[label]?.color.toColor() ?? Colors.blue;
 
   @override
   void onChange(Change<RelationChartDataState> change) {

@@ -27,8 +27,8 @@ class CirclePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+  bool shouldRepaint(covariant CirclePainter oldDelegate) {
+    return oldDelegate.color != color;
   }
 }
 
@@ -55,7 +55,7 @@ class ArrowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+  bool shouldRepaint(covariant ArrowPainter oldDelegate) {
     return false;
   }
 }

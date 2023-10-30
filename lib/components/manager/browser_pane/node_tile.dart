@@ -44,7 +44,9 @@ class _NodeTileState extends State<NodeTile> {
           children: [
             CustomPaint(
               size: Size(constraints.maxWidth, constraints.maxHeight),
-              painter: CirclePainter(),
+              painter: CirclePainter(
+                  color: relationChartDataBloc(context)
+                      .getColor(widget.node.label)),
             ),
             Center(
               child: SizedBox(

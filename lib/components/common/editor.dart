@@ -92,7 +92,10 @@ class _TripletEditorState extends State<TripletEditor> {
             builder: (context, constraints) {
               return CustomPaint(
                 size: Size(constraints.maxWidth, constraints.maxHeight),
-                painter: CirclePainter(radius: 25),
+                painter: CirclePainter(
+                    radius: 25,
+                    color: relationChartDataBloc(context)
+                        .getColor(_getSourceNode()?.label)),
               );
             },
           ),
@@ -188,7 +191,10 @@ class _TripletEditorState extends State<TripletEditor> {
             builder: (context, constraints) {
               return CustomPaint(
                 size: Size(constraints.maxWidth, constraints.maxHeight),
-                painter: CirclePainter(radius: 25),
+                painter: CirclePainter(
+                    radius: 25,
+                    color: relationChartDataBloc(context)
+                        .getColor(_getEndNode()?.label)),
               );
             },
           ),
