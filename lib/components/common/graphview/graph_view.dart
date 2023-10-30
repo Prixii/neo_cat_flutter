@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 
 import '../../../bloc/relation_chart_data_bloc/bloc.dart';
 import '../../../bloc/relation_chart_data_bloc/state.dart';
 import '../../../bloc/triplet_editor_bloc/event.dart';
-import '../../../theme/common_theme.dart';
 import '../../../types/graph_node.dart';
 import '../../../utils/bloc_util.dart';
 import 'graph.dart';
@@ -29,6 +29,7 @@ class GraphView extends StatefulWidget {
 
 class _GraphViewState extends State<GraphView> {
   Widget circularWidget(GraphNode node) {
+    var background = relationChartDataBloc(context).getColor(node.label);
     return MouseRegion(
       cursor: SystemMouseCursors.click, // 设置鼠标光标为小手指样式
       child: GestureDetector(
@@ -40,17 +41,13 @@ class _GraphViewState extends State<GraphView> {
           height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                  color: relationChartDataBloc(context).getColor(node.label),
-                  spreadRadius: 5)
-            ],
+            boxShadow: [BoxShadow(color: background, spreadRadius: 5)],
           ),
           child: Center(
             child: Text(
               relationChartDataBloc(context).state.nodeMap[node.id]?.name ?? '',
               overflow: TextOverflow.ellipsis,
-              style: defaultText.copyWith(fontSize: 12),
+              style: calculateTextColor(background).copyWith(fontSize: 12),
             ),
           ),
         ),

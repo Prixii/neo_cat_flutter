@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:logger/logger.dart';
+import 'package:neo_cat_flutter/theme/common_theme.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-29 10
@@ -92,4 +93,13 @@ extension ColorExtension on Color {
   String toHex() {
     return value.toRadixString(16).padLeft(8, 'f');
   }
+
+  double toGrey() => (red * 30 + green * 59 + green * 11 + 50) / 100;
+}
+
+TextStyle calculateTextColor(Color color) {
+  if (color.toGrey() > 127) {
+    return defaultTextBlack;
+  }
+  return defaultText;
 }
