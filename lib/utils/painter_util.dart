@@ -22,7 +22,7 @@ class CirclePainter extends CustomPainter {
 
     final firstNodeCenter = offset ?? Offset(size.width / 2, size.height / 2);
     var firstNodeRadius = calcRadius();
-    final firstNodePaint = Paint()..color = color ?? Colors.blue;
+    final firstNodePaint = Paint()..color = color ?? const Color(0xfff3f3f3);
     canvas.drawCircle(firstNodeCenter, firstNodeRadius, firstNodePaint);
   }
 

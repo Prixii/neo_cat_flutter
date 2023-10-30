@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:neo_cat_flutter/types/source_node.dart';
 
 import '../../../types/graph_edge.dart';
 import '../../../types/graph_node.dart';
@@ -26,12 +25,6 @@ class Graph {
     if (!nodes.contains(node)) {
       nodes.add(node);
       notifyGraphObserver();
-    }
-  }
-
-  void addNodes(List<SourceNode> nodeList) {
-    for (var node in nodeList) {
-      addNode(GraphNode.fromNode(node));
     }
   }
 

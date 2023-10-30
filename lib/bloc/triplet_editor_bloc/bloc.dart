@@ -49,6 +49,8 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
         edge: edge,
         viewMode: viewMode,
         showNode: showNode,
+        startNodeBorder: selectedColor,
+        endNodeBorder: opacity,
       );
     } else if (endNode == null) {
       endNode = event.newNode;
@@ -61,6 +63,8 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
         edge: edge,
         showNode: endNode,
         viewMode: TripletPosition.end,
+        startNodeBorder: opacity,
+        endNodeBorder: selectedColor,
       );
     } else {
       return state;
@@ -72,7 +76,14 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     switch (event.position) {
       case TripletPosition.start:
         {
-          return state.removeStartNode();
+          var newState = state.removeStartNode();
+          if (state.endNode != null) {
+            return newState.copyWith(
+              startNodeBorder: opacity,
+              endNodeBorder: selectedColor,
+            );
+          }
+          return newState.copyWith();
         }
       case TripletPosition.end:
         {
@@ -88,10 +99,13 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
   TripletEditorState _onChooseEdge(ChooseEdge event) {
     logger.i('[tripletEditorState]: ChooseRelation!');
     var newState = state.copyWith(
-        edge: event.edge.copyWith(),
-        startNode: event.edge.start,
-        endNode: event.edge.end,
-        showNode: event.edge.start);
+      edge: event.edge.copyWith(),
+      startNode: event.edge.start,
+      endNode: event.edge.end,
+      showNode: event.edge.start,
+      startNodeBorder: selectedColor,
+      endNodeBorder: opacity,
+    );
     return newState;
   }
 
@@ -102,12 +116,20 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
       case TripletPosition.start:
         {
           return state.copyWith(
-              showNode: state.startNode, viewMode: event.position);
+            showNode: state.startNode,
+            viewMode: event.position,
+            startNodeBorder: selectedColor,
+            endNodeBorder: opacity,
+          );
         }
       case TripletPosition.end:
         {
           return state.copyWith(
-              showNode: state.endNode, viewMode: event.position);
+            showNode: state.endNode,
+            viewMode: event.position,
+            startNodeBorder: opacity,
+            endNodeBorder: selectedColor,
+          );
         }
       default:
         {

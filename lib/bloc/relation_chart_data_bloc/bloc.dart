@@ -345,10 +345,10 @@ class RelationChartDataBloc
   }
 
   Triplet? getTriplet(GraphEdge edge) {
-    GraphNode? sourceNode = state.nodeMap[edge.start];
+    GraphNode? startNode = state.nodeMap[edge.start];
     GraphNode? endNode = state.nodeMap[edge.end];
-    if (sourceNode != null && endNode != null) {
-      return (sourceNode, edge, endNode);
+    if (startNode != null && endNode != null) {
+      return (startNode, edge, endNode);
     }
     return null;
   }
@@ -386,7 +386,7 @@ class RelationChartDataBloc
   }
 
   Color getColor(LabelName? label) =>
-      state.labelMap[label]?.color.toColor() ?? Colors.blue;
+      state.labelMap[label]?.color.toColor() ?? const Color(0xfff3f3f3);
 
   @override
   void onChange(Change<RelationChartDataState> change) {

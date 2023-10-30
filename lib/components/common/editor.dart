@@ -38,7 +38,19 @@ class _TripletEditorState extends State<TripletEditor> {
   TextEditingController nameController = TextEditingController();
   Map<String, TextEditingController> controllers = {};
 
-  GraphNode? _getSourceNode() {
+  void handleHover(Color color) {
+    setState(() {
+      color = const Color.fromRGBO(0, 0, 0, 0.04);
+    });
+  }
+
+  void handleExit(Color color) {
+    setState(() {
+      color = opacity;
+    });
+  }
+
+  GraphNode? _getStartNode() {
     GraphNode? startNode = tripletEditorBloc(context).state.startNode;
     if (startNode != null) {
       return startNode;
@@ -86,27 +98,39 @@ class _TripletEditorState extends State<TripletEditor> {
           .add(RemoveNode(position: TripletPosition.start)),
       onLongPress: () => tripletEditorBloc(context)
           .add(RemoveNode(position: TripletPosition.start)),
-      child: Stack(
-        children: [
-          LayoutBuilder(
-            builder: (context, constraints) {
-              return CustomPaint(
-                size: Size(constraints.maxWidth, constraints.maxHeight),
-                painter: CirclePainter(
-                    radius: 25,
-                    color: relationChartDataBloc(context)
-                        .getColor(_getSourceNode()?.label)),
-              );
-            },
-          ),
-          Center(
-            child: Text(
-              _getSourceNode()?.name ?? '待选择',
-              overflow: TextOverflow.ellipsis,
-              style: defaultText.copyWith(fontSize: 12),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(
+              width: 4,
+              color: tripletEditorBloc(context).state.startNodeBorder,
             ),
           ),
-        ],
+          child: Stack(
+            children: [
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return CustomPaint(
+                    size: Size(constraints.maxWidth, constraints.maxHeight),
+                    painter: CirclePainter(
+                        radius: 25,
+                        color: relationChartDataBloc(context)
+                            .getColor(_getStartNode()?.label)),
+                  );
+                },
+              ),
+              Center(
+                child: Text(
+                  _getStartNode()?.name ?? '待选择',
+                  overflow: TextOverflow.ellipsis,
+                  style: defaultText.copyWith(fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -185,27 +209,39 @@ class _TripletEditorState extends State<TripletEditor> {
           .add(RemoveNode(position: TripletPosition.end)),
       onLongPress: () => tripletEditorBloc(context)
           .add(RemoveNode(position: TripletPosition.end)),
-      child: Stack(
-        children: [
-          LayoutBuilder(
-            builder: (context, constraints) {
-              return CustomPaint(
-                size: Size(constraints.maxWidth, constraints.maxHeight),
-                painter: CirclePainter(
-                    radius: 25,
-                    color: relationChartDataBloc(context)
-                        .getColor(_getEndNode()?.label)),
-              );
-            },
-          ),
-          Center(
-            child: Text(
-              _getEndNode()?.name ?? '待选择',
-              overflow: TextOverflow.ellipsis,
-              style: defaultText.copyWith(fontSize: 12),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(
+              width: 4,
+              color: tripletEditorBloc(context).state.endNodeBorder,
             ),
           ),
-        ],
+          child: Stack(
+            children: [
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return CustomPaint(
+                    size: Size(constraints.maxWidth, constraints.maxHeight),
+                    painter: CirclePainter(
+                        radius: 25,
+                        color: relationChartDataBloc(context)
+                            .getColor(_getEndNode()?.label)),
+                  );
+                },
+              ),
+              Center(
+                child: Text(
+                  _getEndNode()?.name ?? '待选择',
+                  overflow: TextOverflow.ellipsis,
+                  style: defaultText.copyWith(fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

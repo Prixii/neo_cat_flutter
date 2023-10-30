@@ -36,7 +36,7 @@ class _TripletTileState extends State<TripletTile> {
     endNode = widget.edge.end;
   }
 
-  Widget _sourceNodeBuilder() {
+  Widget _startNodeBuilder() {
     return Stack(
       children: [
         LayoutBuilder(
@@ -152,7 +152,7 @@ class _TripletTileState extends State<TripletTile> {
                     BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
                   builder: (context, state) => Row(
                     children: [
-                      Expanded(flex: 1, child: _sourceNodeBuilder()),
+                      Expanded(flex: 1, child: _startNodeBuilder()),
                       Expanded(flex: 2, child: _edgeBuilder()),
                       Expanded(flex: 1, child: _endNodeBuiler()),
                     ],
