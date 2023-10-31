@@ -3,6 +3,7 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/global_data.dart';
 import 'package:neo_cat_flutter/pages/hello/index.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
@@ -25,6 +26,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    globalData = GlobalData(context: context);
     final relationChartDataBloc = RelationChartDataBloc();
     return BlocProvider(
       create: (context) => relationChartDataBloc,

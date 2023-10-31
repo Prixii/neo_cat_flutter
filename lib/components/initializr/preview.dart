@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/global_data.dart';
 
 import '../../theme/common_theme.dart';
 import '../common/test/directed_graphview.dart';
@@ -20,7 +21,8 @@ class _PreviewState extends State<Preview> {
 
   @override
   void initState() {
-    _richTextEditingController = RichTextEditingController(context: context);
+    // _richTextEditingController = RichTextEditingController(context: context);
+    _richTextEditingController = globalData.richTextEditingController;
     super.initState();
   }
 
