@@ -28,6 +28,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
     on<SetEdgeType>((event, emit) => emit(_onSetEdgeType(event)));
     on<CreateType>((event, emit) async => emit(await _onCreateType(event)));
+    on<ResetEdge>((event, emit) => emit(_onResetEdge()));
   }
 
   Future<TripletEditorState> _onChooseNode(ChooseNode event) async {
@@ -190,6 +191,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
 
   Future<TripletEditorState> _onCreateType(CreateType event) async {
     var controller = TextEditingController();
+    var isCancled = false;
     await showDialog(
       context: event.context,
       builder: (context) => ContentDialog(
@@ -198,6 +200,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
           style: defaultTextBlack,
         ),
         content: TextBox(
+          autofocus: true,
           controller: controller,
         ),
         actions: [
@@ -209,14 +212,36 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
           Button(
               child: const Text('创建'),
               onPressed: () {
+                isCancled = true;
                 Navigator.pop(context);
               }),
         ],
       ),
     );
-    dataBloc.add(CreateEdgeType(controller.text));
-    controller.dispose();
-    return state;
+    if (isCancled) {
+      var newLabel = controller.text;
+      var newEdge = GraphEdge(state.startNode!, state.endNode!, newLabel,
+          "${state.startNode!}${state.endNode!}$newLabel".hashCode);
+      dataBloc.add(CreateEdgeTypeAndAddEdge(controller.text, newEdge));
+      controller.dispose();
+
+      return state.copyWith(edge: newEdge);
+    } else {
+      controller.dispose();
+      return state;
+    }
+  }
+
+  TripletEditorState _onResetEdge() {
+    return TripletEditorState(
+      startNode: state.startNode,
+      edge: null,
+      endNode: state.endNode,
+      viewMode: state.viewMode,
+      showNode: state.showNode,
+      startNodeBorder: state.startNodeBorder,
+      endNodeBorder: state.endNodeBorder,
+    );
   }
 
   Future<GraphEdge?> getEdge(NodeId start, NodeId end) async {

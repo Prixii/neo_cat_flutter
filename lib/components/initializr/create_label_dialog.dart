@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart' show Material;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:neo_cat_flutter/bloc/label/label_event.dart';
+import 'package:neo_cat_flutter/bloc/node/node_event.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
+import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
-void showCreateClassDialog(BuildContext context) async {
+import 'rich_text_field/rich_text_editing_controller.dart';
+
+void showCreateClassDialog(BuildContext context,
+    RichTextEditingController Function() getController) async {
   await showDialog(
     context: context,
-    builder: (context) => ClassCreator(context: context),
+    builder: (context) => ClassCreator(
+      context: context,
+      getController: getController,
+    ),
   );
 }
 
@@ -18,8 +25,9 @@ class ClassCreator extends StatefulWidget {
   const ClassCreator({
     super.key,
     required this.context,
+    required this.getController,
   });
-
+  final RichTextEditingController Function() getController;
   final BuildContext context;
 
   @override
@@ -34,12 +42,6 @@ class _ClassCreatorState extends State<ClassCreator> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
-  }
-
-  void _createLabel() {
-    var labelData = LabelData(
-        name: _controller.text, properties: [], color: pickerColor.toHex());
-    relationChartDataBloc(context).add(CreateLabel(labelData: labelData));
   }
 
   Widget _titleBuilder() {
@@ -105,7 +107,7 @@ class _ClassCreatorState extends State<ClassCreator> {
         child: GestureDetector(
           onTap: () {
             Navigator.pop(context);
-            _createLabel();
+            _creatAndSetLabel();
           },
           child: Container(
             decoration: BoxDecoration(
@@ -124,6 +126,26 @@ class _ClassCreatorState extends State<ClassCreator> {
         ),
       ),
     ]);
+  }
+
+  void _creatAndSetLabel() {
+    var start = widget.getController().selection.start;
+    var end = widget.getController().selection.end;
+    var newText = widget.getController().text;
+    var head = newText.substring(0, start);
+    var center = newText.substring(start, end);
+    var tail = newText.substring(end);
+    newText = "$head€${_controller.text}£$center $tail";
+    widget.getController().text = newText;
+    var labelData = LabelData(
+        name: _controller.text, properties: [], color: pickerColor.toHex());
+    var newNode = GraphNode(
+        name: center,
+        id: "${_controller.text},$center".hashCode,
+        label: _controller.text,
+        properties: {});
+    relationChartDataBloc(context)
+        .add(CreateLabelAndSetNode(labelData, newNode));
   }
 
   @override

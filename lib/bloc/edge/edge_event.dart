@@ -38,10 +38,11 @@ class CreateEdge extends RelationBrowserEvent {
   CreateEdge(this.edge);
 }
 
-class CreateEdgeType extends RelationBrowserEvent {
+class CreateEdgeTypeAndAddEdge extends RelationBrowserEvent {
   final EdgeType type;
+  final GraphEdge edge;
 
-  CreateEdgeType(this.type);
+  CreateEdgeTypeAndAddEdge(this.type, this.edge);
 }
 
 class DeleteEdgeType extends RelationBrowserEvent {

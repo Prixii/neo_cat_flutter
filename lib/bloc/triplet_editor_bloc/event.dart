@@ -56,3 +56,7 @@ class CreateType extends TripletEditorEvent {
 
   CreateType(this.context);
 }
+
+class ResetEdge extends TripletEditorEvent {
+  ResetEdge();
+}

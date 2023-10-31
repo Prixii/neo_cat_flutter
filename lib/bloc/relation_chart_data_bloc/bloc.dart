@@ -31,10 +31,13 @@ class RelationChartDataBloc
     on<CreateEdge>((event, emit) => emit(_onCreateEdge(event)));
     on<DeleteEdge>((event, emit) => emit(_onDeleteEdge(event)));
     on<CreateLabel>((event, emit) => emit(_onCreateLabel(event)));
+    on<CreateLabelAndSetNode>(
+        (event, emit) => emit(_onCreateLabelAndSetNode(event)));
     on<AddNode>((event, emit) => emit(_onAddNode(event)));
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
     on<DeleteNode>((event, emit) => emit(_onDeleteNode(event)));
-    on<CreateEdgeType>((event, emit) => emit(_onCreateEdgeType(event)));
+    on<CreateEdgeTypeAndAddEdge>(
+        (event, emit) => emit(_onCreateEdgeTypeAndAddEdge(event)));
     on<DeleteEdgeType>((event, emit) => emit(_onDeleteEdgeType(event)));
   }
 
@@ -43,6 +46,7 @@ class RelationChartDataBloc
   ) {
     var state = RelationChartDataState.fromJson(jsonDecode(event.rawData));
     logger.i('[relationChartDataEvent]: initRelationChartData!');
+    logger.d(state);
     return state;
   }
 
@@ -298,49 +302,100 @@ class RelationChartDataBloc
     );
   }
 
-  RelationChartDataState _onCreateEdgeType(CreateEdgeType event) {
+  RelationChartDataState _onCreateEdgeTypeAndAddEdge(
+      CreateEdgeTypeAndAddEdge event) {
+    var edge = event.edge;
+    var type = event.type;
+
     var edgeTypes = <EdgeType>{}
       ..addAll(state.edgeTypes)
-      ..add(event.type);
-    var newFlag = !state.forceRefreshFlag;
+      ..add(type);
+
     var edgeToTypeMap = <EdgeType, List<GraphEdge>>{}
       ..addAll(state.edgeToTypeMap)
-      ..[event.type] = [];
+      ..[type] = [edge];
+
+    var edgeMap = <EdgeId, GraphEdge>{}
+      ..addAll(state.edgeMap)
+      ..[edge.id] = edge;
+
+    state.graph!.addEdgeS(edge);
+
+    var newFlag = !state.forceRefreshFlag;
+    logger.d(state.copyWith(
+      edgeTypes: edgeTypes,
+      forceRefreshFlag: newFlag,
+      edgeToTypeMap: edgeToTypeMap,
+      edgeMap: edgeMap,
+    ));
+
     return state.copyWith(
       edgeTypes: edgeTypes,
       forceRefreshFlag: newFlag,
       edgeToTypeMap: edgeToTypeMap,
+      edgeMap: edgeMap,
     );
   }
 
   RelationChartDataState _onDeleteEdgeType(DeleteEdgeType event) {
+    var type = event.type;
     var edgeMap = <EdgeId, GraphEdge>{}..addAll(state.edgeMap);
     var edgeToTypeMap = <EdgeType, List<GraphEdge>>{}
       ..addAll(state.edgeToTypeMap);
-    var edges = edgeToTypeMap[event.type];
+    var edges = edgeToTypeMap[type];
     var edgeTypes = <EdgeType>{}
       ..addAll(state.edgeTypes)
-      ..remove(event.type);
+      ..remove(type);
     if (edges == null) {
       return state.copyWith(edgeTypes: edgeTypes);
     }
     if (edges == []) {
-      edgeToTypeMap.remove(event.type);
       return state.copyWith(
         edgeTypes: edgeTypes,
-        edgeToTypeMap: edgeToTypeMap,
+        edgeToTypeMap: edgeToTypeMap..remove(type),
       );
     }
+
+    state.graph!.removeEdges(edges);
     for (var edge in edges) {
       edgeMap.remove(edge);
-      state.graph!.removeEdge(edge);
     }
-    edgeToTypeMap.remove(event.type);
-
+    edgeToTypeMap.remove(type);
+    logger.i('[delete]');
+    logger.d(state.copyWith(
+      edgeMap: edgeMap,
+      edgeToTypeMap: edgeToTypeMap,
+      edgeTypes: edgeTypes,
+    ));
     return state.copyWith(
       edgeMap: edgeMap,
       edgeToTypeMap: edgeToTypeMap,
       edgeTypes: edgeTypes,
+    );
+  }
+
+  RelationChartDataState _onCreateLabelAndSetNode(CreateLabelAndSetNode event) {
+    var labelMap = <LabelName, LabelData>{}..addAll(state.labelMap);
+    labelMap[event.labelData.name] = event.labelData;
+    var labelVisibilityMap = <LabelName, bool>{}
+      ..addAll(state.labelVisibilityMap);
+
+    labelVisibilityMap[event.labelData.name] = true;
+
+    var node = event.node;
+    var nodeMap = <NodeId, GraphNode>{}
+      ..addAll(state.nodeMap)
+      ..[node.id] = node;
+
+    var nodeToLabelMap = <LabelName, List<GraphNode>>{}
+      ..addAll(state.nodeToLabelMap);
+    nodeToLabelMap[node.label] = [node];
+
+    state.graph!.addNode(node);
+    return state.copyWith(
+      labelMap: labelMap,
+      nodeMap: nodeMap,
+      nodeToLabelMap: nodeToLabelMap,
     );
   }
 

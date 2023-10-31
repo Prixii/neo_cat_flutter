@@ -2,8 +2,11 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/components/initializr/create_label_dialog.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 
+import 'rich_text_editing_controller.dart';
+
 class LabelSetter extends StatefulWidget {
-  const LabelSetter({super.key});
+  const LabelSetter({super.key, required this.getController});
+  final RichTextEditingController Function() getController;
 
   @override
   State<LabelSetter> createState() => _LabelSetterState();
@@ -31,7 +34,7 @@ class _LabelSetterState extends State<LabelSetter> {
       padding: const EdgeInsets.all(4),
       child: GestureDetector(
         onTap: () {
-          showCreateClassDialog(context);
+          showCreateClassDialog(context, widget.getController);
           ContextMenuController.removeAny();
         },
         child: MouseRegion(

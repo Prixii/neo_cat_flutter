@@ -23,7 +23,7 @@ Widget elevatedClassMenuBuilder({
     builder: (context, state) => AdaptiveTextSelectionToolbar(
       anchors: editableTextState.contextMenuAnchors,
       children: [
-        const LabelSetter(),
+        LabelSetter(getController: () => controller),
         const Divider(),
         SizedBox(
           height: 200,

@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/types/graph_edge.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
 
@@ -60,8 +61,7 @@ class _EdgeManagerTileState extends State<EdgeManagerTile> {
           '警告',
           style: defaultTextBlack,
         ),
-        content:
-            const Text('此Label仍有子节点, 如果执行删除操作, 所有子节点(包括其相关的边)都会被删除，确认要删除吗'),
+        content: const Text('此EdgeType仍有子节点, 如果执行删除操作, 所有对应Type的边都会被删除，确认要删除吗'),
         actions: [
           Button(
               child: const Text('算了'),
@@ -75,6 +75,7 @@ class _EdgeManagerTileState extends State<EdgeManagerTile> {
               ),
               onPressed: () {
                 relationChartDataBloc(context).add(DeleteEdgeType(widget.type));
+                tripletEditorBloc(context).add(ResetEdge());
                 Navigator.pop(context);
               }),
         ],
@@ -101,14 +102,15 @@ class _EdgeManagerTileState extends State<EdgeManagerTile> {
     );
   }
 
+  Widget _visibilityBox() => Checkbox(checked: true, onChanged: (value) {});
+
   @override
   Widget build(BuildContext context) {
     return Expander(
       contentPadding: const EdgeInsets.all(8.0),
       header: Row(
         children: [
-          // TODO 设置可见性
-          Checkbox(checked: true, onChanged: (value) {}),
+          // _visibilityBox(),
           const SizedBox(
             width: 12,
           ),

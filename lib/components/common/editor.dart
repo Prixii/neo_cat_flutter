@@ -11,7 +11,6 @@ import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
-import 'package:neo_cat_flutter/utils/common_util.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 import '../../types/graph_edge.dart';
@@ -170,7 +169,6 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   List<ComboBoxItem<String>> _edgeItemGenerator() {
-    logger.d('[generator]');
     var itemList = <ComboBoxItem<String>>[];
     itemList.add(ComboBoxItem(
       child: Text(
@@ -182,21 +180,22 @@ class _TripletEditorState extends State<TripletEditor> {
       },
     ));
     for (var type in relationChartDataBloc(context).state.edgeTypes.toList()) {
-      itemList.add(
-        ComboBoxItem(
-          value: type,
-          child: Text(
-            type,
-            style: defaultTextBlack,
+      try {
+        itemList.add(
+          ComboBoxItem(
+            value: type,
+            child: Text(
+              type,
+              style: defaultTextBlack,
+            ),
+            onTap: () {
+              if (type != tripletEditorBloc(context).state.edge?.type) {
+                tripletEditorBloc(context).add(SetEdgeType(type));
+              }
+            },
           ),
-          onTap: () {
-            if (type == tripletEditorBloc(context).state.edge?.type) {
-              return;
-            }
-            tripletEditorBloc(context).add(SetEdgeType(type));
-          },
-        ),
-      );
+        );
+      } catch (e) {}
     }
     return itemList;
   }

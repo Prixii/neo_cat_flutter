@@ -26,9 +26,7 @@ class LabelTile extends StatefulWidget {
 }
 
 class _LabelTileState extends State<LabelTile> {
-  void createLabel(
-    String name,
-  ) {
+  void _createLabel(String name) {
     relationChartDataBloc(context).add(
       AddNode(
         GraphNode(
@@ -50,7 +48,7 @@ class _LabelTileState extends State<LabelTile> {
     var tail = newText.substring(end);
     newText = "$head€${widget.labelName}£$center $tail";
     controller.text = newText;
-    createLabel(center);
+    _createLabel(center);
   }
 
   Widget _classNameBuilder() {
