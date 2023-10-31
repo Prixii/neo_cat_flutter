@@ -6,7 +6,7 @@ import 'package:neo_cat_flutter/gen/fonts.gen.dart';
 
 var lightTheme = FluentThemeData(
   fontFamily: FontFamily.neoCat,
-  scaffoldBackgroundColor: Colors.grey[20],
+  scaffoldBackgroundColor: Colors.grey[20].withOpacity(0.5),
 );
 
 final normalBoxDecoration = BoxDecoration(

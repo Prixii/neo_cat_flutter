@@ -29,6 +29,7 @@ mixin _$RelationChartDataState {
   Map<String, List<GraphEdge>> get edgeToTypeMap =>
       throw _privateConstructorUsedError;
   bool get forceRefreshFlag => throw _privateConstructorUsedError;
+  bool get isInitDone => throw _privateConstructorUsedError;
   Graph? get graph => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -52,6 +53,7 @@ abstract class $RelationChartDataStateCopyWith<$Res> {
       Map<String, List<GraphNode>> nodeToLabelMap,
       Map<String, List<GraphEdge>> edgeToTypeMap,
       bool forceRefreshFlag,
+      bool isInitDone,
       Graph? graph});
 
   $RelationChartDataModelCopyWith<$Res> get relationChartData;
@@ -80,6 +82,7 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
     Object? nodeToLabelMap = null,
     Object? edgeToTypeMap = null,
     Object? forceRefreshFlag = null,
+    Object? isInitDone = null,
     Object? graph = freezed,
   }) {
     return _then(_value.copyWith(
@@ -119,6 +122,10 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
           ? _value.forceRefreshFlag
           : forceRefreshFlag // ignore: cast_nullable_to_non_nullable
               as bool,
+      isInitDone: null == isInitDone
+          ? _value.isInitDone
+          : isInitDone // ignore: cast_nullable_to_non_nullable
+              as bool,
       graph: freezed == graph
           ? _value.graph
           : graph // ignore: cast_nullable_to_non_nullable
@@ -155,6 +162,7 @@ abstract class _$$RelationChartDataStateImplCopyWith<$Res>
       Map<String, List<GraphNode>> nodeToLabelMap,
       Map<String, List<GraphEdge>> edgeToTypeMap,
       bool forceRefreshFlag,
+      bool isInitDone,
       Graph? graph});
 
   @override
@@ -183,6 +191,7 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
     Object? nodeToLabelMap = null,
     Object? edgeToTypeMap = null,
     Object? forceRefreshFlag = null,
+    Object? isInitDone = null,
     Object? graph = freezed,
   }) {
     return _then(_$RelationChartDataStateImpl(
@@ -222,6 +231,10 @@ class __$$RelationChartDataStateImplCopyWithImpl<$Res>
           ? _value.forceRefreshFlag
           : forceRefreshFlag // ignore: cast_nullable_to_non_nullable
               as bool,
+      isInitDone: null == isInitDone
+          ? _value.isInitDone
+          : isInitDone // ignore: cast_nullable_to_non_nullable
+              as bool,
       graph: freezed == graph
           ? _value.graph
           : graph // ignore: cast_nullable_to_non_nullable
@@ -243,6 +256,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
       final Map<String, List<GraphNode>> nodeToLabelMap = const {},
       final Map<String, List<GraphEdge>> edgeToTypeMap = const {},
       this.forceRefreshFlag = false,
+      this.isInitDone = false,
       this.graph})
       : _labelMap = labelMap,
         _nodeMap = nodeMap,
@@ -322,11 +336,14 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
   @JsonKey()
   final bool forceRefreshFlag;
   @override
+  @JsonKey()
+  final bool isInitDone;
+  @override
   final Graph? graph;
 
   @override
   String toString() {
-    return 'RelationChartDataState(relationChartData: $relationChartData, labelMap: $labelMap, nodeMap: $nodeMap, edgeMap: $edgeMap, labelVisibilityMap: $labelVisibilityMap, edgeTypes: $edgeTypes, nodeToLabelMap: $nodeToLabelMap, edgeToTypeMap: $edgeToTypeMap, forceRefreshFlag: $forceRefreshFlag, graph: $graph)';
+    return 'RelationChartDataState(relationChartData: $relationChartData, labelMap: $labelMap, nodeMap: $nodeMap, edgeMap: $edgeMap, labelVisibilityMap: $labelVisibilityMap, edgeTypes: $edgeTypes, nodeToLabelMap: $nodeToLabelMap, edgeToTypeMap: $edgeToTypeMap, forceRefreshFlag: $forceRefreshFlag, isInitDone: $isInitDone, graph: $graph)';
   }
 
   @override
@@ -349,6 +366,8 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
                 .equals(other._edgeToTypeMap, _edgeToTypeMap) &&
             (identical(other.forceRefreshFlag, forceRefreshFlag) ||
                 other.forceRefreshFlag == forceRefreshFlag) &&
+            (identical(other.isInitDone, isInitDone) ||
+                other.isInitDone == isInitDone) &&
             (identical(other.graph, graph) || other.graph == graph));
   }
 
@@ -364,6 +383,7 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
       const DeepCollectionEquality().hash(_nodeToLabelMap),
       const DeepCollectionEquality().hash(_edgeToTypeMap),
       forceRefreshFlag,
+      isInitDone,
       graph);
 
   @JsonKey(ignore: true)
@@ -385,6 +405,7 @@ abstract class _RelationChartDataState implements RelationChartDataState {
       final Map<String, List<GraphNode>> nodeToLabelMap,
       final Map<String, List<GraphEdge>> edgeToTypeMap,
       final bool forceRefreshFlag,
+      final bool isInitDone,
       final Graph? graph}) = _$RelationChartDataStateImpl;
 
   @override
@@ -405,6 +426,8 @@ abstract class _RelationChartDataState implements RelationChartDataState {
   Map<String, List<GraphEdge>> get edgeToTypeMap;
   @override
   bool get forceRefreshFlag;
+  @override
+  bool get isInitDone;
   @override
   Graph? get graph;
   @override

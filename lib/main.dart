@@ -14,10 +14,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Window.initialize();
   await Window.setEffect(
-    effect: WindowEffect.mica,
-    color: const Color(0xcc222222),
+    effect: WindowEffect.acrylic,
   );
-  Window.setWindowAlphaValue(0.75);
   runApp(const MainApp());
 }
 
@@ -33,6 +31,7 @@ class MainApp extends StatelessWidget {
       child: BlocProvider(
         create: (context) => TripletEditorBloc(dataBloc: relationChartDataBloc),
         child: FluentApp(
+          debugShowCheckedModeBanner: false,
           theme: lightTheme,
           home: const HelloPage(),
         ),

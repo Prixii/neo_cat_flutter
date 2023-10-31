@@ -23,7 +23,7 @@ class RelationChartDataBloc
     extends Bloc<RelationChartDataEvent, RelationChartDataState> {
   RelationChartDataBloc() : super(RelationChartDataState.initial()) {
     on<InitRelationChartData>(
-        (event, emit) => emit(_onInitRelationChartData(event)));
+        (event, emit) async => emit(await _onInitRelationChartData(event)));
     on<SetLabelVisibility>((event, emit) => emit(_onSetClassVisibility(event)));
     on<UpdateClassData>((event, emit) => emit(_onUpdateClassData(event)));
     on<DeleteLabel>((event, emit) => emit(_onDeleteLabel(event)));
@@ -41,12 +41,12 @@ class RelationChartDataBloc
     on<DeleteEdgeType>((event, emit) => emit(_onDeleteEdgeType(event)));
   }
 
-  RelationChartDataState _onInitRelationChartData(
+  Future<RelationChartDataState> _onInitRelationChartData(
     InitRelationChartData event,
-  ) {
-    var state = RelationChartDataState.fromJson(jsonDecode(event.rawData));
+  ) async {
+    var state = await pretreatment(
+        RelationChartDataState.fromJson(jsonDecode(event.rawData)));
     logger.i('[relationChartDataEvent]: initRelationChartData!');
-    logger.d(state);
     return state;
   }
 
