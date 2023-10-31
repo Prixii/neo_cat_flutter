@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/graph_edge.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 import '../../../bloc/relation_chart_data_bloc/bloc.dart';
@@ -37,6 +38,7 @@ class _TripletTileState extends State<TripletTile> {
   }
 
   Widget _startNodeBuilder() {
+    var bgColor = relationChartDataBloc(context).getColor(startNode.label);
     return Stack(
       children: [
         LayoutBuilder(
@@ -44,16 +46,13 @@ class _TripletTileState extends State<TripletTile> {
             return CustomPaint(
               size: Size(constraints.maxWidth, constraints.maxHeight),
               painter: CirclePainter(
-                color: relationChartDataBloc(context).getColor(startNode.label),
+                color: bgColor,
               ),
             );
           },
         ),
         Center(
-          child: Text(
-            startNode.name,
-            style: defaultText,
-          ),
+          child: Text(startNode.name, style: calculateTextColor(bgColor)),
         ),
       ],
     );
@@ -92,22 +91,20 @@ class _TripletTileState extends State<TripletTile> {
   }
 
   Widget _endNodeBuiler() {
+    var bgColor = relationChartDataBloc(context).getColor(endNode.label);
     return Stack(
       children: [
         LayoutBuilder(
           builder: (context, constraints) {
             return CustomPaint(
-              size: Size(constraints.maxWidth, constraints.maxHeight),
-              painter: CirclePainter(
-                  color:
-                      relationChartDataBloc(context).getColor(endNode.label)),
-            );
+                size: Size(constraints.maxWidth, constraints.maxHeight),
+                painter: CirclePainter(color: bgColor));
           },
         ),
         Center(
           child: Text(
             endNode.name,
-            style: defaultText,
+            style: calculateTextColor(bgColor),
           ),
         ),
       ],

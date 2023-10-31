@@ -11,6 +11,7 @@ import 'package:neo_cat_flutter/types/enums.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/types/label_data.dart';
 import 'package:neo_cat_flutter/types/typdef.dart';
+import 'package:neo_cat_flutter/utils/common_util.dart';
 import 'package:neo_cat_flutter/utils/painter_util.dart';
 
 import '../../types/graph_edge.dart';
@@ -90,6 +91,8 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   Widget _startNodeBuilder() {
+    var bgColor =
+        relationChartDataBloc(context).getColor(_getStartNode()?.label);
     return GestureDetector(
       onTap: () => tripletEditorBloc(context)
           .add(ClickTripletNode(TripletPosition.start)),
@@ -114,9 +117,9 @@ class _TripletEditorState extends State<TripletEditor> {
                   return CustomPaint(
                     size: Size(constraints.maxWidth, constraints.maxHeight),
                     painter: CirclePainter(
-                        radius: 25,
-                        color: relationChartDataBloc(context)
-                            .getColor(_getStartNode()?.label)),
+                      radius: 25,
+                      color: bgColor,
+                    ),
                   );
                 },
               ),
@@ -124,7 +127,7 @@ class _TripletEditorState extends State<TripletEditor> {
                 child: Text(
                   _getStartNode()?.name ?? '待选择',
                   overflow: TextOverflow.ellipsis,
-                  style: defaultText.copyWith(fontSize: 12),
+                  style: calculateTextColor(bgColor).copyWith(fontSize: 12),
                 ),
               ),
             ],
@@ -201,6 +204,7 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   Widget _endNodeBuilder() {
+    var bgColor = relationChartDataBloc(context).getColor(_getEndNode()?.label);
     return GestureDetector(
       onTap: () =>
           tripletEditorBloc(context).add(ClickTripletNode(TripletPosition.end)),
@@ -224,10 +228,7 @@ class _TripletEditorState extends State<TripletEditor> {
                 builder: (context, constraints) {
                   return CustomPaint(
                     size: Size(constraints.maxWidth, constraints.maxHeight),
-                    painter: CirclePainter(
-                        radius: 25,
-                        color: relationChartDataBloc(context)
-                            .getColor(_getEndNode()?.label)),
+                    painter: CirclePainter(radius: 25, color: bgColor),
                   );
                 },
               ),
@@ -235,7 +236,7 @@ class _TripletEditorState extends State<TripletEditor> {
                 child: Text(
                   _getEndNode()?.name ?? '待选择',
                   overflow: TextOverflow.ellipsis,
-                  style: defaultText.copyWith(fontSize: 12),
+                  style: calculateTextColor(bgColor).copyWith(fontSize: 12),
                 ),
               ),
             ],
