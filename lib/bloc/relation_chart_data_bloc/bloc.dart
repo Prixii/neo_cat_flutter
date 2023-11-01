@@ -24,18 +24,21 @@ class RelationChartDataBloc
   RelationChartDataBloc() : super(RelationChartDataState.initial()) {
     on<InitRelationChartData>(
         (event, emit) async => emit(await _onInitRelationChartData(event)));
-    on<SetLabelVisibility>((event, emit) => emit(_onSetClassVisibility(event)));
     on<UpdateClassData>((event, emit) => emit(_onUpdateClassData(event)));
-    on<DeleteLabel>((event, emit) => emit(_onDeleteLabel(event)));
-    on<UpdateEdge>((event, emit) => emit(_onUpdateEdge(event)));
-    on<CreateEdge>((event, emit) => emit(_onCreateEdge(event)));
-    on<DeleteEdge>((event, emit) => emit(_onDeleteEdge(event)));
+
     on<CreateLabel>((event, emit) => emit(_onCreateLabel(event)));
+    on<DeleteLabel>((event, emit) => emit(_onDeleteLabel(event)));
     on<CreateLabelAndSetNode>(
         (event, emit) => emit(_onCreateLabelAndSetNode(event)));
+    on<SetLabelVisibility>((event, emit) => emit(_onSetClassVisibility(event)));
+
     on<AddNode>((event, emit) => emit(_onAddNode(event)));
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
     on<DeleteNode>((event, emit) => emit(_onDeleteNode(event)));
+
+    on<UpdateEdge>((event, emit) => emit(_onUpdateEdge(event)));
+    on<CreateEdge>((event, emit) => emit(_onCreateEdge(event)));
+    on<DeleteEdge>((event, emit) => emit(_onDeleteEdge(event)));
     on<CreateEdgeTypeAndAddEdge>(
         (event, emit) => emit(_onCreateEdgeTypeAndAddEdge(event)));
     on<DeleteEdgeType>((event, emit) => emit(_onDeleteEdgeType(event)));
@@ -245,10 +248,20 @@ class RelationChartDataBloc
 
   RelationChartDataState _onDeleteEdge(DeleteEdge event) {
     var edgeMap = <EdgeId, GraphEdge>{}..addAll(state.edgeMap);
+    var edgeToTypeMap = <EdgeType, List<GraphEdge>>{}
+      ..addAll(state.edgeToTypeMap);
     var edge = event.edge;
+
+    var edges = edgeToTypeMap[edge.type] ?? [];
+    edges.remove(edge);
+    edgeToTypeMap[edge.type] = edges;
     state.graph?.removeEdge(edge);
     edgeMap.remove(edge.id);
-    return state.copyWith(edgeMap: edgeMap);
+
+    return state.copyWith(
+      edgeMap: edgeMap,
+      edgeToTypeMap: edgeToTypeMap,
+    );
   }
 
   RelationChartDataState _onCreateLabel(CreateLabel event) {
