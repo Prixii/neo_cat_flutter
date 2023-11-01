@@ -28,6 +28,7 @@ abstract class $SaverStateCopyWith<$Res> {
   factory $SaverStateCopyWith(
           SaverState value, $Res Function(SaverState) then) =
       _$SaverStateCopyWithImpl<$Res, SaverState>;
+
   @useResult
   $Res call({bool isLoading});
 }
@@ -38,9 +39,10 @@ class _$SaverStateCopyWithImpl<$Res, $Val extends SaverState>
   _$SaverStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
   final $Res Function($Val) _then;
+
+  // ignore: unused_field
+  final $Val _value;
 
   @pragma('vm:prefer-inline')
   @override
@@ -62,6 +64,7 @@ abstract class _$$SaverStateImplCopyWith<$Res>
   factory _$$SaverStateImplCopyWith(
           _$SaverStateImpl value, $Res Function(_$SaverStateImpl) then) =
       __$$SaverStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({bool isLoading});
@@ -98,11 +101,6 @@ class _$SaverStateImpl implements _SaverState {
   final bool isLoading;
 
   @override
-  String toString() {
-    return 'SaverState(isLoading: $isLoading)';
-  }
-
-  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
@@ -111,14 +109,19 @@ class _$SaverStateImpl implements _SaverState {
                 other.isLoading == isLoading));
   }
 
-  @override
-  int get hashCode => Object.hash(runtimeType, isLoading);
-
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SaverStateImplCopyWith<_$SaverStateImpl> get copyWith =>
       __$$SaverStateImplCopyWithImpl<_$SaverStateImpl>(this, _$identity);
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isLoading);
+
+  @override
+  String toString() {
+    return 'SaverState(isLoading: $isLoading)';
+  }
 }
 
 abstract class _SaverState implements SaverState {
@@ -126,6 +129,7 @@ abstract class _SaverState implements SaverState {
 
   @override
   bool get isLoading;
+
   @override
   @JsonKey(ignore: true)
   _$$SaverStateImplCopyWith<_$SaverStateImpl> get copyWith =>

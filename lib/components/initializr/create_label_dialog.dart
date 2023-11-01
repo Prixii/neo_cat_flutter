@@ -27,8 +27,9 @@ class ClassCreator extends StatefulWidget {
     required this.context,
     required this.getController,
   });
-  final RichTextEditingController Function() getController;
+
   final BuildContext context;
+  final RichTextEditingController Function() getController;
 
   @override
   State<ClassCreator> createState() => _ClassCreatorState();
@@ -36,6 +37,7 @@ class ClassCreator extends StatefulWidget {
 
 class _ClassCreatorState extends State<ClassCreator> {
   Color pickerColor = Colors.blue;
+
   late TextEditingController _controller;
 
   @override

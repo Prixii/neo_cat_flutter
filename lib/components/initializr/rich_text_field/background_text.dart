@@ -8,21 +8,6 @@ import 'package:neo_cat_flutter/utils/bloc_util.dart';
 import 'package:neo_cat_flutter/utils/common_util.dart';
 
 class BackgroundText extends SpecialText {
-  static const String flag = "€";
-  final BuilderType type;
-  final int start;
-  final BuildContext context;
-  final Color? backgroundColor;
-
-  Color getColor(LabelName label) {
-    var color = relationChartDataBloc(context)
-        .state
-        .labelMap[label.trim()]
-        ?.color
-        .toColor();
-    return color ?? Colors.blue.withOpacity(0.15);
-  }
-
   BackgroundText(
     TextStyle textStyle,
     SpecialTextGestureTapCallback? onTap, {
@@ -36,6 +21,13 @@ class BackgroundText extends SpecialText {
           textStyle,
           onTap: onTap,
         );
+
+  static const String flag = "€";
+
+  final Color? backgroundColor;
+  final BuildContext context;
+  final int start;
+  final BuilderType type;
 
   @override
   InlineSpan finishText() {
@@ -71,5 +63,14 @@ class BackgroundText extends SpecialText {
       recognizer: TapGestureRecognizer()..onTap = () => label,
     );
     return backgroundTextSpan;
+  }
+
+  Color getColor(LabelName label) {
+    var color = relationChartDataBloc(context)
+        .state
+        .labelMap[label.trim()]
+        ?.color
+        .toColor();
+    return color ?? Colors.blue.withOpacity(0.15);
   }
 }

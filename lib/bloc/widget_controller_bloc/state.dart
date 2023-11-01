@@ -4,11 +4,6 @@ import 'package:neo_cat_flutter/types/enums.dart';
 /// @date 2023-10-09 08
 
 class WidgetControllerState {
-  final ViewMode viewMode;
-  final bool isBrowserPaneVisible;
-  final bool isEditorPaneVisible;
-  final int centerFlexWeight;
-
   WidgetControllerState({
     required this.viewMode,
     required this.isBrowserPaneVisible,
@@ -21,6 +16,11 @@ class WidgetControllerState {
         isBrowserPaneVisible = true,
         isEditorPaneVisible = true,
         centerFlexWeight = 2;
+
+  final int centerFlexWeight;
+  final bool isBrowserPaneVisible;
+  final bool isEditorPaneVisible;
+  final ViewMode viewMode;
 
   WidgetControllerState copyWith({
     ViewMode? viewMode,

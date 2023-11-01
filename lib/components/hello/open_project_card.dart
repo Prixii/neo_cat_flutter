@@ -19,9 +19,10 @@ class OpenProjectCard extends StatefulWidget {
 }
 
 class _OpenProjectCardState extends State<OpenProjectCard> {
-  var blurRadius = 10.0;
   var bgColor = Colors.white.withOpacity(0.95);
+  var blurRadius = 10.0;
   var isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     void initStateAndJump(String rawData) {

@@ -8,6 +8,7 @@ import '../../theme/common_theme.dart';
 class PropertyTile extends StatefulWidget {
   const PropertyTile(
       {super.key, required this.propertyName, required this.controller});
+
   final TextEditingController controller;
   final String propertyName;
 

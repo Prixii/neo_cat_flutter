@@ -19,21 +19,6 @@ const int defaultClusterPadding = 15;
 const double epsilon = 0.0001;
 
 class FruchtermanReingoldAlgorithm implements Algorithm {
-  Map<int, Offset> displacement = {};
-  Random rand = Random();
-  double graphHeight = 500; //default value, change ahead of time
-  double graphWidth = 500;
-  late double tick;
-
-  int iterations = defaultIterations;
-  double repulsionRate = defaultRepulsionRate;
-  double attractionRate = defaultAttractionRate;
-  double repulsionPercentage = defaultRepulsionPercentage;
-  double attractionPercentage = defaultAttractionPercentage;
-
-  @override
-  EdgeRenderer? renderer;
-
   FruchtermanReingoldAlgorithm(
       {this.iterations = defaultIterations,
       this.renderer,
@@ -44,6 +29,21 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
     renderer = renderer ?? ArrowEdgeRenderer();
   }
 
+  double attractionPercentage = defaultAttractionPercentage;
+  double attractionRate = defaultAttractionRate;
+  Map<int, Offset> displacement = {};
+  GraphNode? focusedNode;
+  double graphHeight = 500; //default value, change ahead of time
+  double graphWidth = 500;
+  int iterations = defaultIterations;
+  Random rand = Random();
+  double repulsionPercentage = defaultRepulsionPercentage;
+  double repulsionRate = defaultRepulsionRate;
+  late double tick;
+
+  @override
+  EdgeRenderer? renderer;
+
   @override
   void init(Graph? graph) {
     for (var node in graph!.nodes) {
@@ -51,6 +51,51 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
       node.position = Offset(
           rand.nextDouble() * graphWidth, rand.nextDouble() * graphHeight);
     }
+  }
+
+  @override
+  Size run(Graph? graph, double shiftX, double shiftY) {
+    var size = findBiggestSize(graph!) * graph.nodeCount();
+    graphWidth = size;
+    graphHeight = size;
+
+    var nodes = graph.nodes;
+    var edges = graph.edges;
+
+    tick = 0.1 * sqrt(graphWidth / 2 * graphHeight / 2);
+
+    init(graph);
+
+    for (var i = 0; i < iterations; i++) {
+      calculateRepulsion(nodes);
+      calculateAttraction(edges);
+      limitMaximumDisplacement(nodes);
+
+      cool(i);
+
+      if (done()) {
+        break;
+      }
+    }
+
+    if (focusedNode == null) {
+      positionNodes(graph);
+    }
+
+    shiftCoordinates(graph, shiftX, shiftY);
+
+    return calculateGraphSize(graph);
+  }
+
+  @override
+  void setDimensions(double width, double height) {
+    graphWidth = width;
+    graphHeight = height;
+  }
+
+  @override
+  void setFocusedNode(GraphNode node) {
+    focusedNode = node;
   }
 
   @override
@@ -130,42 +175,6 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
       displacement[nodeA.id] =
           displacement[nodeA.id]! / nodes.length.toDouble();
     }
-  }
-
-  GraphNode? focusedNode;
-
-  @override
-  Size run(Graph? graph, double shiftX, double shiftY) {
-    var size = findBiggestSize(graph!) * graph.nodeCount();
-    graphWidth = size;
-    graphHeight = size;
-
-    var nodes = graph.nodes;
-    var edges = graph.edges;
-
-    tick = 0.1 * sqrt(graphWidth / 2 * graphHeight / 2);
-
-    init(graph);
-
-    for (var i = 0; i < iterations; i++) {
-      calculateRepulsion(nodes);
-      calculateAttraction(edges);
-      limitMaximumDisplacement(nodes);
-
-      cool(i);
-
-      if (done()) {
-        break;
-      }
-    }
-
-    if (focusedNode == null) {
-      positionNodes(graph);
-    }
-
-    shiftCoordinates(graph, shiftX, shiftY);
-
-    return calculateGraphSize(graph);
   }
 
   void shiftCoordinates(Graph graph, double shiftX, double shiftY) {
@@ -296,22 +305,15 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
 
     return Size(right - left, bottom - top);
   }
-
-  @override
-  void setFocusedNode(GraphNode node) {
-    focusedNode = node;
-  }
-
-  @override
-  void setDimensions(double width, double height) {
-    graphWidth = width;
-    graphHeight = height;
-  }
 }
 
 class NodeCluster {
-  List<GraphNode>? nodes;
+  NodeCluster() {
+    nodes = [];
+    rect = Rect.zero;
+  }
 
+  List<GraphNode>? nodes;
   Rect? rect;
 
   List<GraphNode>? getNodes() {
@@ -362,10 +364,5 @@ class NodeCluster {
     }
 
     rect = rect!.translate(xDiff, yDiff);
-  }
-
-  NodeCluster() {
-    nodes = [];
-    rect = Rect.zero;
   }
 }

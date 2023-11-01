@@ -16,8 +16,6 @@ import 'state.dart';
 /// @date 2023-10-23 15
 
 class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
-  final RelationChartDataBloc dataBloc;
-
   TripletEditorBloc({required this.dataBloc})
       : super(TripletEditorState.initial()) {
     on<ChooseNode>((event, emit) async => emit(await _onChooseNode(event)));
@@ -30,6 +28,20 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     on<CreateType>((event, emit) async => emit(await _onCreateType(event)));
     on<ResetEdge>((event, emit) => emit(_onResetEdge()));
   }
+
+  final RelationChartDataBloc dataBloc;
+
+  Future<GraphEdge?> getEdge(NodeId start, NodeId end) async {
+    var edgeMap = dataBloc.state.edgeMap;
+    for (var edge in edgeMap.values.toList()) {
+      if (edge.start.id == start && edge.end.id == end) {
+        return edge;
+      }
+    }
+    return null;
+  }
+
+  bool showEdge() => (state.startNode != null && state.endNode != null);
 
   Future<TripletEditorState> _onChooseNode(ChooseNode event) async {
     logger.i('[tripletEditorState]: ChooseNode!');
@@ -243,16 +255,4 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
       endNodeBorder: state.endNodeBorder,
     );
   }
-
-  Future<GraphEdge?> getEdge(NodeId start, NodeId end) async {
-    var edgeMap = dataBloc.state.edgeMap;
-    for (var edge in edgeMap.values.toList()) {
-      if (edge.start.id == start && edge.end.id == end) {
-        return edge;
-      }
-    }
-    return null;
-  }
-
-  bool showEdge() => (state.startNode != null && state.endNode != null);
 }

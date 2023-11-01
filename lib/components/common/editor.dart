@@ -35,8 +35,20 @@ class TripletEditor extends StatefulWidget {
 }
 
 class _TripletEditorState extends State<TripletEditor> {
-  TextEditingController nameController = TextEditingController();
   Map<String, TextEditingController> controllers = {};
+  TextEditingController nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    disposeControllers();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void handleHover(Color color) {
     setState(() {
@@ -48,6 +60,13 @@ class _TripletEditorState extends State<TripletEditor> {
     setState(() {
       color = opacity;
     });
+  }
+
+  void disposeControllers() {
+    for (var controller in controllers.values) {
+      controller.dispose();
+    }
+    controllers = {};
   }
 
   GraphNode? _getStartNode() {
@@ -398,25 +417,6 @@ class _TripletEditorState extends State<TripletEditor> {
       );
     }
     return itemList;
-  }
-
-  void disposeControllers() {
-    for (var controller in controllers.values) {
-      controller.dispose();
-    }
-    controllers = {};
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    disposeControllers();
-    super.dispose();
   }
 
   @override

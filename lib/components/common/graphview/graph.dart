@@ -6,18 +6,17 @@ import '../../../types/graph_edge.dart';
 import '../../../types/graph_node.dart';
 
 class Graph {
-  final List<GraphNode> nodes;
-  final List<GraphEdge> edges;
-  List<GraphObserver>? graphObserver;
-
-  var isTree = false;
-
   Graph({required this.nodes, required this.edges, this.graphObserver});
 
   Graph.init()
       : nodes = [],
         edges = [],
         graphObserver = [];
+
+  final List<GraphEdge> edges;
+  List<GraphObserver>? graphObserver;
+  var isTree = false;
+  final List<GraphNode> nodes;
 
   int nodeCount() => nodes.length;
 

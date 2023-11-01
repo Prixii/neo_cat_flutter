@@ -12,41 +12,41 @@ abstract class RelationBrowserEvent extends RelationChartDataEvent {
 
 /// 使用 [model] 来初始化
 class InitRelationBrowserState extends RelationBrowserEvent {
-  final RelationChartDataModel model;
-
   InitRelationBrowserState({required this.model});
+
+  final RelationChartDataModel model;
 }
 
 /// 更新/添加 [edge] 到Map
 class UpdateEdge extends RelationBrowserEvent {
+  UpdateEdge({required this.edge, required this.oldType});
+
   final GraphEdge edge;
   final EdgeType oldType;
-
-  UpdateEdge({required this.edge, required this.oldType});
 }
 
 /// 移除 [edge] 的关系
 class DeleteEdge extends RelationBrowserEvent {
-  final GraphEdge edge;
-
   DeleteEdge({required this.edge});
+
+  final GraphEdge edge;
 }
 
 class CreateEdge extends RelationBrowserEvent {
-  final GraphEdge edge;
-
   CreateEdge(this.edge);
+
+  final GraphEdge edge;
 }
 
 class CreateEdgeTypeAndAddEdge extends RelationBrowserEvent {
-  final EdgeType type;
-  final GraphEdge edge;
-
   CreateEdgeTypeAndAddEdge(this.type, this.edge);
+
+  final GraphEdge edge;
+  final EdgeType type;
 }
 
 class DeleteEdgeType extends RelationBrowserEvent {
-  final EdgeType type;
-
   DeleteEdgeType(this.type);
+
+  final EdgeType type;
 }

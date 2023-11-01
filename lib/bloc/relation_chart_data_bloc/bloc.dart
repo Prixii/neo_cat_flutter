@@ -41,6 +41,56 @@ class RelationChartDataBloc
     on<DeleteEdgeType>((event, emit) => emit(_onDeleteEdgeType(event)));
   }
 
+  @override
+  void onChange(Change<RelationChartDataState> change) {
+    logger.i('[change!]');
+    super.onChange(change);
+  }
+
+  Triplet? getTriplet(GraphEdge edge) {
+    GraphNode? startNode = state.nodeMap[edge.start];
+    GraphNode? endNode = state.nodeMap[edge.end];
+    if (startNode != null && endNode != null) {
+      return (startNode, edge, endNode);
+    }
+    return null;
+  }
+
+  int instanceCount(LabelName className) =>
+      state.nodeToLabelMap[className]?.length ?? 0;
+
+  Future<String> getRawData() async {
+    var graphNodeList = state.nodeMap.values.toList();
+    var nodeList = <SourceNode>[];
+    for (var graphNode in graphNodeList) {
+      nodeList.add(graphNode.toSourceNode());
+    }
+
+    var graphEdgeList = state.edgeMap.values.toList();
+
+    var edgeList = <SourceEdge>[];
+    for (var edge in graphEdgeList) {
+      edgeList.add(edge.toSourceEdge());
+    }
+
+    var edgeTypeList = state.edgeTypes.toList();
+
+    var newRawData = state.relationChartData.copyWith(
+        labelDataList: state.labelMap.values.toList(),
+        nodeList: nodeList,
+        edgeList: edgeList,
+        edgeTypeList: edgeTypeList);
+    logger.d(newRawData.toJson());
+    return jsonEncode(newRawData.toJson());
+  }
+
+  GraphNode getGraphNode(NodeId id) {
+    return state.nodeMap[id]!;
+  }
+
+  Color getColor(LabelName? label) =>
+      state.labelMap[label]?.color.toColor() ?? const Color(0xfff3f3f3);
+
   Future<RelationChartDataState> _onInitRelationChartData(
     InitRelationChartData event,
   ) async {
@@ -397,55 +447,5 @@ class RelationChartDataBloc
       nodeMap: nodeMap,
       nodeToLabelMap: nodeToLabelMap,
     );
-  }
-
-  Triplet? getTriplet(GraphEdge edge) {
-    GraphNode? startNode = state.nodeMap[edge.start];
-    GraphNode? endNode = state.nodeMap[edge.end];
-    if (startNode != null && endNode != null) {
-      return (startNode, edge, endNode);
-    }
-    return null;
-  }
-
-  int instanceCount(LabelName className) =>
-      state.nodeToLabelMap[className]?.length ?? 0;
-
-  Future<String> getRawData() async {
-    var graphNodeList = state.nodeMap.values.toList();
-    var nodeList = <SourceNode>[];
-    for (var graphNode in graphNodeList) {
-      nodeList.add(graphNode.toSourceNode());
-    }
-
-    var graphEdgeList = state.edgeMap.values.toList();
-
-    var edgeList = <SourceEdge>[];
-    for (var edge in graphEdgeList) {
-      edgeList.add(edge.toSourceEdge());
-    }
-
-    var edgeTypeList = state.edgeTypes.toList();
-
-    var newRawData = state.relationChartData.copyWith(
-        labelDataList: state.labelMap.values.toList(),
-        nodeList: nodeList,
-        edgeList: edgeList,
-        edgeTypeList: edgeTypeList);
-    logger.d(newRawData.toJson());
-    return jsonEncode(newRawData.toJson());
-  }
-
-  GraphNode getGraphNode(NodeId id) {
-    return state.nodeMap[id]!;
-  }
-
-  Color getColor(LabelName? label) =>
-      state.labelMap[label]?.color.toColor() ?? const Color(0xfff3f3f3);
-
-  @override
-  void onChange(Change<RelationChartDataState> change) {
-    logger.i('[change!]');
-    super.onChange(change);
   }
 }

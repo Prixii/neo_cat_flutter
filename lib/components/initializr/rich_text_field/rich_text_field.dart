@@ -48,20 +48,16 @@ Widget richTextFieldBuilder(
 }
 
 class MySpecialTextSpanBuilder extends SpecialTextSpanBuilder {
-  /// whether show background for @somebody
-  final bool showAtBackground;
-  final BuilderType type;
-  final BuildContext context;
   MySpecialTextSpanBuilder(
       {this.showAtBackground = true,
       this.type = BuilderType.extendedText,
       required this.context});
-  @override
-  TextSpan build(String data,
-      {TextStyle? textStyle, SpecialTextGestureTapCallback? onTap}) {
-    var textSpan = super.build(data, textStyle: textStyle, onTap: onTap);
-    return textSpan;
-  }
+
+  final BuildContext context;
+  /// whether show background for @somebody
+  final bool showAtBackground;
+
+  final BuilderType type;
 
   @override
   SpecialText? createSpecialText(
@@ -83,6 +79,13 @@ class MySpecialTextSpanBuilder extends SpecialTextSpanBuilder {
       );
     }
     return null;
+  }
+
+  @override
+  TextSpan build(String data,
+      {TextStyle? textStyle, SpecialTextGestureTapCallback? onTap}) {
+    var textSpan = super.build(data, textStyle: textStyle, onTap: onTap);
+    return textSpan;
   }
 }
 

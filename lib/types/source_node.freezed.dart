@@ -21,11 +21,15 @@ SourceNode _$SourceNodeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SourceNode {
   String get name => throw _privateConstructorUsedError;
+
   Map<String, dynamic>? get properties => throw _privateConstructorUsedError;
+
   int get id => throw _privateConstructorUsedError;
+
   String get label => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $SourceNodeCopyWith<SourceNode> get copyWith =>
       throw _privateConstructorUsedError;
@@ -36,6 +40,7 @@ abstract class $SourceNodeCopyWith<$Res> {
   factory $SourceNodeCopyWith(
           SourceNode value, $Res Function(SourceNode) then) =
       _$SourceNodeCopyWithImpl<$Res, SourceNode>;
+
   @useResult
   $Res call(
       {String name, Map<String, dynamic>? properties, int id, String label});
@@ -47,9 +52,10 @@ class _$SourceNodeCopyWithImpl<$Res, $Val extends SourceNode>
   _$SourceNodeCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
   final $Res Function($Val) _then;
+
+  // ignore: unused_field
+  final $Val _value;
 
   @pragma('vm:prefer-inline')
   @override
@@ -86,6 +92,7 @@ abstract class _$$SourceNodeImplCopyWith<$Res>
   factory _$$SourceNodeImplCopyWith(
           _$SourceNodeImpl value, $Res Function(_$SourceNodeImpl) then) =
       __$$SourceNodeImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -143,26 +150,15 @@ class _$SourceNodeImpl implements _SourceNode {
       _$$SourceNodeImplFromJson(json);
 
   @override
-  final String name;
-  final Map<String, dynamic>? _properties;
-  @override
-  Map<String, dynamic>? get properties {
-    final value = _properties;
-    if (value == null) return null;
-    if (_properties is EqualUnmodifiableMapView) return _properties;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
-
-  @override
   final int id;
+
   @override
   final String label;
 
   @override
-  String toString() {
-    return 'SourceNode(name: $name, properties: $properties, id: $id, label: $label)';
-  }
+  final String name;
+
+  final Map<String, dynamic>? _properties;
 
   @override
   bool operator ==(dynamic other) {
@@ -178,20 +174,34 @@ class _$SourceNodeImpl implements _SourceNode {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name,
-      const DeepCollectionEquality().hash(_properties), id, label);
-
-  @JsonKey(ignore: true)
-  @override
   @pragma('vm:prefer-inline')
   _$$SourceNodeImplCopyWith<_$SourceNodeImpl> get copyWith =>
       __$$SourceNodeImplCopyWithImpl<_$SourceNodeImpl>(this, _$identity);
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name,
+      const DeepCollectionEquality().hash(_properties), id, label);
+
+  @override
+  Map<String, dynamic>? get properties {
+    final value = _properties;
+    if (value == null) return null;
+    if (_properties is EqualUnmodifiableMapView) return _properties;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
 
   @override
   Map<String, dynamic> toJson() {
     return _$$SourceNodeImplToJson(
       this,
     );
+  }
+
+  @override
+  String toString() {
+    return 'SourceNode(name: $name, properties: $properties, id: $id, label: $label)';
   }
 }
 
@@ -206,13 +216,17 @@ abstract class _SourceNode implements SourceNode {
       _$SourceNodeImpl.fromJson;
 
   @override
-  String get name;
-  @override
-  Map<String, dynamic>? get properties;
-  @override
   int get id;
+
   @override
   String get label;
+
+  @override
+  String get name;
+
+  @override
+  Map<String, dynamic>? get properties;
+
   @override
   @JsonKey(ignore: true)
   _$$SourceNodeImplCopyWith<_$SourceNodeImpl> get copyWith =>

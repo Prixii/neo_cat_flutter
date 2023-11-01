@@ -9,9 +9,9 @@ abstract class WidgetControllerEvent {
 
 /// 设置viewMode到 [viewMode]
 class SetViewMode extends WidgetControllerEvent {
-  final ViewMode viewMode;
-
   SetViewMode({required this.viewMode});
+
+  final ViewMode viewMode;
 }
 
 /// 设置浏览界面BrowseerPane的可见性为 [isVisible]

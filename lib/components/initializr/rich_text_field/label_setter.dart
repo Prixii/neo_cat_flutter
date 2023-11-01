@@ -6,6 +6,7 @@ import 'rich_text_editing_controller.dart';
 
 class LabelSetter extends StatefulWidget {
   const LabelSetter({super.key, required this.getController});
+
   final RichTextEditingController Function() getController;
 
   @override
@@ -13,12 +14,9 @@ class LabelSetter extends StatefulWidget {
 }
 
 class _LabelSetterState extends State<LabelSetter> {
+  Color backgroundColor = Colors.transparent;
+
   late TextEditingController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
 
   @override
   void dispose() {
@@ -26,7 +24,11 @@ class _LabelSetterState extends State<LabelSetter> {
     super.dispose();
   }
 
-  Color backgroundColor = Colors.transparent;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {

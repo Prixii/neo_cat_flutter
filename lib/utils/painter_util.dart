@@ -7,11 +7,11 @@ import 'package:neo_cat_flutter/types/typdef.dart';
 /// @date 2023-10-02 12
 
 class CirclePainter extends CustomPainter {
+  CirclePainter({this.color, this.offset, this.radius});
+
   Color? color;
   Offset? offset;
   double? radius;
-
-  CirclePainter({this.color, this.offset, this.radius});
 
   @override
   void paint(Canvas canvas, Size size) {

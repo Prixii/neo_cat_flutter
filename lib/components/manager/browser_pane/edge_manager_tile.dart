@@ -13,17 +13,18 @@ import 'triplet_tile.dart';
 class EdgeManagerTile extends StatefulWidget {
   const EdgeManagerTile({super.key, required this.type, required this.edges});
 
-  final EdgeType type;
   final List<GraphEdge> edges;
+  final EdgeType type;
 
   @override
   State<EdgeManagerTile> createState() => _EdgeManagerTileState();
 }
 
 class _EdgeManagerTileState extends State<EdgeManagerTile> {
+  GraphEdge? edge;
   late OverlayEntry overlayEntry;
   Position position = (0, 0);
-  GraphEdge? edge;
+
   @override
   void initState() {
     super.initState();

@@ -8,7 +8,7 @@ abstract class ClassEditorEvent {
 }
 
 class ChooseClass extends ClassEditorEvent {
-  final LabelData classData;
-
   ChooseClass({required this.classData});
+
+  final LabelData classData;
 }

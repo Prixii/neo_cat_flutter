@@ -1,9 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
 class RichTextEditingController extends TextEditingController {
-  BuildContext context;
-
   RichTextEditingController({required this.context});
+
+  BuildContext context;
 
   @override
   TextSpan buildTextSpan(

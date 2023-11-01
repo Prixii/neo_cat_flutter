@@ -9,13 +9,6 @@ import '../../types/graph_node.dart';
 /// @date 2023-10-09 09
 
 class TripletEditorState {
-  final GraphNode? startNode;
-  final GraphEdge? edge;
-  final GraphNode? endNode;
-  final TripletPosition viewMode;
-  final GraphNode? showNode;
-  final Color startNodeBorder;
-  final Color endNodeBorder;
   TripletEditorState({
     required this.startNode,
     required this.edge,
@@ -34,6 +27,14 @@ class TripletEditorState {
         showNode = null,
         startNodeBorder = opacity,
         endNodeBorder = opacity;
+
+  final GraphEdge? edge;
+  final GraphNode? endNode;
+  final Color endNodeBorder;
+  final GraphNode? showNode;
+  final GraphNode? startNode;
+  final Color startNodeBorder;
+  final TripletPosition viewMode;
 
   TripletEditorState copyWith({
     GraphNode? startNode,

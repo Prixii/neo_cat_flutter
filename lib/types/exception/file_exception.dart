@@ -1,7 +1,7 @@
 class FileNotExistException implements Exception {
-  final String filePath;
-
   FileNotExistException(this.filePath);
+
+  final String filePath;
 
   @override
   String toString() {

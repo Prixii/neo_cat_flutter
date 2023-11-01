@@ -1,7 +1,7 @@
 class IllegalDataException implements Exception {
-  final String filePath;
-
   IllegalDataException(this.filePath);
+
+  final String filePath;
 
   @override
   String toString() {

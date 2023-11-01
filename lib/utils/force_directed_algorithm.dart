@@ -1,15 +1,6 @@
 import 'dart:math';
 
 class ForceDirectedAlgorithm {
-  List<Node> nodes;
-  List<Edge> edges;
-  double k; // 弹簧劲度系数
-  double c; // 斥力系数
-  double width; // 画布宽度
-  double height; // 画布高度
-  late double area; // 画布面积
-  double temperature; // 温度参数
-
   ForceDirectedAlgorithm(
       {required this.nodes,
       required this.edges,
@@ -20,6 +11,15 @@ class ForceDirectedAlgorithm {
       this.temperature = 100}) {
     area = width * height;
   }
+
+  late double area; // 画布面积
+  double c; // 斥力系数
+  List<Edge> edges;
+  double height; // 画布高度
+  double k; // 弹簧劲度系数
+  List<Node> nodes;
+  double temperature; // 温度参数
+  double width; // 画布宽度
 
   void run(int iterations) {
     for (int i = 0; i < iterations; i++) {
@@ -73,27 +73,27 @@ class ForceDirectedAlgorithm {
 }
 
 class Node {
-  Vector position;
-
   Node(this.position);
+
+  Vector position;
 }
 
 class Edge {
+  Edge(this.from, this.to);
+
   Node from;
   Node to;
-
-  Edge(this.from, this.to);
 }
 
 class Vector {
-  double x;
-  double y;
-
   Vector(this.x, this.y);
 
   Vector.zero()
       : x = 0,
         y = 0;
+
+  double x;
+  double y;
 
   Vector operator +(Vector other) => Vector(x + other.x, y + other.y);
 

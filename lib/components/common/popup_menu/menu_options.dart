@@ -5,9 +5,9 @@ class SingleMenuOption extends StatefulWidget {
   const SingleMenuOption(
       {super.key, required this.icon, required this.label, this.onTap});
 
+  final Function()? onTap;
   final Icon icon;
   final String label;
-  final Function()? onTap;
 
   @override
   State<SingleMenuOption> createState() => _SingleMenuOptionState();

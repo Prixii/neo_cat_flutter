@@ -7,7 +7,7 @@ abstract class RelationChartDataEvent {
 
 /// 使用从json文件中读取的数据 [rawData] 初始化State
 class InitRelationChartData extends RelationChartDataEvent {
-  final String rawData;
-
   InitRelationChartData({required this.rawData});
+
+  final String rawData;
 }

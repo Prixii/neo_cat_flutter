@@ -8,15 +8,6 @@ import 'typdef.dart';
 var random = Random(1);
 
 class GraphNode {
-  Size size = const Size(0, 0); // 节点的大小
-  Offset position = Offset(
-      random.nextDouble() * 20 + 10, random.nextDouble() * 20 + 10); // 节点的位置
-
-  int id;
-  LabelName label;
-  String name;
-  Map<String, dynamic>? properties;
-
   GraphNode({
     required this.name,
     required this.id,
@@ -31,6 +22,32 @@ class GraphNode {
       label: node.label,
       properties: node.properties,
     );
+  }
+
+  int id;
+  LabelName label;
+  String name;
+  Offset position = Offset(
+      random.nextDouble() * 20 + 10, random.nextDouble() * 20 + 10); // 节点的位置
+
+  Map<String, dynamic>? properties;
+  Size size = const Size(0, 0); // 节点的大小
+
+  // 重写等于运算符
+  @override
+  bool operator ==(Object other) =>
+      other is GraphNode && hashCode == other.hashCode;
+
+  // 获取哈希码
+  @override
+  int get hashCode {
+    return ("$id ").hashCode;
+  }
+
+  // 转换为字符串
+  @override
+  String toString() {
+    return 'Node{position: $position, key: $id, _size: $size, properties:${properties?.entries.toList()}}';
   }
 
   GraphNode copyWith(
@@ -69,22 +86,5 @@ class GraphNode {
       id: id,
       label: label,
     );
-  }
-
-  // 重写等于运算符
-  @override
-  bool operator ==(Object other) =>
-      other is GraphNode && hashCode == other.hashCode;
-
-  // 获取哈希码
-  @override
-  int get hashCode {
-    return ("$id ").hashCode;
-  }
-
-  // 转换为字符串
-  @override
-  String toString() {
-    return 'Node{position: $position, key: $id, _size: $size, properties:${properties?.entries.toList()}}';
   }
 }

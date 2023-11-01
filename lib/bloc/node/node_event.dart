@@ -6,26 +6,26 @@ import '../../types/graph_node.dart';
 abstract class NodeEvent extends RelationChartDataEvent {}
 
 class AddNode extends NodeEvent {
-  final GraphNode node;
-
   AddNode(this.node);
+
+  final GraphNode node;
 }
 
 class UpdateNode extends NodeEvent {
-  final GraphNode node;
-
   UpdateNode(this.node);
+
+  final GraphNode node;
 }
 
 class DeleteNode extends NodeEvent {
-  final GraphNode node;
-
   DeleteNode(this.node);
+
+  final GraphNode node;
 }
 
 class CreateLabelAndSetNode extends NodeEvent {
+  CreateLabelAndSetNode(this.labelData, this.node);
+
   final LabelData labelData;
   final GraphNode node;
-
-  CreateLabelAndSetNode(this.labelData, this.node);
 }

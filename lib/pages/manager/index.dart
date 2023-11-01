@@ -18,12 +18,12 @@ class ManagerPage extends StatefulWidget {
 }
 
 class _ManagerPageState extends State<ManagerPage> {
+  final _widgetControllerBloc = WidgetControllerBloc();
+
   @override
   void initState() {
     super.initState();
   }
-
-  final _widgetControllerBloc = WidgetControllerBloc();
 
   Widget _editorBuilder() {
     return Padding(

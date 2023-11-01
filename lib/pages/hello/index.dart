@@ -17,49 +17,45 @@ class _HelloPageState extends State<HelloPage> {
   Widget build(BuildContext context) {
     return ScaffoldPage(
       padding: EdgeInsets.zero,
-      content: Container(
-        color: FluentTheme.of(Navigator.of(context).context)
-            .scaffoldBackgroundColor,
-        child: Center(
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
+      content: Center(
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(),
+            ),
+            Expanded(
+              flex: 2,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  const Expanded(
+                    flex: 2,
+                    child: Row(
+                      children: [
+                        CreateProjectCard(),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        OpenProjectCard(),
+                      ],
                     ),
-                    const Expanded(
-                      flex: 2,
-                      child: Row(
-                        children: [
-                          CreateProjectCard(),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          OpenProjectCard(),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                ],
               ),
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
-            ],
-          ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(),
+            ),
+          ],
         ),
       ),
     );

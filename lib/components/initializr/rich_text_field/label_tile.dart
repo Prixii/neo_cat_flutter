@@ -18,14 +18,16 @@ class LabelTile extends StatefulWidget {
       required this.getController});
 
   final Color color;
-  final LabelName labelName;
   final RichTextEditingController Function() getController;
+  final LabelName labelName;
 
   @override
   State<LabelTile> createState() => _LabelTileState();
 }
 
 class _LabelTileState extends State<LabelTile> {
+  Color backgroundColor = Colors.transparent;
+
   void _createLabel(String name) {
     relationChartDataBloc(context).add(
       AddNode(
@@ -38,7 +40,6 @@ class _LabelTileState extends State<LabelTile> {
     );
   }
 
-  Color backgroundColor = Colors.transparent;
   void _setClass(RichTextEditingController controller) {
     var start = controller.selection.start;
     var end = controller.selection.end;

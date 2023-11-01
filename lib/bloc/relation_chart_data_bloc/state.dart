@@ -27,6 +27,11 @@ class RelationChartDataState with _$RelationChartDataState {
     Graph? graph,
   }) = _RelationChartDataState;
 
+  factory RelationChartDataState.fromJson(Map<String, dynamic> json) {
+    var relationChartData = RelationChartDataModel.fromJson(json);
+    return RelationChartDataState(relationChartData: relationChartData);
+  }
+
   factory RelationChartDataState.initial() => RelationChartDataState(
         relationChartData: RelationChartDataModel.initial(),
         forceRefreshFlag: false,
@@ -36,11 +41,6 @@ class RelationChartDataState with _$RelationChartDataState {
           graphObserver: [],
         ),
       );
-
-  factory RelationChartDataState.fromJson(Map<String, dynamic> json) {
-    var relationChartData = RelationChartDataModel.fromJson(json);
-    return RelationChartDataState(relationChartData: relationChartData);
-  }
 }
 
 Future<RelationChartDataState> pretreatment(

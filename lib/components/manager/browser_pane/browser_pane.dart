@@ -14,13 +14,13 @@ class BrowserPane extends StatefulWidget {
 }
 
 class _BrowserPaneState extends State<BrowserPane> {
-  WidgetControllerState _getBlocState() =>
-      context.read<WidgetControllerBloc>().state;
-
   @override
   void initState() {
     super.initState();
   }
+
+  WidgetControllerState _getBlocState() =>
+      context.read<WidgetControllerBloc>().state;
 
   @override
   Widget build(BuildContext context) {

@@ -10,6 +10,7 @@ class GraphClusterViewPage extends StatefulWidget {
   const GraphClusterViewPage({
     super.key,
   });
+
   @override
   State<GraphClusterViewPage> createState() => _GraphClusterViewPageState();
 }

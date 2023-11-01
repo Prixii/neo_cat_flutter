@@ -15,6 +15,11 @@ class ClassManager extends StatefulWidget {
 }
 
 class _ClassManagerState extends State<ClassManager> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   List<LabelData> _getClassDataList() {
     return relationChartDataBloc(context).state.labelMap.values.toList();
   }
@@ -22,11 +27,6 @@ class _ClassManagerState extends State<ClassManager> {
   List<GraphNode> _getNodeList({required int classIndex}) {
     var className = _getClassDataList()[classIndex].name;
     return relationChartDataBloc(context).state.nodeToLabelMap[className] ?? [];
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override

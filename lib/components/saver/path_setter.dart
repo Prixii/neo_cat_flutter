@@ -14,21 +14,21 @@ class PathSetter extends StatefulWidget {
 }
 
 class _PathSetterState extends State<PathSetter> {
-  late TextEditingController _folderNameController;
   late TextEditingController _fileNameController;
-
-  @override
-  void initState() {
-    super.initState();
-    _folderNameController = TextEditingController();
-    _fileNameController = TextEditingController();
-  }
+  late TextEditingController _folderNameController;
 
   @override
   void dispose() {
     _folderNameController.dispose();
     _fileNameController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _folderNameController = TextEditingController();
+    _fileNameController = TextEditingController();
   }
 
   Widget _titleBuilder() {

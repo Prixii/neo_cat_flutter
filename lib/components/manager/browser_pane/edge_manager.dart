@@ -13,6 +13,7 @@ import '../../../utils/bloc_util.dart';
 
 class RelationManager extends StatefulWidget {
   const RelationManager({super.key});
+
   @override
   State<RelationManager> createState() => _RelationManagerState();
 }

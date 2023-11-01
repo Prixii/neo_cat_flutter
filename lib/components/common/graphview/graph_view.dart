@@ -15,13 +15,13 @@ import 'algorithm.dart';
 typedef NodeWidgetBuilder = Widget Function(GraphNode node);
 
 class GraphView extends StatefulWidget {
-  final Algorithm algorithm;
-  final Paint? paint;
-  final bool animated;
-
   const GraphView(
       {Key? key, required this.algorithm, this.paint, this.animated = true})
       : super(key: key);
+
+  final Algorithm algorithm;
+  final bool animated;
+  final Paint? paint;
 
   @override
   State<GraphView> createState() => _GraphViewState();
@@ -76,9 +76,6 @@ class RenderCustomLayoutBox extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, NodeBoxData>,
         RenderBoxContainerDefaultsMixin<RenderBox, NodeBoxData> {
-  late Graph _graph;
-  late Algorithm _algorithm;
-  late Paint _paint;
   RenderCustomLayoutBox(
     Graph graph,
     Algorithm algorithm,
@@ -91,37 +88,33 @@ class RenderCustomLayoutBox extends RenderBox
     addAll(children);
   }
 
-  Paint get edgePaint => _paint;
+  late Algorithm _algorithm;
+  late Graph _graph;
+  late Paint _paint;
 
-  set edgePaint(Paint? value) {
-    _paint = value ??
-        (Paint()
-          ..color = Colors.black
-          ..strokeWidth = 3)
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.butt;
-    markNeedsPaint();
-  }
-
-  Graph get graph => _graph;
-
-  set graph(Graph value) {
-    _graph = value;
-    markNeedsLayout();
-  }
-
-  Algorithm get algorithm => _algorithm;
-
-  set algorithm(Algorithm value) {
-    _algorithm = value;
-    markNeedsLayout();
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<Graph>('graph', graph));
+    properties.add(DiagnosticsProperty<Algorithm>('algorithm', algorithm));
+    properties.add(DiagnosticsProperty<Paint>('paint', edgePaint));
   }
 
   @override
-  void setupParentData(RenderBox child) {
-    if (child.parentData is! NodeBoxData) {
-      child.parentData = NodeBoxData();
-    }
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
+    return defaultHitTestChildren(result, position: position);
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    context.canvas.save();
+    context.canvas.translate(offset.dx, offset.dy);
+
+    algorithm.renderer?.render(context.canvas, graph, edgePaint);
+
+    context.canvas.restore();
+
+    defaultPaint(context, offset);
   }
 
   @override
@@ -160,40 +153,42 @@ class RenderCustomLayoutBox extends RenderBox
   }
 
   @override
-  void paint(PaintingContext context, Offset offset) {
-    context.canvas.save();
-    context.canvas.translate(offset.dx, offset.dy);
-
-    algorithm.renderer?.render(context.canvas, graph, edgePaint);
-
-    context.canvas.restore();
-
-    defaultPaint(context, offset);
+  void setupParentData(RenderBox child) {
+    if (child.parentData is! NodeBoxData) {
+      child.parentData = NodeBoxData();
+    }
   }
 
-  @override
-  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
-    return defaultHitTestChildren(result, position: position);
+  Paint get edgePaint => _paint;
+
+  set edgePaint(Paint? value) {
+    _paint = value ??
+        (Paint()
+          ..color = Colors.black
+          ..strokeWidth = 3)
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.butt;
+    markNeedsPaint();
   }
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Graph>('graph', graph));
-    properties.add(DiagnosticsProperty<Algorithm>('algorithm', algorithm));
-    properties.add(DiagnosticsProperty<Paint>('paint', edgePaint));
+  Graph get graph => _graph;
+
+  set graph(Graph value) {
+    _graph = value;
+    markNeedsLayout();
+  }
+
+  Algorithm get algorithm => _algorithm;
+
+  set algorithm(Algorithm value) {
+    _algorithm = value;
+    markNeedsLayout();
   }
 }
 
 class NodeBoxData extends ContainerBoxParentData<RenderBox> {}
 
 class _GraphViewAnimated extends StatefulWidget {
-  final Graph graph;
-  final Algorithm algorithm;
-  final Paint? paint;
-  final nodes = <Widget>[];
-  final stepMilis = 25;
-
   _GraphViewAnimated(
       {Key? key,
       required this.graph,
@@ -205,14 +200,26 @@ class _GraphViewAnimated extends StatefulWidget {
     }
   }
 
+  final Algorithm algorithm;
+  final Graph graph;
+  final nodes = <Widget>[];
+  final Paint? paint;
+  final stepMilis = 25;
+
   @override
   _GraphViewAnimatedState createState() => _GraphViewAnimatedState();
 }
 
 class _GraphViewAnimatedState extends State<_GraphViewAnimated> {
-  late Timer timer;
-  late Graph graph;
   late Algorithm algorithm;
+  late Graph graph;
+  late Timer timer;
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -232,10 +239,8 @@ class _GraphViewAnimatedState extends State<_GraphViewAnimated> {
     });
   }
 
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
+  Future<void> update() async {
+    setState(() {});
   }
 
   @override
@@ -266,18 +271,14 @@ class _GraphViewAnimatedState extends State<_GraphViewAnimated> {
       ],
     );
   }
-
-  Future<void> update() async {
-    setState(() {});
-  }
 }
 
 class EdgeRender extends CustomPainter {
+  EdgeRender(this.algorithm, this.graph, this.offset);
+
   Algorithm algorithm;
   Graph graph;
   Offset offset;
-
-  EdgeRender(this.algorithm, this.graph, this.offset);
 
 // 设置了画箭头的样式
   @override

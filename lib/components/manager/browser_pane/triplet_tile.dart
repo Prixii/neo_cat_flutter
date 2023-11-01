@@ -15,9 +15,9 @@ import '../../../utils/bloc_util.dart';
 /// @date 2023-10-04 09
 
 class TripletTile extends StatefulWidget {
-  final GraphEdge edge;
-
   const TripletTile({super.key, required this.edge});
+
+  final GraphEdge edge;
 
   @override
   State<TripletTile> createState() => _TripletTileState();
@@ -25,9 +25,9 @@ class TripletTile extends StatefulWidget {
 
 class _TripletTileState extends State<TripletTile> {
   Color backgroundColor = opacity;
-  late final GraphNode startNode;
-  late final GraphNode endNode;
   late final GraphEdge edge;
+  late final GraphNode endNode;
+  late final GraphNode startNode;
 
   @override
   void initState() {

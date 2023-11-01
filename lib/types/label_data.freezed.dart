@@ -21,10 +21,13 @@ LabelData _$LabelDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LabelData {
   String get name => throw _privateConstructorUsedError;
+
   List<String> get properties => throw _privateConstructorUsedError;
+
   String get color => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $LabelDataCopyWith<LabelData> get copyWith =>
       throw _privateConstructorUsedError;
@@ -34,6 +37,7 @@ mixin _$LabelData {
 abstract class $LabelDataCopyWith<$Res> {
   factory $LabelDataCopyWith(LabelData value, $Res Function(LabelData) then) =
       _$LabelDataCopyWithImpl<$Res, LabelData>;
+
   @useResult
   $Res call({String name, List<String> properties, String color});
 }
@@ -44,9 +48,10 @@ class _$LabelDataCopyWithImpl<$Res, $Val extends LabelData>
   _$LabelDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
   final $Res Function($Val) _then;
+
+  // ignore: unused_field
+  final $Val _value;
 
   @pragma('vm:prefer-inline')
   @override
@@ -78,6 +83,7 @@ abstract class _$$LabelDataImplCopyWith<$Res>
   factory _$$LabelDataImplCopyWith(
           _$LabelDataImpl value, $Res Function(_$LabelDataImpl) then) =
       __$$LabelDataImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({String name, List<String> properties, String color});
@@ -129,23 +135,8 @@ class _$LabelDataImpl implements _LabelData {
 
   @override
   final String name;
+
   final List<String> _properties;
-  @override
-  @JsonKey()
-  List<String> get properties {
-    if (_properties is EqualUnmodifiableListView) return _properties;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_properties);
-  }
-
-  @override
-  @JsonKey()
-  final String color;
-
-  @override
-  String toString() {
-    return 'LabelData(name: $name, properties: $properties, color: $color)';
-  }
 
   @override
   bool operator ==(dynamic other) {
@@ -158,10 +149,17 @@ class _$LabelDataImpl implements _LabelData {
             (identical(other.color, color) || other.color == color));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name,
-      const DeepCollectionEquality().hash(_properties), color);
+  @JsonKey()
+  List<String> get properties {
+    if (_properties is EqualUnmodifiableListView) return _properties;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_properties);
+  }
+
+  @override
+  @JsonKey()
+  final String color;
 
   @JsonKey(ignore: true)
   @override
@@ -169,11 +167,21 @@ class _$LabelDataImpl implements _LabelData {
   _$$LabelDataImplCopyWith<_$LabelDataImpl> get copyWith =>
       __$$LabelDataImplCopyWithImpl<_$LabelDataImpl>(this, _$identity);
 
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name,
+      const DeepCollectionEquality().hash(_properties), color);
+
   @override
   Map<String, dynamic> toJson() {
     return _$$LabelDataImplToJson(
       this,
     );
+  }
+
+  @override
+  String toString() {
+    return 'LabelData(name: $name, properties: $properties, color: $color)';
   }
 }
 
@@ -187,11 +195,14 @@ abstract class _LabelData implements LabelData {
       _$LabelDataImpl.fromJson;
 
   @override
+  String get color;
+
+  @override
   String get name;
+
   @override
   List<String> get properties;
-  @override
-  String get color;
+
   @override
   @JsonKey(ignore: true)
   _$$LabelDataImplCopyWith<_$LabelDataImpl> get copyWith =>

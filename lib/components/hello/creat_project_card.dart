@@ -15,6 +15,7 @@ class CreateProjectCard extends StatefulWidget {
 
 class _CreateProjectCardState extends State<CreateProjectCard> {
   var blurRadius = 10.0;
+
   @override
   Widget build(BuildContext context) {
     void toInitializr() {

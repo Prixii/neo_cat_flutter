@@ -18,18 +18,28 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RelationChartDataState {
   RelationChartDataModel get relationChartData =>
       throw _privateConstructorUsedError;
+
   Map<String, LabelData> get labelMap => throw _privateConstructorUsedError;
+
   Map<int, GraphNode> get nodeMap => throw _privateConstructorUsedError;
+
   Map<int, GraphEdge> get edgeMap => throw _privateConstructorUsedError;
+
   Map<String, bool> get labelVisibilityMap =>
       throw _privateConstructorUsedError;
+
   Set<String> get edgeTypes => throw _privateConstructorUsedError;
+
   Map<String, List<GraphNode>> get nodeToLabelMap =>
       throw _privateConstructorUsedError;
+
   Map<String, List<GraphEdge>> get edgeToTypeMap =>
       throw _privateConstructorUsedError;
+
   bool get forceRefreshFlag => throw _privateConstructorUsedError;
+
   bool get isInitDone => throw _privateConstructorUsedError;
+
   Graph? get graph => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,6 +52,7 @@ abstract class $RelationChartDataStateCopyWith<$Res> {
   factory $RelationChartDataStateCopyWith(RelationChartDataState value,
           $Res Function(RelationChartDataState) then) =
       _$RelationChartDataStateCopyWithImpl<$Res, RelationChartDataState>;
+
   @useResult
   $Res call(
       {RelationChartDataModel relationChartData,
@@ -66,9 +77,19 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
   _$RelationChartDataStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
   final $Res Function($Val) _then;
+
+  // ignore: unused_field
+  final $Val _value;
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RelationChartDataModelCopyWith<$Res> get relationChartData {
+    return $RelationChartDataModelCopyWith<$Res>(_value.relationChartData,
+        (value) {
+      return _then(_value.copyWith(relationChartData: value) as $Val);
+    });
+  }
 
   @pragma('vm:prefer-inline')
   @override
@@ -132,15 +153,6 @@ class _$RelationChartDataStateCopyWithImpl<$Res,
               as Graph?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $RelationChartDataModelCopyWith<$Res> get relationChartData {
-    return $RelationChartDataModelCopyWith<$Res>(_value.relationChartData,
-        (value) {
-      return _then(_value.copyWith(relationChartData: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -150,6 +162,10 @@ abstract class _$$RelationChartDataStateImplCopyWith<$Res>
           _$RelationChartDataStateImpl value,
           $Res Function(_$RelationChartDataStateImpl) then) =
       __$$RelationChartDataStateImplCopyWithImpl<$Res>;
+
+  @override
+  $RelationChartDataModelCopyWith<$Res> get relationChartData;
+
   @override
   @useResult
   $Res call(
@@ -164,9 +180,6 @@ abstract class _$$RelationChartDataStateImplCopyWith<$Res>
       bool forceRefreshFlag,
       bool isInitDone,
       Graph? graph});
-
-  @override
-  $RelationChartDataModelCopyWith<$Res> get relationChartData;
 }
 
 /// @nodoc
@@ -267,84 +280,18 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
         _edgeToTypeMap = edgeToTypeMap;
 
   @override
-  final RelationChartDataModel relationChartData;
-  final Map<String, LabelData> _labelMap;
-  @override
-  @JsonKey()
-  Map<String, LabelData> get labelMap {
-    if (_labelMap is EqualUnmodifiableMapView) return _labelMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_labelMap);
-  }
-
-  final Map<int, GraphNode> _nodeMap;
-  @override
-  @JsonKey()
-  Map<int, GraphNode> get nodeMap {
-    if (_nodeMap is EqualUnmodifiableMapView) return _nodeMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_nodeMap);
-  }
-
-  final Map<int, GraphEdge> _edgeMap;
-  @override
-  @JsonKey()
-  Map<int, GraphEdge> get edgeMap {
-    if (_edgeMap is EqualUnmodifiableMapView) return _edgeMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_edgeMap);
-  }
-
-  final Map<String, bool> _labelVisibilityMap;
-  @override
-  @JsonKey()
-  Map<String, bool> get labelVisibilityMap {
-    if (_labelVisibilityMap is EqualUnmodifiableMapView)
-      return _labelVisibilityMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_labelVisibilityMap);
-  }
-
-  final Set<String> _edgeTypes;
-  @override
-  @JsonKey()
-  Set<String> get edgeTypes {
-    if (_edgeTypes is EqualUnmodifiableSetView) return _edgeTypes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_edgeTypes);
-  }
-
-  final Map<String, List<GraphNode>> _nodeToLabelMap;
-  @override
-  @JsonKey()
-  Map<String, List<GraphNode>> get nodeToLabelMap {
-    if (_nodeToLabelMap is EqualUnmodifiableMapView) return _nodeToLabelMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_nodeToLabelMap);
-  }
-
-  final Map<String, List<GraphEdge>> _edgeToTypeMap;
-  @override
-  @JsonKey()
-  Map<String, List<GraphEdge>> get edgeToTypeMap {
-    if (_edgeToTypeMap is EqualUnmodifiableMapView) return _edgeToTypeMap;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_edgeToTypeMap);
-  }
-
-  @override
-  @JsonKey()
-  final bool forceRefreshFlag;
-  @override
-  @JsonKey()
-  final bool isInitDone;
-  @override
   final Graph? graph;
 
   @override
-  String toString() {
-    return 'RelationChartDataState(relationChartData: $relationChartData, labelMap: $labelMap, nodeMap: $nodeMap, edgeMap: $edgeMap, labelVisibilityMap: $labelVisibilityMap, edgeTypes: $edgeTypes, nodeToLabelMap: $nodeToLabelMap, edgeToTypeMap: $edgeToTypeMap, forceRefreshFlag: $forceRefreshFlag, isInitDone: $isInitDone, graph: $graph)';
-  }
+  final RelationChartDataModel relationChartData;
+
+  final Map<int, GraphEdge> _edgeMap;
+  final Map<String, List<GraphEdge>> _edgeToTypeMap;
+  final Set<String> _edgeTypes;
+  final Map<String, LabelData> _labelMap;
+  final Map<String, bool> _labelVisibilityMap;
+  final Map<int, GraphNode> _nodeMap;
+  final Map<String, List<GraphNode>> _nodeToLabelMap;
 
   @override
   bool operator ==(dynamic other) {
@@ -372,6 +319,78 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
   }
 
   @override
+  @JsonKey()
+  Map<String, LabelData> get labelMap {
+    if (_labelMap is EqualUnmodifiableMapView) return _labelMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_labelMap);
+  }
+
+  @override
+  @JsonKey()
+  Map<int, GraphNode> get nodeMap {
+    if (_nodeMap is EqualUnmodifiableMapView) return _nodeMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_nodeMap);
+  }
+
+  @override
+  @JsonKey()
+  Map<int, GraphEdge> get edgeMap {
+    if (_edgeMap is EqualUnmodifiableMapView) return _edgeMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_edgeMap);
+  }
+
+  @override
+  @JsonKey()
+  Map<String, bool> get labelVisibilityMap {
+    if (_labelVisibilityMap is EqualUnmodifiableMapView)
+      return _labelVisibilityMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_labelVisibilityMap);
+  }
+
+  @override
+  @JsonKey()
+  Set<String> get edgeTypes {
+    if (_edgeTypes is EqualUnmodifiableSetView) return _edgeTypes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_edgeTypes);
+  }
+
+  @override
+  @JsonKey()
+  Map<String, List<GraphNode>> get nodeToLabelMap {
+    if (_nodeToLabelMap is EqualUnmodifiableMapView) return _nodeToLabelMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_nodeToLabelMap);
+  }
+
+  @override
+  @JsonKey()
+  Map<String, List<GraphEdge>> get edgeToTypeMap {
+    if (_edgeToTypeMap is EqualUnmodifiableMapView) return _edgeToTypeMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_edgeToTypeMap);
+  }
+
+  @override
+  @JsonKey()
+  final bool forceRefreshFlag;
+
+  @override
+  @JsonKey()
+  final bool isInitDone;
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RelationChartDataStateImplCopyWith<_$RelationChartDataStateImpl>
+      get copyWith => __$$RelationChartDataStateImplCopyWithImpl<
+          _$RelationChartDataStateImpl>(this, _$identity);
+
+  @override
   int get hashCode => Object.hash(
       runtimeType,
       relationChartData,
@@ -386,12 +405,10 @@ class _$RelationChartDataStateImpl implements _RelationChartDataState {
       isInitDone,
       graph);
 
-  @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$RelationChartDataStateImplCopyWith<_$RelationChartDataStateImpl>
-      get copyWith => __$$RelationChartDataStateImplCopyWithImpl<
-          _$RelationChartDataStateImpl>(this, _$identity);
+  String toString() {
+    return 'RelationChartDataState(relationChartData: $relationChartData, labelMap: $labelMap, nodeMap: $nodeMap, edgeMap: $edgeMap, labelVisibilityMap: $labelVisibilityMap, edgeTypes: $edgeTypes, nodeToLabelMap: $nodeToLabelMap, edgeToTypeMap: $edgeToTypeMap, forceRefreshFlag: $forceRefreshFlag, isInitDone: $isInitDone, graph: $graph)';
+  }
 }
 
 abstract class _RelationChartDataState implements RelationChartDataState {
@@ -409,27 +426,38 @@ abstract class _RelationChartDataState implements RelationChartDataState {
       final Graph? graph}) = _$RelationChartDataStateImpl;
 
   @override
-  RelationChartDataModel get relationChartData;
-  @override
-  Map<String, LabelData> get labelMap;
-  @override
-  Map<int, GraphNode> get nodeMap;
-  @override
   Map<int, GraphEdge> get edgeMap;
-  @override
-  Map<String, bool> get labelVisibilityMap;
-  @override
-  Set<String> get edgeTypes;
-  @override
-  Map<String, List<GraphNode>> get nodeToLabelMap;
+
   @override
   Map<String, List<GraphEdge>> get edgeToTypeMap;
+
+  @override
+  Set<String> get edgeTypes;
+
   @override
   bool get forceRefreshFlag;
-  @override
-  bool get isInitDone;
+
   @override
   Graph? get graph;
+
+  @override
+  bool get isInitDone;
+
+  @override
+  Map<String, LabelData> get labelMap;
+
+  @override
+  Map<String, bool> get labelVisibilityMap;
+
+  @override
+  Map<int, GraphNode> get nodeMap;
+
+  @override
+  Map<String, List<GraphNode>> get nodeToLabelMap;
+
+  @override
+  RelationChartDataModel get relationChartData;
+
   @override
   @JsonKey(ignore: true)
   _$$RelationChartDataStateImplCopyWith<_$RelationChartDataStateImpl>

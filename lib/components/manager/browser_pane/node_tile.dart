@@ -14,6 +14,7 @@ import '../../../theme/common_theme.dart';
 
 class NodeTile extends StatefulWidget {
   const NodeTile({super.key, required this.node});
+
   final GraphNode node;
 
   @override

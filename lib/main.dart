@@ -13,9 +13,8 @@ import 'package:neo_cat_flutter/theme/common_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Window.initialize();
-  await Window.setEffect(
-    effect: WindowEffect.acrylic,
-  );
+  await Window.setEffect(effect: WindowEffect.acrylic);
+
   runApp(const MainApp());
 }
 
@@ -33,7 +32,9 @@ class MainApp extends StatelessWidget {
         child: FluentApp(
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
-          home: const HelloPage(),
+          home: const Acrylic(
+            child: HelloPage(),
+          ),
         ),
       ),
     );

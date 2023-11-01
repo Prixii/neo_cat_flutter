@@ -27,11 +27,20 @@ class ClassManagerTile extends StatefulWidget {
 }
 
 class _ClassManagerTileState extends State<ClassManagerTile> {
+  GraphNode? node;
   late OverlayEntry overlayEntry;
-
   Position position = (0, 0);
 
-  GraphNode? node;
+  @override
+  void dispose() {
+    try {
+      overlayEntry.remove();
+    } catch (e) {
+      logger.d('dispose overLay');
+    }
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +68,12 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
       ],
     );
   }
+
+  bool isClassVisible() =>
+      relationChartDataBloc(context)
+          .state
+          .labelVisibilityMap[widget.label.name] ??
+      false;
 
   void _checkConflict() {
     showDialog(
@@ -91,16 +106,6 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
     );
   }
 
-  @override
-  void dispose() {
-    try {
-      overlayEntry.remove();
-    } catch (e) {
-      logger.d('dispose overLay');
-    }
-    super.dispose();
-  }
-
   Widget _nodeListBuilder() {
     return ListView.builder(
       itemCount: widget.nodeList.length,
@@ -119,12 +124,6 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
       ),
     );
   }
-
-  bool isClassVisible() =>
-      relationChartDataBloc(context)
-          .state
-          .labelVisibilityMap[widget.label.name] ??
-      false;
 
   @override
   Widget build(BuildContext context) {

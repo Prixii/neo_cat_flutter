@@ -5,11 +5,21 @@ import 'source_edge.dart';
 import 'typdef.dart';
 
 class GraphEdge {
-  GraphNode start;
+  GraphEdge(this.start, this.end, this.type, this.id, {this.paint});
+
   GraphNode end;
-  EdgeType type;
   EdgeId id;
   Paint? paint;
+  GraphNode start;
+  EdgeType type;
+
+  @override
+  bool operator ==(Object? other) =>
+      identical(this, other) ||
+      other is GraphEdge && hashCode == other.hashCode;
+
+  @override
+  int get hashCode => id;
 
   static GraphEdge? fromSourceEdge(
       SourceEdge sourceEdge, Map<NodeId, GraphNode> nodeMap) {
@@ -24,8 +34,6 @@ class GraphEdge {
   SourceEdge toSourceEdge() =>
       SourceEdge(id: id, type: type, start: start.id, end: end.id);
 
-  GraphEdge(this.start, this.end, this.type, this.id, {this.paint});
-
   GraphEdge copyWith({
     GraphNode? start,
     GraphNode? end,
@@ -36,14 +44,6 @@ class GraphEdge {
       GraphEdge(start ?? this.start, end ?? this.end, type ?? this.type,
           id ?? this.id,
           paint: paint ?? this.paint);
-
-  @override
-  bool operator ==(Object? other) =>
-      identical(this, other) ||
-      other is GraphEdge && hashCode == other.hashCode;
-
-  @override
-  int get hashCode => id;
 }
 
 abstract class GraphObserver {

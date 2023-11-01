@@ -9,6 +9,7 @@ import 'manager/index.dart';
 
 class MainNavigator extends StatefulWidget {
   const MainNavigator({super.key, this.rawData});
+
   final String? rawData;
 
   @override
