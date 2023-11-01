@@ -126,13 +126,6 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
           .labelVisibilityMap[widget.label.name] ??
       false;
 
-  Widget _visibilityBox() => Checkbox(
-        checked: isClassVisible(),
-        onChanged: (value) => relationChartDataBloc(context).add(
-          SetLabelVisibility(labelName: widget.label.name),
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
     return Expander(

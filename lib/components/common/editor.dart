@@ -183,22 +183,20 @@ class _TripletEditorState extends State<TripletEditor> {
       },
     ));
     for (var type in relationChartDataBloc(context).state.edgeTypes.toList()) {
-      try {
-        itemList.add(
-          ComboBoxItem(
-            value: type,
-            child: Text(
-              type,
-              style: defaultTextBlack,
-            ),
-            onTap: () {
-              if (type != tripletEditorBloc(context).state.edge?.type) {
-                tripletEditorBloc(context).add(SetEdgeType(type));
-              }
-            },
+      itemList.add(
+        ComboBoxItem(
+          value: type,
+          child: Text(
+            type,
+            style: defaultTextBlack,
           ),
-        );
-      } catch (e) {}
+          onTap: () {
+            if (type != tripletEditorBloc(context).state.edge?.type) {
+              tripletEditorBloc(context).add(SetEdgeType(type));
+            }
+          },
+        ),
+      );
     }
     return itemList;
   }

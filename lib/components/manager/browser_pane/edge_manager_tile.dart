@@ -102,8 +102,6 @@ class _EdgeManagerTileState extends State<EdgeManagerTile> {
     );
   }
 
-  Widget _visibilityBox() => Checkbox(checked: true, onChanged: (value) {});
-
   @override
   Widget build(BuildContext context) {
     return Expander(
