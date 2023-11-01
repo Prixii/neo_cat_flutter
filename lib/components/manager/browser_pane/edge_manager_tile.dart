@@ -82,6 +82,7 @@ class _EdgeManagerTileState extends State<EdgeManagerTile> {
       itemCount: widget.edges.length,
       shrinkWrap: true,
       itemBuilder: (context, index) => GestureDetector(
+        key: Key(widget.type),
         child: TripletTile(edge: widget.edges[index]),
         onSecondaryTapDown: (details) {
           setState(
