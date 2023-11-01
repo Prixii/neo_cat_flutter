@@ -397,6 +397,15 @@ class _TripletEditorState extends State<TripletEditor> {
 
   List<ComboBoxItem<String>> _labelItemGenerator() {
     var itemList = <ComboBoxItem<String>>[];
+    itemList.add(ComboBoxItem(
+      child: Text(
+        '创建Label',
+        style: defaultTextBlack,
+      ),
+      onTap: () {
+        tripletEditorBloc(context).add(CreateLabel(context));
+      },
+    ));
     for (var label
         in relationChartDataBloc(context).state.labelMap.values.toList()) {
       itemList.add(

@@ -446,12 +446,20 @@ class RelationChartDataBloc
     labelVisibilityMap[event.labelData.name] = true;
 
     var node = event.node;
+    var nodeToLabelMap = <LabelName, List<GraphNode>>{}
+      ..addAll(state.nodeToLabelMap);
+
+    if (event.isNodeExist) {
+      var oldLabel = node.label;
+      nodeToLabelMap[oldLabel] =
+          (nodeToLabelMap[oldLabel]?..remove(node)) ?? [];
+      node = node.copyWith(label: event.labelData.name);
+      state.graph!.updateNode(node);
+    }
     var nodeMap = <NodeId, GraphNode>{}
       ..addAll(state.nodeMap)
       ..[node.id] = node;
 
-    var nodeToLabelMap = <LabelName, List<GraphNode>>{}
-      ..addAll(state.nodeToLabelMap);
     nodeToLabelMap[node.label] = [node];
 
     state.graph!.addNode(node);

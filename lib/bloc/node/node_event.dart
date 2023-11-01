@@ -24,8 +24,9 @@ class DeleteNode extends NodeEvent {
 }
 
 class CreateLabelAndSetNode extends NodeEvent {
-  CreateLabelAndSetNode(this.labelData, this.node);
+  CreateLabelAndSetNode(this.labelData, this.node, this.isNodeExist);
 
   final LabelData labelData;
   final GraphNode node;
+  final bool isNodeExist;
 }

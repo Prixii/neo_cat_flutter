@@ -147,7 +147,7 @@ class _ClassCreatorState extends State<ClassCreator> {
         label: _controller.text,
         properties: {});
     relationChartDataBloc(context)
-        .add(CreateLabelAndSetNode(labelData, newNode));
+        .add(CreateLabelAndSetNode(labelData, newNode, false));
   }
 
   @override

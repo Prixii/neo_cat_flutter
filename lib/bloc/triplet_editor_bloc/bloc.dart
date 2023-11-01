@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart' show Material;
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:neo_cat_flutter/bloc/edge/edge_event.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
+import 'package:neo_cat_flutter/types/label_data.dart';
 import '../../theme/common_theme.dart';
 import '../../types/enums.dart';
 import '../../types/graph_edge.dart';
@@ -26,6 +29,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     on<UpdateNode>((event, emit) => emit(_onUpdateNode(event)));
     on<SetEdgeType>((event, emit) => emit(_onSetEdgeType(event)));
     on<CreateType>((event, emit) async => emit(await _onCreateType(event)));
+    on<CreateLabel>((event, emit) async => emit(await _onCreateLabel(event)));
     on<ResetEdge>((event, emit) => emit(_onResetEdge()));
   }
 
@@ -203,7 +207,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
 
   Future<TripletEditorState> _onCreateType(CreateType event) async {
     var controller = TextEditingController();
-    var isCancled = false;
+    var isCreated = false;
     await showDialog(
       context: event.context,
       builder: (context) => ContentDialog(
@@ -224,20 +228,110 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
           Button(
               child: const Text('创建'),
               onPressed: () {
-                isCancled = true;
+                isCreated = true;
                 Navigator.pop(context);
               }),
         ],
       ),
     );
-    if (isCancled) {
-      var newLabel = controller.text;
-      var newEdge = GraphEdge(state.startNode!, state.endNode!, newLabel,
-          "${state.startNode!}${state.endNode!}$newLabel".hashCode);
+    if (isCreated) {
+      var newType = controller.text;
+      var newEdge = GraphEdge(state.startNode!, state.endNode!, newType,
+          "${state.startNode!}${state.endNode!}$newType".hashCode);
       dataBloc.add(CreateEdgeTypeAndAddEdge(controller.text, newEdge));
       controller.dispose();
 
       return state.copyWith(edge: newEdge);
+    } else {
+      controller.dispose();
+      return state;
+    }
+  }
+
+  Future<TripletEditorState> _onCreateLabel(CreateLabel event) async {
+    var controller = TextEditingController();
+    Color pickerColor = Colors.blue;
+    var isCreated = false;
+    await showDialog(
+      context: event.context,
+      builder: (context) => ContentDialog(
+        title: Text(
+          '创建新的Label',
+          style: defaultTextBlack,
+        ),
+        content: SizedBox(
+          height: 246,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 30,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextBox(
+                        autofocus: true,
+                        controller: controller,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: Container(color: pickerColor),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(0),
+                child: Material(
+                  child: SlidePicker(
+                    showIndicator: false,
+                    enableAlpha: false,
+                    pickerColor: pickerColor,
+                    onColorChanged: (Color newColor) {
+                      pickerColor = newColor;
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          Button(
+              child: const Text('算了'),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          Button(
+              child: const Text('创建'),
+              onPressed: () {
+                isCreated = true;
+                Navigator.pop(context);
+              }),
+        ],
+      ),
+    );
+    if (isCreated) {
+      var labelName = controller.text;
+      controller.dispose();
+      var newLabel = LabelData(name: labelName, color: pickerColor.toHex());
+      dataBloc.add(
+          data_event.CreateLabelAndSetNode(newLabel, state.showNode!, true));
+      return state.copyWith(
+        showNode: state.showNode!.copyWith(label: labelName),
+      );
     } else {
       controller.dispose();
       return state;

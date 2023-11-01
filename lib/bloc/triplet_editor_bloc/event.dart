@@ -60,3 +60,9 @@ class CreateType extends TripletEditorEvent {
 class ResetEdge extends TripletEditorEvent {
   ResetEdge();
 }
+
+class CreateLabel extends TripletEditorEvent {
+  CreateLabel(this.context);
+
+  final BuildContext context;
+}
