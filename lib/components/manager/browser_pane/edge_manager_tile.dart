@@ -43,13 +43,6 @@ class _EdgeManagerTileState extends State<EdgeManagerTile> {
             overlayEntry.remove();
           },
         ),
-        SingleMenuOption(
-          icon: Icon(
-            FluentIcons.accounts,
-            color: Colors.blue,
-          ),
-          label: "Accounts",
-        ),
       ],
     );
   }

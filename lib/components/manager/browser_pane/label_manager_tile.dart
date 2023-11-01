@@ -58,13 +58,6 @@ class _ClassManagerTileState extends State<ClassManagerTile> {
             overlayEntry.remove();
           },
         ),
-        SingleMenuOption(
-          icon: Icon(
-            FluentIcons.accounts,
-            color: Colors.blue,
-          ),
-          label: "Accounts",
-        ),
       ],
     );
   }

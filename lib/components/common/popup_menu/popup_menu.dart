@@ -12,7 +12,7 @@ class PopupMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      height: 200,
+      height: 50,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
@@ -49,8 +49,6 @@ OverlayEntry popupMenuBuilder(
   late OverlayEntry overlayEntry;
   overlayEntry = OverlayEntry(
     builder: (context) => SizedBox(
-      width: 200,
-      height: 200,
       child: Stack(
         children: [
           GestureDetector(
@@ -65,8 +63,7 @@ OverlayEntry popupMenuBuilder(
           Positioned(
             top: getPosition().$2,
             left: getPosition().$1,
-            height: 320,
-            width: 200,
+
             // child: const PopupMenu(),
             child: PopupMenu(
               options: options,
