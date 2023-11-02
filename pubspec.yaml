@@ -27,6 +27,7 @@ dependencies:
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
   logger: ^2.0.2+1
+  msix: ^3.16.6
   shared_preferences: ^2.2.1
 
 dev_dependencies:
@@ -39,6 +40,11 @@ dev_dependencies:
 flutter_gen:
   output: lib/gen/
   line_length: 80
+
+msix_config:
+  display_name: neo_cat_flutter
+  msix_version: 1.0.0.0
+  
 
 flutter:
   uses-material-design: true

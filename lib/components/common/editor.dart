@@ -177,6 +177,7 @@ class _TripletEditorState extends State<TripletEditor> {
                 child:
                     BlocBuilder<RelationChartDataBloc, RelationChartDataState>(
                   builder: (context, state) => ComboBox(
+                    key: Key(_edgeItemGenerator().length.toString()),
                     items: _edgeItemGenerator(),
                     value: _getEdge()?.type ?? '',
                     onChanged: (e) => {},
@@ -325,7 +326,8 @@ class _TripletEditorState extends State<TripletEditor> {
             ),
             Expanded(
               flex: 3,
-              child: ComboBox<LabelName>(
+              child: ComboBox(
+                key: Key(_labelItemGenerator().length.toString()),
                 value: tripletEditorBloc(context).state.showNode!.label,
                 items: _labelItemGenerator(),
                 onChanged: (label) => {},
