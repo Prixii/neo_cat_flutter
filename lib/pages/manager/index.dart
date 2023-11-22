@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/widget_controller_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/widget_controller_bloc/state.dart';
 import 'package:neo_cat_flutter/components/common/editor.dart';
-import 'package:neo_cat_flutter/components/common/test/directed_graphview.dart';
+import 'package:neo_cat_flutter/components/common/graphview/directed_graphview.dart';
 import 'package:neo_cat_flutter/components/manager/browser_pane/browser_pane.dart';
 import 'package:neo_cat_flutter/components/manager/top_btn_group.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';

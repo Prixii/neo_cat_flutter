@@ -2,7 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/global_data.dart';
 
 import '../../theme/common_theme.dart';
-import '../common/test/directed_graphview.dart';
+import '../common/graphview/directed_graphview.dart';
 import 'rich_text_field/rich_text_editing_controller.dart';
 import 'rich_text_field/rich_text_field.dart';
 
