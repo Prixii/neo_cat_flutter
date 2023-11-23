@@ -13,7 +13,7 @@ class GraphNode {
     required this.id,
     required this.label,
     required this.properties,
-    this.size = const Size(40, 40),
+    this.size = const Size(20, 20),
   });
 
   factory GraphNode.fromNode(SourceNode node) {
