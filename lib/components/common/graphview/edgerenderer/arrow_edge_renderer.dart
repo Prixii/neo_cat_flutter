@@ -24,20 +24,8 @@ class ArrowEdgeRenderer extends EdgeRenderer {
       var source = edge.start;
       var destination = edge.end;
 
-      // 获取起始节点和目标节点在画布上的偏移量
-      var sourceOffset = source.position;
-      var destinationOffset = destination.position;
-
-      // 计算起始点的位置
-      var startX = sourceOffset.dx;
-      var startY = sourceOffset.dy;
-
-      // 计算终点的位置
-      var stopX = destinationOffset.dx;
-      var stopY = destinationOffset.dy;
-
       // 调整起始点和终点，以适应目标节点的边界
-      var clippedLine = clipLine(startX, startY, stopX, stopY, destination);
+      var clippedLine = clipLine(source, destination);
 
       // 声明一个可空的边界三角形画笔
       Paint? edgeTrianglePaint;
@@ -51,12 +39,13 @@ class ArrowEdgeRenderer extends EdgeRenderer {
 
       // 绘制箭头的三角形部分，并获取三角形的中心点
       var triangleCentroid = drawTriangle(
-          canvas,
-          edgeTrianglePaint ?? trianglePaint,
-          clippedLine[0],
-          clippedLine[1],
-          clippedLine[2],
-          clippedLine[3]);
+        canvas,
+        edgeTrianglePaint ?? trianglePaint,
+        clippedLine[0],
+        clippedLine[1],
+        clippedLine[2],
+        clippedLine[3],
+      );
 
       // 绘制连接起始点和三角形中心的线条，使用了边的画笔或传入的画笔
       canvas.drawLine(
@@ -105,28 +94,43 @@ class ArrowEdgeRenderer extends EdgeRenderer {
     return triangleCentroid;
   }
 
-  List<double> clipLine(double startX, double startY, double stopX,
-      double stopY, GraphNode destination) {
+  List<double> clipLine(GraphNode source, GraphNode destination) {
+    // 获取起始节点和目标节点在画布上的偏移量
+    var sourceOffset = source.position;
+    var destinationOffset = destination.position;
+
+    // 计算起始点的位置
+    var startX = sourceOffset.dx;
+    var startY = sourceOffset.dy;
+
+    // 计算终点的位置
+    var endX = destinationOffset.dx;
+    var endY = destinationOffset.dy;
+
     // 创建一个包含4个元素的列表，填充为0.0
     var resultLine = List.filled(4, 0.0);
 
-    resultLine[1] = startY;
-
     // 计算角度
-    var angle = atan2(stopY - startY, stopX - startX);
+    var angle = atan2(endY - startY, endX - startX);
 
     // 计算目标节点尺寸的一半
-    var halfHeight = destination.radius / 2;
-    var halfWidth = destination.radius / 2;
+    var endRadius = destination.radius;
 
     // 计算斜率乘以宽度的一半和高度的一半
-    var halfSlopeWidth = cos(angle) * halfWidth;
-    var halfSlopeHeight = sin(angle) * halfHeight;
+    var halfSlopeWidthEnd = cos(angle) * endRadius;
+    var halfSlopeHeightEnd = sin(angle) * endRadius;
 
-    resultLine[0] = startX + halfSlopeWidth;
-    resultLine[1] = startY + halfSlopeHeight;
-    resultLine[2] = stopX - halfSlopeWidth;
-    resultLine[3] = stopY - halfSlopeHeight;
+    // 计算目标节点尺寸的一半
+    var sourceRadius = source.radius;
+
+    // 计算斜率乘以宽度的一半和高度的一半
+    var halfSlopeWidthSource = cos(angle) * sourceRadius;
+    var halfSlopeHeightSource = sin(angle) * sourceRadius;
+
+    resultLine[0] = startX + halfSlopeWidthSource;
+    resultLine[1] = startY + halfSlopeHeightSource;
+    resultLine[2] = endX - halfSlopeWidthEnd;
+    resultLine[3] = endY - halfSlopeHeightEnd;
 
     return resultLine;
   }

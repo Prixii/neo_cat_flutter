@@ -37,8 +37,8 @@ class _GraphViewState extends State<GraphView> {
           tripletEditorBloc(context).add(ChooseNode(newNode: node));
         },
         child: Container(
-          width: node.radius,
-          height: node.radius,
+          width: node.radius * 2,
+          height: node.radius * 2,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [BoxShadow(color: background, spreadRadius: 5)],
@@ -297,6 +297,6 @@ class EdgeRender extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+    return false;
   }
 }

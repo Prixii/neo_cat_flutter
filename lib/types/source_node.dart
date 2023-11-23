@@ -13,7 +13,7 @@ class SourceNode with _$SourceNode {
     required Map<String, dynamic>? properties,
     required NodeId id,
     required LabelName label,
-    @Default(40) double radius,
+    @Default(20) double radius,
   }) = _SourceNode;
 
   factory SourceNode.fromJson(Map<String, dynamic> json) =>

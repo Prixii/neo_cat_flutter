@@ -98,7 +98,7 @@ extension ColorExtension on Color {
 }
 
 TextStyle calculateTextColor(Color color) {
-  if (color.toGrey() > 127) {
+  if (color.toGrey() > 168) {
     return defaultTextBlack;
   }
   return defaultText;
