@@ -66,3 +66,10 @@ class CreateLabel extends TripletEditorEvent {
 
   final BuildContext context;
 }
+
+class ResizeNode extends TripletEditorEvent {
+  ResizeNode(this.newSize, this.context);
+
+  final BuildContext context;
+  final double newSize;
+}

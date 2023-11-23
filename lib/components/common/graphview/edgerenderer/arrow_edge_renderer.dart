@@ -116,8 +116,8 @@ class ArrowEdgeRenderer extends EdgeRenderer {
     var angle = atan2(stopY - startY, stopX - startX);
 
     // 计算目标节点尺寸的一半
-    var halfHeight = destination.height / 2;
-    var halfWidth = destination.width / 2;
+    var halfHeight = destination.radius / 2;
+    var halfWidth = destination.radius / 2;
 
     // 计算斜率乘以宽度的一半和高度的一半
     var halfSlopeWidth = cos(angle) * halfWidth;

@@ -31,6 +31,7 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     on<CreateType>((event, emit) async => emit(await _onCreateType(event)));
     on<CreateLabel>((event, emit) async => emit(await _onCreateLabel(event)));
     on<ResetEdge>((event, emit) => emit(_onResetEdge()));
+    on<ResizeNode>((event, emit) => emit(_onResizeNode(event)));
   }
 
   final RelationChartDataBloc dataBloc;
@@ -203,6 +204,14 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
     var edge = GraphEdge(state.startNode!, state.endNode!, type, hashCode);
     dataBloc.add(CreateEdge(edge));
     return state.copyWith(edge: edge);
+  }
+
+  TripletEditorState _onResizeNode(ResizeNode event) {
+    var radius = event.newSize;
+    var showNode = state.showNode;
+    showNode!.size = Size(radius, radius);
+    dataBloc.add(data_event.UpdateNode(showNode));
+    return state.copyWith(showNode: showNode);
   }
 
   Future<TripletEditorState> _onCreateType(CreateType event) async {

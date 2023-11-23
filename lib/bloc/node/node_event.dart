@@ -30,3 +30,9 @@ class CreateLabelAndSetNode extends NodeEvent {
   final GraphNode node;
   final bool isNodeExist;
 }
+
+class ResizeNode extends NodeEvent {
+  ResizeNode(this.node);
+
+  final GraphNode node;
+}

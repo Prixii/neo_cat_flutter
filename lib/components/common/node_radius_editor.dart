@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/bloc.dart';
+import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
 import 'package:neo_cat_flutter/types/graph_node.dart';
 import 'package:neo_cat_flutter/utils/bloc_util.dart';
@@ -26,7 +27,8 @@ class _NodeRadiusEditorState extends State<NodeRadiusEditor> {
         _functionButtonBuilder(
           'Size Up',
           const Icon(FluentIcons.calculator_subtract),
-          () {},
+          () => tripletEditorBloc(context)
+              .add(ResizeNode(_showNode().radius - 5, context)),
         ),
         Expanded(
           child: Text(
@@ -38,7 +40,8 @@ class _NodeRadiusEditorState extends State<NodeRadiusEditor> {
         _functionButtonBuilder(
           'Size Up',
           const Icon(FluentIcons.calculator_addition),
-          () {},
+          () => tripletEditorBloc(context)
+              .add(ResizeNode(_showNode().radius + 5, context)),
         ),
       ],
     );

@@ -63,9 +63,7 @@ class GraphNode {
           properties: properties ?? this.properties,
           size: radius != null ? Size(radius, radius) : size);
 
-  double get height => size.height; // 获取节点的高度
-
-  double get width => size.width; // 获取节点的宽度
+  double get radius => size.width;
 
   double get x => position.dx; // 获取节点的 x 坐标
 

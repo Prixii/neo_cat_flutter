@@ -37,8 +37,8 @@ class _GraphViewState extends State<GraphView> {
           tripletEditorBloc(context).add(ChooseNode(newNode: node));
         },
         child: Container(
-          width: node.width,
-          height: node.height,
+          width: node.radius,
+          height: node.radius,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [BoxShadow(color: background, spreadRadius: 5)],

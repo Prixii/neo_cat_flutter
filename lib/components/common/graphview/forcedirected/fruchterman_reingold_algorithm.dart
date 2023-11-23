@@ -269,7 +269,7 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
   }
 
   double findBiggestSize(Graph graph) {
-    return graph.nodes.map((it) => max(it.height, it.width)).reduce(max);
+    return graph.nodes.map((it) => it.radius).reduce(max);
   }
 
   Offset getOffset(Graph graph) {
@@ -299,8 +299,8 @@ class FruchtermanReingoldAlgorithm implements Algorithm {
     for (var node in graph.nodes) {
       left = min(left, node.x);
       top = min(top, node.y);
-      right = max(right, node.x + node.width);
-      bottom = max(bottom, node.y + node.height);
+      right = max(right, node.x + node.radius);
+      bottom = max(bottom, node.y + node.radius);
     }
 
     return Size(right - left, bottom - top);
@@ -333,13 +333,13 @@ class NodeCluster {
 
     if (nodes!.length == 1) {
       rect = Rect.fromLTRB(
-          node.x, node.y, node.x + node.width, node.y + node.height);
+          node.x, node.y, node.x + node.radius, node.y + node.radius);
     } else {
       rect = Rect.fromLTRB(
           min(rect!.left, node.x),
           min(rect!.top, node.y),
-          max(rect!.right, node.x + node.width),
-          max(rect!.bottom, node.y + node.height));
+          max(rect!.right, node.x + node.radius),
+          max(rect!.bottom, node.y + node.radius));
     }
   }
 
