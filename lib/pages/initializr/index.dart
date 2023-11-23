@@ -2,7 +2,6 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:neo_cat_flutter/components/common/editor.dart';
 
 import '../../components/initializr/preview.dart';
-import '../../theme/common_theme.dart';
 
 /// @author wang.jiaqi
 /// @date 2023-09-29 11
@@ -21,14 +20,9 @@ class _InitializrPageState extends State<InitializrPage> {
   }
 
   Widget _editorBuilder() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 6, 6, 0),
-      child: Container(
-        decoration: normalBoxDecoration.copyWith(
-          border: normalBorder,
-        ),
-        child: const TripletEditor(),
-      ),
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(0, 6, 6, 0),
+      child: TripletEditor(),
     );
   }
 

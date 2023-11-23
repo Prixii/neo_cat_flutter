@@ -26,20 +26,15 @@ class _ManagerPageState extends State<ManagerPage> {
   }
 
   Widget _editorBuilder() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(3, 0, 6, 0),
-      child: Container(
-        decoration: normalBoxDecoration.copyWith(
-          border: normalBorder,
-        ),
-        child: const Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: TripletEditor(),
-            ),
-          ],
-        ),
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(3, 0, 6, 0),
+      child: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: TripletEditor(),
+          ),
+        ],
       ),
     );
   }

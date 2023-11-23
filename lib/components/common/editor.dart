@@ -264,9 +264,22 @@ class _TripletEditorState extends State<TripletEditor> {
     );
   }
 
+  GraphNode? showNode() => tripletEditorBloc(context).state.showNode;
+
+  Widget _instantPropertiesEditorBuilder() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+      child: Column(
+        children: [
+          const NodeRadiusEditor(),
+          _labelSetterBuilder(showNode()!.label),
+        ],
+      ),
+    );
+  }
+
   Widget _propertiesListBuiler() {
     disposeControllers();
-    GraphNode? showNode() => tripletEditorBloc(context).state.showNode;
     nameController.text = '';
     LabelData? labelData() =>
         relationChartDataBloc(context).state.labelMap[showNode()?.label];
@@ -285,8 +298,6 @@ class _TripletEditorState extends State<TripletEditor> {
               propertyName: 'name',
               controller: nameController..text = showNode()!.name,
             ),
-            NodeRadiusEditor(),
-            _labelSetterBuilder(showNode()!.label),
             Expanded(
               flex: 1,
               child: ListView.builder(
@@ -342,7 +353,7 @@ class _TripletEditorState extends State<TripletEditor> {
 
   Widget _confirmButtonBuilder() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
       child: SizedBox(
         height: 40,
         width: double.infinity,
@@ -436,11 +447,29 @@ class _TripletEditorState extends State<TripletEditor> {
     return BlocBuilder<TripletEditorBloc, TripletEditorState>(
       builder: (context, state) => Column(
         children: [
-          _tripletEditorBuilder(),
-          const Divider(),
+          Container(
+            decoration: normalBoxDecoration.copyWith(
+              border: normalBorder,
+            ),
+            child: _tripletEditorBuilder(),
+          ),
+          const SizedBox(
+            height: 6,
+          ),
+          Container(
+            decoration: normalBoxDecoration.copyWith(
+              border: normalBorder,
+            ),
+            child: _instantPropertiesEditorBuilder(),
+          ),
+          const SizedBox(
+            height: 6,
+          ),
           Expanded(
             child: Container(
-              decoration: normalBoxDecoration,
+              decoration: normalBoxDecoration.copyWith(
+                border: normalBorder,
+              ),
               child: _propertiesListBuiler(),
             ),
           ),
