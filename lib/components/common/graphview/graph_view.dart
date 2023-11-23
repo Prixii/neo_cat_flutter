@@ -203,7 +203,7 @@ class _GraphViewAnimated extends StatefulWidget {
   final Graph graph;
   final nodes = <Widget>[];
   final Paint? paint;
-  final stepMilis = 25;
+  final stepMilis = 33;
 
   @override
   _GraphViewAnimatedState createState() => _GraphViewAnimatedState();
@@ -252,7 +252,7 @@ class _GraphViewAnimatedState extends State<_GraphViewAnimated> {
       children: [
         CustomPaint(
           size: MediaQuery.of(context).size,
-          painter: EdgeRender(algorithm, graph, const Offset(20, 20)),
+          painter: EdgeRender(algorithm, graph, const Offset(0, 0)),
         ),
         ...List<Widget>.generate(graph.nodeCount(), (index) {
           return Positioned(

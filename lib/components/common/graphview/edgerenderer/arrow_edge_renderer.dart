@@ -12,6 +12,7 @@ const double arrowLength = 10;
 
 class ArrowEdgeRenderer extends EdgeRenderer {
   var trianglePath = Path();
+  var path = Path();
 
   @override
   void render(Canvas canvas, Graph graph, Paint paint) {
@@ -52,6 +53,7 @@ class ArrowEdgeRenderer extends EdgeRenderer {
           Offset(clippedLine[0], clippedLine[1]),
           Offset(triangleCentroid[0], triangleCentroid[1]),
           edge.paint ?? paint);
+      // canvas.drawPath(path, paint..color = Colors.purple);
 
       // 计算文字的位置
       var textX = (clippedLine[0] + clippedLine[2]) / 2;
@@ -99,13 +101,18 @@ class ArrowEdgeRenderer extends EdgeRenderer {
     var sourceOffset = source.position;
     var destinationOffset = destination.position;
 
+    var endRadius = destination.radius;
+    var sourceRadius = source.radius;
+    // 计算终点的位置
+
     // 计算起始点的位置
     var startX = sourceOffset.dx;
     var startY = sourceOffset.dy;
-
-    // 计算终点的位置
     var endX = destinationOffset.dx;
     var endY = destinationOffset.dy;
+
+    path.moveTo(startX + sourceRadius, startY + sourceRadius);
+    path.lineTo(endX + endRadius, endY + endRadius);
 
     // 创建一个包含4个元素的列表，填充为0.0
     var resultLine = List.filled(4, 0.0);
@@ -114,23 +121,21 @@ class ArrowEdgeRenderer extends EdgeRenderer {
     var angle = atan2(endY - startY, endX - startX);
 
     // 计算目标节点尺寸的一半
-    var endRadius = destination.radius;
 
     // 计算斜率乘以宽度的一半和高度的一半
     var halfSlopeWidthEnd = cos(angle) * endRadius;
     var halfSlopeHeightEnd = sin(angle) * endRadius;
 
     // 计算目标节点尺寸的一半
-    var sourceRadius = source.radius;
 
     // 计算斜率乘以宽度的一半和高度的一半
     var halfSlopeWidthSource = cos(angle) * sourceRadius;
     var halfSlopeHeightSource = sin(angle) * sourceRadius;
 
-    resultLine[0] = startX + halfSlopeWidthSource;
-    resultLine[1] = startY + halfSlopeHeightSource;
-    resultLine[2] = endX - halfSlopeWidthEnd;
-    resultLine[3] = endY - halfSlopeHeightEnd;
+    resultLine[0] = startX + sourceRadius + halfSlopeWidthSource;
+    resultLine[1] = startY + sourceRadius + halfSlopeHeightSource;
+    resultLine[2] = endX + endRadius - halfSlopeWidthEnd;
+    resultLine[3] = endY + endRadius - halfSlopeHeightEnd;
 
     return resultLine;
   }
