@@ -6,10 +6,9 @@ import '../../theme/common_theme.dart';
 /// @date 2023-10-02 20
 
 class PropertyTile extends StatefulWidget {
-  const PropertyTile(
-      {super.key, required this.propertyName, required this.controller});
+  const PropertyTile({super.key, required this.propertyName, this.controller});
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String propertyName;
 
   @override
@@ -26,28 +25,33 @@ class PropertyTileState extends State<PropertyTile> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),
-      child: Center(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Text(
-                widget.propertyName,
-                textAlign: TextAlign.center,
-                style: defaultTextBlack,
+      child: SizedBox(
+        height: 28,
+        child: Center(
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Text(
+                  widget.propertyName,
+                  textAlign: TextAlign.center,
+                  style: defaultTextBlack,
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              flex: 3,
-              child: TextBox(
-                controller: widget.controller,
-                style: defaultTextBlack,
+              const SizedBox(
+                width: 8,
               ),
-            )
-          ],
+              Expanded(
+                flex: 3,
+                child: (widget.controller != null)
+                    ? TextBox(
+                        controller: widget.controller,
+                        style: defaultTextBlack,
+                      )
+                    : Container(),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -267,15 +267,27 @@ class _TripletEditorState extends State<TripletEditor> {
   GraphNode? showNode() => tripletEditorBloc(context).state.showNode;
 
   Widget _instantPropertiesEditorBuilder() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-      child: Column(
-        children: [
-          const NodeRadiusEditor(),
-          _labelSetterBuilder(showNode()!.label),
-        ],
-      ),
-    );
+    if (showNode() == null) {
+      return const Padding(
+        padding: EdgeInsets.fromLTRB(12, 0, 12, 12),
+        child: Column(
+          children: [
+            PropertyTile(propertyName: 'radius'),
+            PropertyTile(propertyName: 'Label'),
+          ],
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        child: Column(
+          children: [
+            const NodeRadiusEditor(),
+            _labelSetterBuilder(showNode()!.label),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _propertiesListBuiler() {
