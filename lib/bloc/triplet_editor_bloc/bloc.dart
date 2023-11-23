@@ -247,7 +247,8 @@ class TripletEditorBloc extends Bloc<TripletEditorEvent, TripletEditorState> {
       var newType = controller.text;
       var newEdge = GraphEdge(state.startNode!, state.endNode!, newType,
           "${state.startNode!}${state.endNode!}$newType".hashCode);
-      dataBloc.add(CreateEdgeTypeAndAddEdge(controller.text, newEdge));
+      dataBloc.add(CreateEdgeTypeAndAddEdge(
+          type: controller.text, newEdge: newEdge, oldEdge: state.edge));
       controller.dispose();
 
       return state.copyWith(edge: newEdge);

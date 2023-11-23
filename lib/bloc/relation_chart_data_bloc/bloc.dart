@@ -367,9 +367,9 @@ class RelationChartDataBloc
 
   RelationChartDataState _onCreateEdgeTypeAndAddEdge(
       CreateEdgeTypeAndAddEdge event) {
-    var edge = event.edge;
+    var edge = event.newEdge;
     var type = event.type;
-
+    var oldEdge = event.oldEdge;
     var edgeTypes = <EdgeType>{}
       ..addAll(state.edgeTypes)
       ..add(type);
@@ -381,6 +381,11 @@ class RelationChartDataBloc
     var edgeMap = <EdgeId, GraphEdge>{}
       ..addAll(state.edgeMap)
       ..[edge.id] = edge;
+
+    if (oldEdge != null) {
+      edgeMap.remove(oldEdge);
+      state.graph?.removeEdge(oldEdge);
+    }
 
     state.graph!.addEdgeS(edge);
 
