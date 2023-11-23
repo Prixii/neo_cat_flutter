@@ -12,6 +12,7 @@ _$SourceNodeImpl _$$SourceNodeImplFromJson(Map<String, dynamic> json) =>
       properties: json['properties'] as Map<String, dynamic>?,
       id: json['id'] as int,
       label: json['label'] as String,
+      radius: (json['radius'] as num?)?.toDouble() ?? 45,
     );
 
 Map<String, dynamic> _$$SourceNodeImplToJson(_$SourceNodeImpl instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$SourceNodeImplToJson(_$SourceNodeImpl instance) =>
       'properties': instance.properties,
       'id': instance.id,
       'label': instance.label,
+      'radius': instance.radius,
     };

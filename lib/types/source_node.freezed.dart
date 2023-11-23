@@ -21,15 +21,12 @@ SourceNode _$SourceNodeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SourceNode {
   String get name => throw _privateConstructorUsedError;
-
   Map<String, dynamic>? get properties => throw _privateConstructorUsedError;
-
   int get id => throw _privateConstructorUsedError;
-
   String get label => throw _privateConstructorUsedError;
+  double get radius => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
   @JsonKey(ignore: true)
   $SourceNodeCopyWith<SourceNode> get copyWith =>
       throw _privateConstructorUsedError;
@@ -40,10 +37,13 @@ abstract class $SourceNodeCopyWith<$Res> {
   factory $SourceNodeCopyWith(
           SourceNode value, $Res Function(SourceNode) then) =
       _$SourceNodeCopyWithImpl<$Res, SourceNode>;
-
   @useResult
   $Res call(
-      {String name, Map<String, dynamic>? properties, int id, String label});
+      {String name,
+      Map<String, dynamic>? properties,
+      int id,
+      String label,
+      double radius});
 }
 
 /// @nodoc
@@ -52,10 +52,9 @@ class _$SourceNodeCopyWithImpl<$Res, $Val extends SourceNode>
   _$SourceNodeCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  // ignore: unused_field
   final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -64,6 +63,7 @@ class _$SourceNodeCopyWithImpl<$Res, $Val extends SourceNode>
     Object? properties = freezed,
     Object? id = null,
     Object? label = null,
+    Object? radius = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -82,6 +82,10 @@ class _$SourceNodeCopyWithImpl<$Res, $Val extends SourceNode>
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
+      radius: null == radius
+          ? _value.radius
+          : radius // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -92,11 +96,14 @@ abstract class _$$SourceNodeImplCopyWith<$Res>
   factory _$$SourceNodeImplCopyWith(
           _$SourceNodeImpl value, $Res Function(_$SourceNodeImpl) then) =
       __$$SourceNodeImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
-      {String name, Map<String, dynamic>? properties, int id, String label});
+      {String name,
+      Map<String, dynamic>? properties,
+      int id,
+      String label,
+      double radius});
 }
 
 /// @nodoc
@@ -114,6 +121,7 @@ class __$$SourceNodeImplCopyWithImpl<$Res>
     Object? properties = freezed,
     Object? id = null,
     Object? label = null,
+    Object? radius = null,
   }) {
     return _then(_$SourceNodeImpl(
       name: null == name
@@ -132,6 +140,10 @@ class __$$SourceNodeImplCopyWithImpl<$Res>
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
+      radius: null == radius
+          ? _value.radius
+          : radius // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -143,46 +155,16 @@ class _$SourceNodeImpl implements _SourceNode {
       {required this.name,
       required final Map<String, dynamic>? properties,
       required this.id,
-      required this.label})
+      required this.label,
+      this.radius = 40})
       : _properties = properties;
 
   factory _$SourceNodeImpl.fromJson(Map<String, dynamic> json) =>
       _$$SourceNodeImplFromJson(json);
 
   @override
-  final int id;
-
-  @override
-  final String label;
-
-  @override
   final String name;
-
   final Map<String, dynamic>? _properties;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SourceNodeImpl &&
-            (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._properties, _properties) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.label, label) || other.label == label));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SourceNodeImplCopyWith<_$SourceNodeImpl> get copyWith =>
-      __$$SourceNodeImplCopyWithImpl<_$SourceNodeImpl>(this, _$identity);
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, name,
-      const DeepCollectionEquality().hash(_properties), id, label);
-
   @override
   Map<String, dynamic>? get properties {
     final value = _properties;
@@ -193,15 +175,47 @@ class _$SourceNodeImpl implements _SourceNode {
   }
 
   @override
+  final int id;
+  @override
+  final String label;
+  @override
+  @JsonKey()
+  final double radius;
+
+  @override
+  String toString() {
+    return 'SourceNode(name: $name, properties: $properties, id: $id, label: $label, radius: $radius)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SourceNodeImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality()
+                .equals(other._properties, _properties) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.radius, radius) || other.radius == radius));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name,
+      const DeepCollectionEquality().hash(_properties), id, label, radius);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SourceNodeImplCopyWith<_$SourceNodeImpl> get copyWith =>
+      __$$SourceNodeImplCopyWithImpl<_$SourceNodeImpl>(this, _$identity);
+
+  @override
   Map<String, dynamic> toJson() {
     return _$$SourceNodeImplToJson(
       this,
     );
-  }
-
-  @override
-  String toString() {
-    return 'SourceNode(name: $name, properties: $properties, id: $id, label: $label)';
   }
 }
 
@@ -210,23 +224,22 @@ abstract class _SourceNode implements SourceNode {
       {required final String name,
       required final Map<String, dynamic>? properties,
       required final int id,
-      required final String label}) = _$SourceNodeImpl;
+      required final String label,
+      final double radius}) = _$SourceNodeImpl;
 
   factory _SourceNode.fromJson(Map<String, dynamic> json) =
       _$SourceNodeImpl.fromJson;
 
   @override
-  int get id;
-
-  @override
-  String get label;
-
-  @override
   String get name;
-
   @override
   Map<String, dynamic>? get properties;
-
+  @override
+  int get id;
+  @override
+  String get label;
+  @override
+  double get radius;
   @override
   @JsonKey(ignore: true)
   _$$SourceNodeImplCopyWith<_$SourceNodeImpl> get copyWith =>

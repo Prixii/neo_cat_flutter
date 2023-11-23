@@ -13,15 +13,16 @@ class GraphNode {
     required this.id,
     required this.label,
     required this.properties,
+    this.size = const Size(40, 40),
   });
 
   factory GraphNode.fromNode(SourceNode node) {
     return GraphNode(
-      name: node.name,
-      id: node.id,
-      label: node.label,
-      properties: node.properties,
-    );
+        name: node.name,
+        id: node.id,
+        label: node.label,
+        properties: node.properties,
+        size: Size(node.radius, node.radius));
   }
 
   int id;
@@ -31,9 +32,8 @@ class GraphNode {
       random.nextDouble() * 20 + 10, random.nextDouble() * 20 + 10); // 节点的位置
 
   Map<String, dynamic>? properties;
-  Size size = const Size(0, 0); // 节点的大小
+  Size size;
 
-  // 重写等于运算符
   @override
   bool operator ==(Object other) =>
       other is GraphNode && hashCode == other.hashCode;
@@ -54,12 +54,14 @@ class GraphNode {
           {String? name,
           int? id,
           LabelName? label,
-          Map<String, dynamic>? properties}) =>
+          Map<String, dynamic>? properties,
+          double? radius}) =>
       GraphNode(
           name: name ?? this.name,
           id: id ?? this.id,
           label: label ?? this.label,
-          properties: properties ?? this.properties);
+          properties: properties ?? this.properties,
+          size: radius != null ? Size(radius, radius) : size);
 
   double get height => size.height; // 获取节点的高度
 

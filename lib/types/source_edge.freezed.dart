@@ -21,15 +21,11 @@ SourceEdge _$SourceEdgeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SourceEdge {
   int get id => throw _privateConstructorUsedError;
-
   String get type => throw _privateConstructorUsedError;
-
   int get start => throw _privateConstructorUsedError;
-
   int get end => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
   @JsonKey(ignore: true)
   $SourceEdgeCopyWith<SourceEdge> get copyWith =>
       throw _privateConstructorUsedError;
@@ -40,7 +36,6 @@ abstract class $SourceEdgeCopyWith<$Res> {
   factory $SourceEdgeCopyWith(
           SourceEdge value, $Res Function(SourceEdge) then) =
       _$SourceEdgeCopyWithImpl<$Res, SourceEdge>;
-
   @useResult
   $Res call({int id, String type, int start, int end});
 }
@@ -51,10 +46,9 @@ class _$SourceEdgeCopyWithImpl<$Res, $Val extends SourceEdge>
   _$SourceEdgeCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  // ignore: unused_field
   final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -91,7 +85,6 @@ abstract class _$$SourceEdgeImplCopyWith<$Res>
   factory _$$SourceEdgeImplCopyWith(
           _$SourceEdgeImpl value, $Res Function(_$SourceEdgeImpl) then) =
       __$$SourceEdgeImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({int id, String type, int start, int end});
@@ -147,16 +140,18 @@ class _$SourceEdgeImpl implements _SourceEdge {
       _$$SourceEdgeImplFromJson(json);
 
   @override
+  final int id;
+  @override
+  final String type;
+  @override
+  final int start;
+  @override
   final int end;
 
   @override
-  final int id;
-
-  @override
-  final int start;
-
-  @override
-  final String type;
+  String toString() {
+    return 'SourceEdge(id: $id, type: $type, start: $start, end: $end)';
+  }
 
   @override
   bool operator ==(dynamic other) {
@@ -171,24 +166,19 @@ class _$SourceEdgeImpl implements _SourceEdge {
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SourceEdgeImplCopyWith<_$SourceEdgeImpl> get copyWith =>
-      __$$SourceEdgeImplCopyWithImpl<_$SourceEdgeImpl>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, type, start, end);
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, type, start, end);
+  @pragma('vm:prefer-inline')
+  _$$SourceEdgeImplCopyWith<_$SourceEdgeImpl> get copyWith =>
+      __$$SourceEdgeImplCopyWithImpl<_$SourceEdgeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
     return _$$SourceEdgeImplToJson(
       this,
     );
-  }
-
-  @override
-  String toString() {
-    return 'SourceEdge(id: $id, type: $type, start: $start, end: $end)';
   }
 }
 
@@ -203,17 +193,13 @@ abstract class _SourceEdge implements SourceEdge {
       _$SourceEdgeImpl.fromJson;
 
   @override
-  int get end;
-
-  @override
   int get id;
-
-  @override
-  int get start;
-
   @override
   String get type;
-
+  @override
+  int get start;
+  @override
+  int get end;
   @override
   @JsonKey(ignore: true)
   _$$SourceEdgeImplCopyWith<_$SourceEdgeImpl> get copyWith =>

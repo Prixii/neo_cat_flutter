@@ -5,6 +5,7 @@ import 'package:neo_cat_flutter/bloc/relation_chart_data_bloc/state.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/bloc.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/event.dart';
 import 'package:neo_cat_flutter/bloc/triplet_editor_bloc/state.dart';
+import 'package:neo_cat_flutter/components/common/node_radius_editor.dart';
 import 'package:neo_cat_flutter/components/common/property_tile.dart';
 import 'package:neo_cat_flutter/theme/common_theme.dart';
 import 'package:neo_cat_flutter/types/enums.dart';
@@ -264,9 +265,9 @@ class _TripletEditorState extends State<TripletEditor> {
   }
 
   Widget _propertiesListBuiler() {
-    nameController.text = '';
     disposeControllers();
     GraphNode? showNode() => tripletEditorBloc(context).state.showNode;
+    nameController.text = '';
     LabelData? labelData() =>
         relationChartDataBloc(context).state.labelMap[showNode()?.label];
     if (showNode() == null) {
@@ -284,6 +285,7 @@ class _TripletEditorState extends State<TripletEditor> {
               propertyName: 'name',
               controller: nameController..text = showNode()!.name,
             ),
+            NodeRadiusEditor(),
             _labelSetterBuilder(showNode()!.label),
             Expanded(
               flex: 1,

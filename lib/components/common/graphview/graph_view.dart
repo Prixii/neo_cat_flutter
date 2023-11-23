@@ -37,8 +37,8 @@ class _GraphViewState extends State<GraphView> {
           tripletEditorBloc(context).add(ChooseNode(newNode: node));
         },
         child: Container(
-          width: 40,
-          height: 40,
+          width: node.width,
+          height: node.height,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [BoxShadow(color: background, spreadRadius: 5)],
@@ -64,7 +64,6 @@ class _GraphViewState extends State<GraphView> {
         algorithm: widget.algorithm,
         paint: widget.paint,
         builder: (GraphNode node) {
-          node.size = const Size(45, 45);
           return circularWidget(node); // 返回一个圆形小部件
         },
       ),
